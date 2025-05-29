@@ -1,0 +1,50 @@
+# Abhängigkeiten
+/node_modules
+/.pnp
+.pnp.js
+
+# Build-Ausgaben
+/dist
+/dist-ssr
+/.nuxt
+/.output
+/.vite
+*.tsbuildinfo
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local

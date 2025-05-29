@@ -1,0 +1,6 @@
+
+{
+  "name": "Interaktive Umfrage-Plattform",
+  "description": "Eine React- und Tailwind CSS-Anwendung zum Erstellen, Verteilen und Analysieren von Umfragen. Bietet verschiedene Fragetypen, Echtzeit-Ergebnisvisualisierung und CSV-Export für Lehrkräfte sowie eine einfache Benutzeroberfläche für Teilnehmer.",
+  "requestFramePermissions": []
+}

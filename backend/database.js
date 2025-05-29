@@ -1,4 +1,5 @@
 
+
 const path = require('path');
 const fs = require('fs');
 
@@ -127,6 +128,7 @@ if (process.env.DATABASE_URL) {
             });
         });
     }
-});
+  });
+}
 
 module.exports = db;

@@ -1,0 +1,20 @@
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/

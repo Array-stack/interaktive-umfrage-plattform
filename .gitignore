@@ -15,7 +15,6 @@
 .env
 .env.*
 !.env.example
-!.env.production
 
 # Logs
 logs
@@ -50,6 +49,7 @@ Thumbs.db
 # Lokale Entwicklung
 *.local
 
-# SQLite Datenbank
-*.sqlite
-*.sqlite-journal
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal

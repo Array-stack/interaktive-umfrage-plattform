@@ -1,45 +1,24 @@
 
-
+const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const fs = require('fs');
+const DBSOURCE = path.join(__dirname, 'surveys.db'); // Vollständiger Pfad zur Datenbankdatei
 
-let db;
-
-// Prüfe, ob wir in Railway sind
-if (process.env.DATABASE_URL) {
-  // PostgreSQL für Produktion (Railway)
-  const { Pool } = require('pg');
-  const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
-  });
-  
-  console.log('Verbindung zur PostgreSQL-Datenbank über Railway hergestellt');
-  module.exports = pool;
-} else {
-  // SQLite für lokale Entwicklung
-  const sqlite3 = require('sqlite3').verbose();
-  const DBSOURCE = path.join(__dirname, 'surveys.db');
-
-  // Erstelle die Datenbankdatei, falls sie nicht existiert
-  if (!fs.existsSync(DBSOURCE)) {
-    fs.closeSync(fs.openSync(DBSOURCE, 'w'));
-  }
-
-  db = new sqlite3.Database(DBSOURCE, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
+// Datenbankverbindung mit besseren Timeouts
+const db = new sqlite3.Database(DBSOURCE, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
     if (err) {
-      console.error('Fehler beim Öffnen der SQLite-Datenbank:', err.message);
-      process.exit(1);
+      // Kann die Datenbank nicht öffnen
+      console.error('Fehler beim Öffnen der Datenbank:', err.message);
+      process.exit(1); // Beende den Prozess, da die Datenbank für die Anwendung essentiell ist
     } else {
       console.log('Erfolgreich mit der SQLite-Datenbank verbunden:', DBSOURCE);
+      // Timeout für Datenbankoperationen (in Millisekunden)
       db.configure('busyTimeout', 5000);
+      // Aktiviere Fremdschlüssel
       db.run('PRAGMA foreign_keys = ON;', (err) => {
         if (err) console.error('Fehler beim Aktivieren der Fremdschlüssel:', err.message);
       });
-      console.log('Verbunden mit der SQLite-Datenbank.');
-      db.serialize(() => {
+        console.log('Verbunden mit der SQLite-Datenbank.');
+        db.serialize(() => {
             // Aktiviert Fremdschlüssel-Unterstützung
             db.run("PRAGMA foreign_keys = ON;");
 
@@ -49,7 +28,9 @@ if (process.env.DATABASE_URL) {
                 title TEXT NOT NULL,
                 description TEXT,
                 ownerId TEXT NOT NULL,
-                createdAt TEXT NOT NULL
+                createdAt TEXT NOT NULL,
+                isPublic INTEGER DEFAULT 1,
+                access_type TEXT DEFAULT 'public'
             )`, (err) => {
                 if (err) { console.error("Fehler beim Erstellen der Tabelle 'surveys':", err.message); }
             });
@@ -81,9 +62,92 @@ if (process.env.DATABASE_URL) {
                 survey_id TEXT NOT NULL,
                 respondentId TEXT NOT NULL, -- Eindeutige ID des Antwortenden
                 submittedAt TEXT NOT NULL,
+                ip_address TEXT, -- IP-Adresse des Antwortenden
                 FOREIGN KEY (survey_id) REFERENCES surveys (id) ON DELETE CASCADE
             )`, (err) => {
-                if (err) { console.error("Fehler beim Erstellen der Tabelle 'responses':", err.message); }
+                if (err) { 
+                    console.error("Fehler beim Erstellen der Tabelle 'responses':", err.message);
+                    return;
+                } 
+                
+                console.log("Tabelle 'responses' erfolgreich erstellt oder bereits vorhanden");
+                
+                // Überprüfen, ob die ip_address-Spalte bereits existiert
+                db.all("PRAGMA table_info(responses)", [], (err, columns) => {
+                    if (err) {
+                        console.error("Fehler beim Überprüfen der Tabellenspalten:", err.message);
+                        return;
+                    }
+                    
+                    // Sicherstellen, dass columns ein Array ist
+                    if (!Array.isArray(columns)) {
+                        console.log("Unerwartetes Ergebnis von PRAGMA table_info:", columns);
+                        columns = [];
+                    }
+                    
+                    // Überprüfen, ob die ip_address-Spalte bereits existiert
+                    const hasIpAddress = columns.some(column => 
+                        column.name === 'ip_address' && column.type === 'TEXT'
+                    );
+                    
+                    if (hasIpAddress) {
+                        console.log("ip_address-Spalte ist bereits vorhanden");
+                        return;
+                    }
+                    
+                    console.log("Füge ip_address-Spalte zur responses-Tabelle hinzu...");
+                    
+                    // Neue Tabelle mit der zusätzlichen Spalte erstellen
+                    db.serialize(() => {
+                        db.run('BEGIN TRANSACTION');
+                        
+                        // 1. Temporäre Tabelle mit der neuen Struktur erstellen
+                        db.run(`
+                            CREATE TABLE responses_new (
+                                id TEXT PRIMARY KEY,
+                                survey_id TEXT NOT NULL,
+                                respondentId TEXT NOT NULL,
+                                submittedAt TEXT NOT NULL,
+                                ip_address TEXT,
+                                FOREIGN KEY (survey_id) REFERENCES surveys (id) ON DELETE CASCADE
+                            )
+                        `);
+                        
+                        // 2. Daten von der alten Tabelle kopieren
+                        db.run(`
+                            INSERT INTO responses_new (id, survey_id, respondentId, submittedAt, ip_address)
+                            SELECT id, survey_id, respondentId, submittedAt, NULL 
+                            FROM responses
+                        `);
+                        
+                        // 3. Alte Tabelle umbenennen und neue aktivieren
+                        db.run('DROP TABLE IF EXISTS responses_old');
+                        db.run('ALTER TABLE responses RENAME TO responses_old');
+                        db.run('ALTER TABLE responses_new RENAME TO responses');
+                        
+                        // 4. Indizes neu erstellen
+                        db.run('CREATE INDEX IF NOT EXISTS idx_responses_survey ON responses(survey_id)');
+                        
+                        // 5. Transaktion abschließen
+                        db.run('COMMIT', (err) => {
+                            if (err) {
+                                console.error("Fehler beim Abschließen der Transaktion:", err.message);
+                                db.run('ROLLBACK');
+                            } else {
+                                console.log("ip_address-Spalte erfolgreich hinzugefügt");
+                                
+                                // Alte Tabelle aufräumen (außerhalb der Transaktion)
+                                db.run('DROP TABLE IF EXISTS responses_old', (err) => {
+                                    if (err) {
+                                        console.error("Fehler beim Löschen der alten Tabelle:", err.message);
+                                    } else {
+                                        console.log("Alte Tabelle erfolgreich aufgeräumt");
+                                    }
+                                });
+                            }
+                        });
+                    });
+                });
             });
 
             // Tabelle für einzelne Antworten (answers)
@@ -96,6 +160,24 @@ if (process.env.DATABASE_URL) {
                 FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
             )`, (err) => {
                 if (err) { console.error("Fehler beim Erstellen der Tabelle 'answers':", err.message); }
+            });
+            
+            // Tabelle für Lehrer-Schüler-Beziehung
+            db.run(`CREATE TABLE IF NOT EXISTS teacher_students (
+                id TEXT PRIMARY KEY,
+                teacher_id TEXT NOT NULL,
+                student_id TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (teacher_id) REFERENCES users (id) ON DELETE CASCADE,
+                FOREIGN KEY (student_id) REFERENCES users (id) ON DELETE CASCADE,
+                UNIQUE(teacher_id, student_id)
+            )`, (err) => {
+                if (err) { console.error("Fehler beim Erstellen der Tabelle 'teacher_students':", err.message); }
+                else {
+                    // Indizes für schnellere Abfragen
+                    db.run('CREATE INDEX IF NOT EXISTS idx_teacher_students_teacher ON teacher_students(teacher_id)');
+                    db.run('CREATE INDEX IF NOT EXISTS idx_teacher_students_student ON teacher_students(student_id)');
+                }
             });
             
             // Tabelle für Benutzer (users)
@@ -128,7 +210,28 @@ if (process.env.DATABASE_URL) {
             });
         });
     }
-  });
-}
+});
 
 module.exports = db;
+
+// Nach der Tabellendefinition hinzufügen
+db.all("PRAGMA table_info(surveys)", (err, rows) => {
+    if (err) {
+        console.error("Fehler beim Prüfen der surveys-Tabelle:", err.message);
+        return;
+    }
+    
+    // Prüfen, ob isPublic-Spalte existiert
+    const hasIsPublic = rows.some(row => row.name === 'isPublic');
+    
+    if (!hasIsPublic) {
+        console.log("Füge isPublic-Spalte zur surveys-Tabelle hinzu...");
+        db.run("ALTER TABLE surveys ADD COLUMN isPublic INTEGER DEFAULT 1", (err) => {
+            if (err) {
+                console.error("Fehler beim Hinzufügen der isPublic-Spalte:", err.message);
+            } else {
+                console.log("isPublic-Spalte erfolgreich hinzugefügt.");
+            }
+        });
+    }
+});

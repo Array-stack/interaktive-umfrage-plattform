@@ -1,0 +1,33 @@
+**Prompt für Agent:**
+
+Implementiere das Hosting für die Interaktive Umfrage-Plattform wie folgt:
+
+1. **Frontend:**
+
+* Deploy mit Vercel (React 18.2, Vite 5, TypeScript)
+* API\_BASE\_URL auf Backend-URL setzen
+* Proxy in vite.config.ts für Produktion entfernen
+* `npm run build` ausführen und Deployment testen
+
+2. **Backend:**
+
+* Deploy auf Railway (Node.js/Express 4.18.2) mit SQLite als persistent gespeicherte Datenbank
+* Umgebungsvariablen korrekt konfigurieren: NODE\_ENV=production, APP\_URL (Frontend-URL)
+* CORS auf Frontend-URL beschränken
+* JWT-Authentifizierung aktivieren, Rate-Limiting implementieren
+* Keine Debug-Logs oder Testdateien im Deployment
+
+3. **Datenbank:**
+
+* SQLite für den Start verwenden, Backups einrichten
+* Bei Wachstum PostgreSQL-Migration vorbereiten
+
+4. **Qualität & Sicherheit:**
+
+* Testdateien und Konsolenausgaben vor Deployment entfernen
+* Sicherheitsmaßnahmen strikt umsetzen
+
+5. **Deployment & Updates:**
+
+* Railway über GitHub-Repository verbinden für automatisches Deployment
+* Rückfragen vor Planabweichungen melden

@@ -3,34 +3,29 @@ import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
-  
-  // Standard-API-URL für Entwicklung
-  const apiUrl = env.VITE_API_URL || 'http://localhost:3001';
-  
   return {
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-      'process.env.VITE_API_URL': JSON.stringify(apiUrl)
-    },
-    server: {
-      proxy: {
-        '/api': {
-          target: apiUrl,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
-        }
-      }
+      'process.env.API_BASE_URL': JSON.stringify(env.API_BASE_URL || 'https://interaktive-umfrage-plattform-backend.up.railway.app/api')
     },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
       }
     },
-    build: {
-      outDir: 'dist',
-      emptyOutDir: true,
-      sourcemap: mode === 'development'
+    server: {
+      port: 5173,
+      open: true,
+      // Proxy-Konfiguration für die Entwicklung beibehalten
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3001',
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path
+        }
+      }
     }
   };
 });

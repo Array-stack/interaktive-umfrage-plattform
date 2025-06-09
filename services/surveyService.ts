@@ -1,7 +1,7 @@
 
 import { Survey, NewSurvey, SurveyResponse, NewSurveyResponse } from '../types';
 
-const API_BASE_URL = 'http://localhost:3001/api'; // Backend-URL
+const API_BASE_URL = '/api'; // Changed from 'http://localhost:3001/api'
 
 // Helper to handle API responses
 const handleApiResponse = async (response: Response) => {
@@ -59,7 +59,9 @@ export const surveyService = {
   },
 
   getResponsesForSurvey: async (surveyId: string): Promise<SurveyResponse[]> => {
-    const response = await fetch(`${API_BASE_URL}/surveys/${surveyId}/responses`);
+    const response = await fetch(`${API_BASE_URL}/surveys/${surveyId}/responses`, {
+      headers: getAuthHeader()
+    });
     return handleApiResponse(response);
   },
 

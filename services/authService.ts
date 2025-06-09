@@ -7,7 +7,8 @@ export interface VerifyEmailResponse {
 }
 
 // API-Basis-URL für Backend-Anfragen
-const API_BASE_URL = 'http://localhost:3001/api';
+// Verwende die Umgebungsvariable oder den Fallback für die Produktion
+const API_BASE_URL = process.env.API_BASE_URL || '/api';
 console.log('API_BASE_URL:', API_BASE_URL);
 
 // Helper zum Umgang mit API-Antworten
@@ -308,11 +309,29 @@ export const authService = {
       if (!token) return false;
       
       // Überprüfen, ob das Token gültig ist (nicht abgelaufen)
-      // Hinweis: Dies ist eine einfache Überprüfung. In einer Produktionsumgebung sollten Sie das Token validieren.
       const tokenParts = token.split('.');
       if (tokenParts.length !== 3) return false;
       
-      return true;
+      // Token dekodieren und Ablaufdatum prüfen
+      try {
+        const payload = JSON.parse(atob(tokenParts[1]));
+        const expirationTime = payload.exp * 1000; // exp ist in Sekunden, JS verwendet Millisekunden
+        const currentTime = Date.now();
+        
+        // Prüfen, ob das Token abgelaufen ist
+        if (expirationTime < currentTime) {
+          console.log('Token ist abgelaufen');
+          // Token aus dem localStorage entfernen, da es abgelaufen ist
+          removeToken();
+          removeUser();
+          return false;
+        }
+        
+        return true;
+      } catch (decodeError) {
+        console.error('Fehler beim Dekodieren des Tokens:', decodeError);
+        return false;
+      }
     } catch (error) {
       console.error('Fehler bei der Authentifizierungsprüfung:', error);
       return false;

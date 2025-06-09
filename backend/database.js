@@ -1,7 +1,9 @@
 
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const DBSOURCE = path.join(__dirname, 'surveys.db'); // Vollständiger Pfad zur Datenbankdatei
+
+// Datenbankpfad aus Umgebungsvariable oder Standardpfad
+const DBSOURCE = process.env.DATABASE_PATH || path.join(__dirname, 'surveys.db');
 
 // Datenbankverbindung mit besseren Timeouts
 const db = new sqlite3.Database(DBSOURCE, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {

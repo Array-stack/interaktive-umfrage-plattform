@@ -53,3 +53,12 @@ Thumbs.db
 *.db
 *.db-shm
 *.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt

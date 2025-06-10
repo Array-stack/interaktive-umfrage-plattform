@@ -23,39 +23,9 @@ const getClientIp = (req) => {
 app.set('trust proxy', true);
 
 // CORS-Konfiguration
+// Vereinfachte CORS-Konfiguration, die explizit die Vercel-Domain erlaubt
 const corsOptions = {
-  origin: (origin, callback) => {
-    // Erlaube Anfragen ohne Origin in der Entwicklung
-    if (!origin && NODE_ENV === 'development') {
-      console.log('CORS: Entwicklungsumgebung - erlaube Anfrage ohne Origin');
-      return callback(null, true);
-    }
-
-    // Erlaubte Ursprünge
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'http://localhost:5174',
-      'https://interaktive-umfrage-plattform.vercel.app',
-      'https://interaktive-umfrage-plattform-git-main-array-stack.vercel.app',
-      'https://interaktive-umfrage-plattform-array-stack.vercel.app',
-      'https://interaktive-umfrage-plattform-production.up.railway.app',
-      'http://localhost:3001'
-    ];
-    
-    // Für Produktion: Erlaube alle Anfragen von der Vercel-Domain
-    if (NODE_ENV === 'production' && origin && origin.includes('vercel.app')) {
-      console.log(`CORS: Erlaube Anfrage von Vercel-Domain: ${origin}`);
-      return callback(null, true);
-    }
-    
-    if (!origin || allowedOrigins.includes(origin)) {
-      console.log(`CORS: Erlaube Anfrage von: ${origin || 'keine Origin'}`);
-      return callback(null, true);
-    }
-    
-    console.warn('CORS: Zugriff verweigert für Herkunft:', origin);
-    return callback(new Error('Nicht erlaubt durch CORS'));
-  },
+  origin: "https://interaktive-umfrage-plattform.vercel.app",
   credentials: true, // Wichtig für Cookies und Authentifizierungs-Header
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
   allowedHeaders: [
@@ -77,6 +47,9 @@ const corsOptions = {
 
 // CORS Middleware
 app.use(cors(corsOptions));
+
+// Alternativ: Direkte CORS-Konfiguration wie vom Nutzer vorgeschlagen
+// app.use(cors({ origin: "https://interaktive-umfrage-plattform.vercel.app" }));
 
 // Body Parser Middleware
 app.use(express.json({ limit: '10mb' }));

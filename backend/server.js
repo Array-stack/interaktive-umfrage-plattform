@@ -2,7 +2,7 @@ const { createServer } = require('http');
 const app = require('./app');
 const db = require('./database');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080; // Standardmäßig Port 8080 für Railway
 
 // Hilfsfunktion zur Datenbankinitialisierung
 async function initDatabase() {
@@ -29,6 +29,7 @@ async function startServer() {
         console.log(`API erreichbar unter ${process.env.APP_URL || 'https://interaktive-umfrage-plattform-backend.up.railway.app'}/api`);
       } else {
         console.log(`API erreichbar unter http://localhost:${PORT}/api`);
+        console.log('Hinweis: Für Railway wird Port 8080 verwendet, wenn keine PORT-Umgebungsvariable gesetzt ist');
       }
     });
     

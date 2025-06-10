@@ -18,13 +18,3 @@ node_modules/
 # Temporäre Dateien
 tmp/
 temp/
-
-# Entwicklungsdateien
-check-db.js
-check-choices.js
-test-db.js
-
-# Datenbankaktualisierungsdateien
-add_*.js
-update_*.js
-*.backup

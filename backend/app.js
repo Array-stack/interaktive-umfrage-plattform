@@ -35,15 +35,17 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:5173',
       'http://localhost:5174',
+      'http://localhost:8080',
       'https://interaktive-umfrage-plattform.vercel.app',
       'https://interaktive-umfrage-plattform-git-main-array-stack.vercel.app',
       'https://interaktive-umfrage-plattform-array-stack.vercel.app',
+      'https://interaktive-umfrage-plattform-production.up.railway.app',
       'http://localhost:3001'
     ];
     
-    // Für Produktion: Erlaube alle Anfragen von der Vercel-Domain
-    if (NODE_ENV === 'production' && origin && origin.includes('vercel.app')) {
-      console.log(`CORS: Erlaube Anfrage von Vercel-Domain: ${origin}`);
+    // Für Produktion: Erlaube alle Anfragen von der Vercel-Domain und Railway-Domain
+    if (NODE_ENV === 'production' && origin && (origin.includes('vercel.app') || origin.includes('railway.app'))) {
+      console.log(`CORS: Erlaube Anfrage von Vercel/Railway-Domain: ${origin}`);
       return callback(null, true);
     }
     

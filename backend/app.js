@@ -22,11 +22,25 @@ const getClientIp = (req) => {
 // Trust Proxy für korrekte IP-Erkennung hinter Proxies
 app.set('trust proxy', true);
 
-// CORS-Konfiguration
-// Vereinfachte CORS-Konfiguration, die explizit die Vercel-Domain erlaubt
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://interaktive-umfrage-plattform.vercel.app',
+  'https://interaktive-umfrage-plattform-git-main-array-stack.vercel.app',
+  'https://interaktive-umfrage-plattform-array-stack.vercel.app',
+  'https://interaktive-umfrage-plattform-production.up.railway.app',
+  'http://localhost:8080'
+];
+
 const corsOptions = {
-  origin: "https://interaktive-umfrage-plattform.vercel.app",
-  credentials: true, // Wichtig für Cookies und Authentifizierungs-Header
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Nicht erlaubter Origin: ' + origin));
+    }
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
   allowedHeaders: [
     'Content-Type', 
@@ -45,15 +59,7 @@ const corsOptions = {
   exposedHeaders: ['Content-Range', 'X-Total-Count']
 };
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'https://interaktive-umfrage-plattform.vercel.app',
-  'https://interaktive-umfrage-plattform-git-main-array-stack.vercel.app',
-  'https://interaktive-umfrage-plattform-array-stack.vercel.app',
-  'https://interaktive-umfrage-plattform-production.up.railway.app', // <-- hinzufügen!
-  'http://localhost:8080'
-];
+app.use(cors(corsOptions));
 
 // CORS Middleware
 app.use(cors(corsOptions));

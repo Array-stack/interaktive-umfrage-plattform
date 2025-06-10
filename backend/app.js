@@ -45,6 +45,16 @@ const corsOptions = {
   exposedHeaders: ['Content-Range', 'X-Total-Count']
 };
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://interaktive-umfrage-plattform.vercel.app',
+  'https://interaktive-umfrage-plattform-git-main-array-stack.vercel.app',
+  'https://interaktive-umfrage-plattform-array-stack.vercel.app',
+  'https://interaktive-umfrage-plattform-production.up.railway.app', // <-- hinzufügen!
+  'http://localhost:8080'
+];
+
 // CORS Middleware
 app.use(cors(corsOptions));
 

@@ -38,6 +38,7 @@ const corsOptions = {
       'https://interaktive-umfrage-plattform.vercel.app',
       'https://interaktive-umfrage-plattform-git-main-array-stack.vercel.app',
       'https://interaktive-umfrage-plattform-array-stack.vercel.app',
+      'https://interaktive-umfrage-plattform-production.up.railway.app',
       'http://localhost:3001'
     ];
     

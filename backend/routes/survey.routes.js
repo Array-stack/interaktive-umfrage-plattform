@@ -11,10 +11,58 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 
 /**
  * @route   GET /api/surveys/recommended
- * @desc    Empfohlene Umfragen abrufen
+ * @desc    Empfohlene Umfragen abrufen (Testversion)
  * @access  Öffentlich
  */
-router.get('/recommended', asyncHandler(async (req, res) => {
+router.get('/recommended', async (req, res) => {
+  console.log('Test-Route /recommended aufgerufen');
+  
+  try {
+    // Testdaten
+    const testSurveys = [
+      {
+        id: 'test1',
+        title: 'Testumfrage 1',
+        description: 'Dies ist eine Testumfrage',
+        isPublic: true,
+        createdAt: new Date().toISOString(),
+        ownerId: 'system',
+        ownerName: 'System',
+        totalQuestions: 3,
+        responseCount: 5
+      },
+      {
+        id: 'test2',
+        title: 'Zweite Testumfrage',
+        description: 'Noch eine Testumfrage',
+        isPublic: true,
+        createdAt: new Date().toISOString(),
+        ownerId: 'system',
+        ownerName: 'System',
+        totalQuestions: 5,
+        responseCount: 2
+      }
+    ];
+    
+    console.log('Sende Testumfragen:', testSurveys);
+    res.json(testSurveys);
+    
+  } catch (error) {
+    console.error('Fehler in /recommended:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Interner Serverfehler',
+      details: error.message 
+    });
+  }
+});
+
+/**
+ * @route   GET /api/surveys
+ * @desc    Alle öffentlichen Umfragen abrufen
+ * @access  Öffentlich
+ */
+router.get('/', asyncHandler(async (req, res) => {
   const userId = req.user?.userId || null;
   const isAuthenticated = !!userId;
   const userRole = req.user?.role || null;

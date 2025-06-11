@@ -903,47 +903,88 @@ export const surveyService = {
   },
   
   /**
-   * Ruft empfohlene Umfragen ab
+   * Ruft empfohlene Umfragen ab mit verbesserter Fehlerbehandlung
    */
   async getRecommendedSurveys(): Promise<any> {
     try {
       const url = `${API_BASE_URL}/surveys/recommended`;
-      console.log('Fetching recommended surveys from:', url);
-      console.log('Using auth headers:', getAuthHeader());
+      console.log('[getRecommendedSurveys] Starte Abfrage an:', url);
       
-      const response = await fetch(url, {
+      const requestOptions = {
         method: 'GET',
-        headers: getAuthHeader(),
-        credentials: 'include'  // Wichtig für Cookies/Headers
-      });
+        headers: {
+          ...getAuthHeader(),
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache'
+        },
+        credentials: 'include' as const
+      };
       
-      console.log('Response status:', response.status);
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+      console.log('[getRecommendedSurveys] Request Options:', JSON.stringify({
+        url,
+        headers: requestOptions.headers,
+        credentials: requestOptions.credentials
+      }, null, 2));
       
-      console.log('Recommended surveys response status:', response.status);
+      const response = await fetch(url, requestOptions);
       
-      // Bei 404 ein leeres Array zurückgeben, aber mit Warnung loggen
-      if (response.status === 404) {
-        console.warn('Recommended surveys endpoint not found (404)');
+      console.log(`[getRecommendedSurveys] Response Status: ${response.status} ${response.statusText}`);
+      
+      // Content-Type überprüfen
+      const contentType = response.headers.get('content-type');
+      const isJson = contentType && contentType.includes('application/json');
+      
+      // Response-Header loggen
+      console.log('[getRecommendedSurveys] Response Headers:', 
+        Object.fromEntries(response.headers.entries()));
+      
+      // Bei 404 oder 501 (Not Implemented) leeres Array zurückgeben
+      if (response.status === 404 || response.status === 501) {
+        console.warn(`[getRecommendedSurveys] Endpoint nicht verfügbar (${response.status})`);
         return [];
       }
       
-      // Bei anderen Fehlern den Fehler werfen
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Error fetching recommended surveys:', response.status, errorData);
-        throw new Error(
-          errorData.message || 
-          errorData.error || 
-          `HTTP-Fehler ${response.status}: ${response.statusText}`
-        );
+      // Bei nicht-JSON Antwort
+      if (!isJson) {
+        const responseText = await response.text();
+        console.error('[getRecommendedSurveys] Ungültiges Antwortformat. Erwartet: JSON, Erhalten:', {
+          status: response.status,
+          statusText: response.statusText,
+          contentType,
+          responsePreview: responseText.substring(0, 200) // Erste 200 Zeichen der Antwort
+        });
+        return [];
       }
       
-      const data = await response.json();
-      console.log('Recommended surveys data:', data);
-      return data;
+      // JSON-Antwort verarbeiten
+      const responseData = await response.json().catch(error => {
+        console.error('[getRecommendedSurveys] Fehler beim Parsen der JSON-Antwort:', error);
+        throw new Error('Ungültiges JSON-Format in der Antwort');
+      });
+      
+      // Bei HTTP-Fehlern
+      if (!response.ok) {
+        console.error('[getRecommendedSurveys] API-Fehler:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: responseData
+        });
+        return [];
+      }
+      
+      console.log('[getRecommendedSurveys] Erfolgreich abgerufen:', {
+        count: Array.isArray(responseData) ? responseData.length : 'unbekannt',
+        data: Array.isArray(responseData) ? responseData.slice(0, 3) : responseData
+      });
+      
+      return responseData || [];
+      
     } catch (error) {
-      console.error('Fehler beim Abrufen empfohlener Umfragen:', error);
+      console.error('[getRecommendedSurveys] Kritischer Fehler:', {
+        error: error instanceof Error ? error.message : 'Unbekannter Fehler',
+        stack: error instanceof Error ? error.stack : undefined,
+        timestamp: new Date().toISOString()
+      });
       return [];
     }
   },

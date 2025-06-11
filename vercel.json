@@ -3,7 +3,7 @@
   "rewrites": [
     { 
       "source": "/api/:path*", 
-      "destination": "https://interaktive-umfrage-plattform-backend.up.railway.app/api/:path*" 
+      "destination": "https://interaktive-umfrage-plattform-nechts.up.railway.app/api/:path*" 
     }
   ],
   "builds": [
@@ -15,7 +15,7 @@
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/api/(.*)", "dest": "https://interaktive-umfrage-plattform-backend.up.railway.app/api/$1" },
+    { "src": "/api/(.*)", "dest": "https://interaktive-umfrage-plattform-nechts.up.railway.app/api/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ],
   "headers": [
@@ -31,7 +31,7 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { 
           "key": "Content-Security-Policy", 
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://interaktive-umfrage-plattform-backend.up.railway.app" 
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://interaktive-umfrage-plattform-nechts.up.railway.app" 
         }
       ]
     }

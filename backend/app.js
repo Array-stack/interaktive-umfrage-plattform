@@ -32,8 +32,7 @@ const allowedOrigins = [
   'http://localhost:5174',
   'http://localhost:8080',
   'https://interaktive-umfrage-plattform.vercel.app',
-  'https://interaktive-umfrage-plattform-backend.up.railway.app',
-  'https://interaktive-umfrage-plattform-production.up.railway.app'
+  'https://interaktive-umfrage-plattform-nechts.up.railway.app'
 ];
 
 // Erweiterte CORS-Konfiguration

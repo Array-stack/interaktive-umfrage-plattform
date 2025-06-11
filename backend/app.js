@@ -30,35 +30,51 @@ app.set('trust proxy', true);
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
+  'http://localhost:8080',
   'https://interaktive-umfrage-plattform.vercel.app',
   'https://interaktive-umfrage-plattform-git-main-array-stack.vercel.app',
   'https://interaktive-umfrage-plattform-array-stack.vercel.app',
   'https://interaktive-umfrage-plattform-production.up.railway.app', // Railway Frontend
-  'http://localhost:8080'
+  'https://interaktive-umfrage-plattform-backend.up.railway.app' // Railway Backend
 ];
+
+// Aktiviere CORS für Preflight-Requests
+app.options('*', cors());
 
 const corsOptions = {
   origin: function(origin, callback) {
     // allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
+    
+    // Logging für Debugging
+    console.log('Incoming origin:', origin);
+    
+    // Prüfe auf Übereinstimmung mit erlaubten Origins
+    if (allowedOrigins.some(allowedOrigin => 
+      origin === allowedOrigin || 
+      origin.startsWith(allowedOrigin.replace('https://', 'http://'))
+    )) {
       return callback(null, true);
-    } else {
-      return callback(new Error('Nicht erlaubte Origin: ' + origin), false);
     }
+    
+    console.warn('Blocked by CORS:', origin);
+    return callback(new Error('Nicht erlaubte Origin: ' + origin), false);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
   allowedHeaders: [
-    'Content-Type', 
-    'Authorization', 
+    'Content-Type',
+    'Authorization',
     'X-Requested-With',
     'Accept',
     'Origin',
+    'Access-Control-Allow-Origin',
     'Access-Control-Allow-Headers',
     'Access-Control-Request-Method',
     'Access-Control-Request-Headers',
     'X-CSRF-Token',
+    'X-Requested-With',
+    'X-HTTP-Method-Override',
     'Cache-Control',
     'Pragma',
     'Expires'

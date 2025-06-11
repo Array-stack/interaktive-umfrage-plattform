@@ -1,4 +1,8 @@
-require('dotenv').config();
+// Lade Umgebungsvariablen basierend auf der aktuellen Umgebung
+const envPath = process.env.NODE_ENV === 'production' 
+  ? './.env.production' 
+  : '.env';
+require('dotenv').config({ path: envPath });
 const express = require('express');
 const cors = require('cors');
 const path = require('path');

@@ -18,3 +18,7 @@ node_modules/
 # Temporäre Dateien
 tmp/
 temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3

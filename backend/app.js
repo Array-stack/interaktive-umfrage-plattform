@@ -32,7 +32,6 @@ const allowedOrigins = [
   'http://localhost:5174',
   'http://localhost:8080',
   'https://interaktive-umfrage-plattform.vercel.app',
-  'https://interaktive-umfrage-plat-git-1fbe17-tournoishop7-8596s-projects.vercel.app',
   'https://interaktive-umfrage-plattform-backend.up.railway.app',
   'https://interaktive-umfrage-plattform-production.up.railway.app'
 ];
@@ -48,7 +47,7 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    // Erlaube alle Vercel Preview-URLs und Railway-URLs
+    // Erlaube alle Vercel und Railway Subdomains
     const allowedPatterns = [
       /^https?:\/\/localhost(:\d+)?$/,
       /^https?:\/\/.*\.vercel\.app$/,
@@ -65,17 +64,40 @@ const corsOptions = {
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  exposedHeaders: ['Content-Range', 'X-Total-Count'],
-  optionsSuccessStatus: 200
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With', 
+    'Accept', 
+    'Origin',
+    'Access-Control-Allow-Origin'
+  ],
+  exposedHeaders: [
+    'Content-Range', 
+    'X-Total-Count',
+    'Access-Control-Allow-Origin',
+    'Access-Control-Allow-Credentials'
+  ],
+  optionsSuccessStatus: 200,
+  preflightContinue: false
 };
 
 // CORS für alle Routen aktivieren
 app.use(cors(corsOptions));
 
-// Preflight für alle Routen erlauben
+// Preflight für alle Routen explizit erlauben
 app.options('*', cors(corsOptions));
+
+// Manuelle CORS-Header für alle Antworten
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin) || /^https?:\/\/.*\.railway\.app$/.test(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  }
+  next();
+});
 // ======================================
 
 // Body Parser Middleware

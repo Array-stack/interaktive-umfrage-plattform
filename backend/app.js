@@ -28,58 +28,53 @@ app.set('trust proxy', true);
 
 // ======== CORS-Konfiguration =========
 const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'http://localhost:8080',
   'https://interaktive-umfrage-plattform.vercel.app',
+  'http://localhost:3000',
   'https://interaktive-umfrage-plattform-nechts.up.railway.app'
 ];
 
-// Erweiterte CORS-Konfiguration
+// CORS-Konfiguration
 const corsOptions = {
   origin: function (origin, callback) {
-    // Erlaube fehlenden Ursprung (z.B. bei nicht-Browser-Anfragen)
-    if (!origin) return callback(null, true);
+    // Erlaube alle Anfragen ohne Origin-Header (z.B. cURL, Postman)
+    if (!origin) {
+      console.log('No origin header - allowing request');
+      return callback(null, true);
+    }
+    
+    // Debug-Ausgabe
+    console.log('Incoming request from origin:', origin);
     
     // Erlaube explizit aufgeführte Domains
-    if (allowedOrigins.includes(origin)) {
+    if (allowedOrigins.some(allowed => 
+      origin.toLowerCase() === allowed.toLowerCase()
+    )) {
+      console.log('Origin allowed by whitelist:', origin);
       return callback(null, true);
     }
-
-    // Erlaube alle Vercel und Railway Subdomains
-    const allowedPatterns = [
-      /^https?:\/\/localhost(:\d+)?$/,
-      /^https?:\/\/.*\.vercel\.app$/,
-      /^https?:\/\/.*-tournoishop7-[\w-]+\.vercel\.app$/,
-      /^https?:\/\/.*\.railway\.app$/
-    ];
-
-    if (allowedPatterns.some(pattern => pattern.test(origin))) {
-      console.log('Allowed origin by pattern:', origin);
+    
+    // Erlaube lokale Entwicklung
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Allowing all origins in development');
       return callback(null, true);
     }
-
-    console.warn('Blocked by CORS:', origin);
+    
+    // Blockiere nicht erlaubte Domains
+    console.log('Origin not allowed:', origin);
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
     'Content-Type', 
     'Authorization', 
     'X-Requested-With', 
-    'Accept', 
-    'Origin',
-    'Access-Control-Allow-Origin'
+    'Accept'
   ],
-  exposedHeaders: [
-    'Content-Range', 
-    'X-Total-Count',
-    'Access-Control-Allow-Origin',
-    'Access-Control-Allow-Credentials'
-  ],
-  optionsSuccessStatus: 200,
-  preflightContinue: false
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  maxAge: 86400, // 24 Stunden
+  preflightContinue: false,
+  optionsSuccessStatus: 200
 };
 
 // CORS für alle Routen aktivieren
@@ -102,6 +97,33 @@ app.use((req, res, next) => {
 // Body Parser Middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Response Header Middleware
+app.use((req, res, next) => {
+  // Setze Standard-Header für alle Antworten
+  res.setHeader('Content-Type', 'application/json');
+  
+  // CORS-Header
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  // Security Headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  
+  // Preflight Request Handling
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  next();
+});
 
 // Request Logging
 app.use((req, res, next) => {

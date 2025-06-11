@@ -32,32 +32,32 @@ const allowedOrigins = [
   'http://localhost:5174',
   'http://localhost:8080',
   'https://interaktive-umfrage-plattform.vercel.app',
-  'https://interaktive-umfrage-plattform-git-main-array-stack.vercel.app',
-  'https://interaktive-umfrage-plattform-array-stack.vercel.app',
-  'https://interaktive-umfrage-plattform-production.up.railway.app',
-  'https://interaktive-umfrage-plattform-backend.up.railway.app'
+  'https://interaktive-umfrage-plat-git-1fbe17-tournoishop7-8596s-projects.vercel.app',
+  'https://interaktive-umfrage-plattform-backend.up.railway.app',
+  'https://interaktive-umfrage-plattform-production.up.railway.app'
 ];
 
-// Einfache CORS-Konfiguration
+// Erweiterte CORS-Konfiguration
 const corsOptions = {
   origin: function (origin, callback) {
-    // Erlaube alle Subdomains von vercel.app und railway.app
-    const allowedPatterns = [
-      /^https?:\/\/localhost(:\d+)?$/,
-      /^https?:\/\/.*\.vercel\.app$/,
-      /^https?:\/\/.*\.railway\.app$/
-    ];
-
     // Erlaube fehlenden Ursprung (z.B. bei nicht-Browser-Anfragen)
     if (!origin) return callback(null, true);
-
+    
     // Erlaube explizit aufgeführte Domains
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
-    // Prüfe Muster
+    // Erlaube alle Vercel Preview-URLs und Railway-URLs
+    const allowedPatterns = [
+      /^https?:\/\/localhost(:\d+)?$/,
+      /^https?:\/\/.*\.vercel\.app$/,
+      /^https?:\/\/.*-tournoishop7-[\w-]+\.vercel\.app$/,
+      /^https?:\/\/.*\.railway\.app$/
+    ];
+
     if (allowedPatterns.some(pattern => pattern.test(origin))) {
+      console.log('Allowed origin by pattern:', origin);
       return callback(null, true);
     }
 
@@ -65,10 +65,10 @@ const corsOptions = {
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
   exposedHeaders: ['Content-Range', 'X-Total-Count'],
-  optionsSuccessStatus: 200 // Einige ältere Browser benötigen dies
+  optionsSuccessStatus: 200
 };
 
 // CORS für alle Routen aktivieren

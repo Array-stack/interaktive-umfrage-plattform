@@ -40,7 +40,9 @@ export interface StudentSurvey extends Omit<Survey, 'questions'> {
 
 // Konstanten
 const RESPONDENT_ID_LOCALSTORAGE_KEY = 'current_survey_respondent_id';
-const API_BASE_URL = process.env.API_BASE_URL || '/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+
+console.log('Using API_BASE_URL:', API_BASE_URL);
 
 /**
  * Verarbeitet API-Antworten und wirft Fehler bei HTTP-Fehlern

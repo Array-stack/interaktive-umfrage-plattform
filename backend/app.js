@@ -124,7 +124,7 @@ app.use('/api', apiRoutes);
 if (process.env.NODE_ENV === 'production') {
   const buildPath = path.join(__dirname, '../dist');
   
-  // Statische Assets
+  // Statische Dateien mit korrekten Headern
   app.use(express.static(buildPath, {
     setHeaders: (res, path) => {
       if (path.endsWith('.js')) {
@@ -132,13 +132,18 @@ if (process.env.NODE_ENV === 'production') {
       } else if (path.endsWith('.css')) {
         res.setHeader('Content-Type', 'text/css');
       }
-      res.setHeader('Cache-Control', 'public, max-age=31536000');
+      // Kein Caching für HTML
+      if (path.endsWith('.html')) {
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      } else {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      }
     }
   }));
-  
+
   // SPA Fallback - muss nach allen Routen kommen
-  app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api/')) {
+  app.get('*', (req, res, next) => {
+    if (!req.path.startsWith('/api')) {
       return res.sendFile(path.join(buildPath, 'index.html'));
     }
     next();

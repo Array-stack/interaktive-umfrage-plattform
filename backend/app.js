@@ -100,17 +100,24 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Response Header Middleware
 app.use((req, res, next) => {
+  // Cache-Control Header setzen
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  
   // Setze Standard-Header für alle Antworten
   res.setHeader('Content-Type', 'application/json');
   
   // CORS-Header
   const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
+  if (origin && allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Max-Age', '0'); // Für Entwicklung
   
   // Security Headers
   res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -119,7 +126,7 @@ app.use((req, res, next) => {
   
   // Preflight Request Handling
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(204).end();
   }
   
   next();

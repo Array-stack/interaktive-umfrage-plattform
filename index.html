@@ -30,6 +30,22 @@
     
     <div id="root" class="min-h-screen flex flex-col"></div>
     
+    <!-- Vite HMR Client -->
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Fallback für Produktion -->
+    <script type="module">
+      // Dynamisches Laden des Einstiegspunkts
+      import('/src/main.tsx').catch(err => {
+        console.error('Fehler beim Laden des Moduls:', err);
+        // Versuche es mit absolutem Pfad
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = '/src/main.tsx';
+        document.body.appendChild(script);
+      });
+    </script>
+    
     <!-- Import Map für ESM-Module -->
     <script type="importmap">
       {
@@ -42,7 +58,17 @@
         }
       }
     </script>
-    
+    <script type="module">
+      // Dynamisches Laden des Einstiegspunkts
+      import('/src/main.tsx').catch(err => {
+        console.error('Fehler beim Laden des Moduls:', err);
+        // Versuche es mit absolutem Pfad
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = '/src/main.tsx';
+        document.body.appendChild(script);
+      });
+    </script>
     <!-- Hauptanwendungsskript -->
     <script type="module" src="/src/main.tsx"></script>
   </body>

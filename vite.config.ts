@@ -1,10 +1,19 @@
 import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, '.', '');
+  const isProduction = mode === 'production';
+  
   return {
-    base: process.env.NODE_ENV === 'production' ? './' : '/',  // Relativer Pfad für Produktion
+    base: isProduction ? '/' : '/',  // Absoluter Pfad für Produktion
+    define: {
+      'import.meta.env.PROD': isProduction,
+      'import.meta.env.VITE_API_BASE_URL': JSON.stringify(
+        isProduction 
+          ? 'https://interaktive-umfrage-plattform-nechts.up.railway.app/api'
+          : 'http://localhost:3001/api'
+      )
+    },
     build: {
       rollupOptions: {
         output: {
@@ -15,13 +24,6 @@ export default defineConfig(({ mode }) => {
         }
       },
       chunkSizeWarningLimit: 1000 // Erhöht das Warnlimit auf 1MB
-    },
-    define: {
-      'import.meta.env.VITE_API_BASE_URL': JSON.stringify(
-        mode === 'development'
-          ? 'http://localhost:3001/api'
-          : env.VITE_API_BASE_URL || 'https://interaktive-umfrage-plattform-nechts.up.railway.app/api'
-      )
     },
     resolve: {
       alias: {

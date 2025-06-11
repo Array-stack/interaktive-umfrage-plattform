@@ -147,7 +147,7 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Server starten
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3001; // 3001 ist nur der Fallback für lokale Entwicklung
 const server = app.listen(PORT, () => {
   console.log(`Server läuft auf Port ${PORT} in ${process.env.NODE_ENV || 'development'} Mode`);  
   console.log(`Datenbankpfad: ${process.env.DATABASE_PATH || 'Standardpfad wird verwendet'}`);

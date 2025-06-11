@@ -124,4 +124,20 @@ app.use(notFoundHandler);
 // Globaler Fehlerhandler
 app.use(errorHandler);
 
+// Server starten
+const PORT = process.env.PORT || 8080;
+const server = app.listen(PORT, () => {
+  console.log(`Server läuft auf Port ${PORT} in ${process.env.NODE_ENV || 'development'} Mode`);  
+  console.log(`Datenbankpfad: ${process.env.DATABASE_PATH || 'Standardpfad wird verwendet'}`);
+});
+
+// Graceful Shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM empfangen. Server wird heruntergefahren...');
+  server.close(() => {
+    console.log('Server heruntergefahren');
+    process.exit(0);
+  });
+});
+
 module.exports = app;

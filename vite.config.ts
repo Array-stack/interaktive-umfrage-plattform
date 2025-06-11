@@ -4,7 +4,7 @@ import { defineConfig, loadEnv } from 'vite';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
-    base: '/',  // Wichtig für korrekte Pfade im Build
+    base: process.env.NODE_ENV === 'production' ? './' : '/',  // Relativer Pfad für Produktion
     build: {
       rollupOptions: {
         output: {

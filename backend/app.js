@@ -160,11 +160,25 @@ app.use('/api', apiRoutes);
 // Statische Dateien für Produktion
 if (process.env.NODE_ENV === 'production') {
   const buildPath = path.join(__dirname, '../dist');
-  app.use(express.static(buildPath));
   
-  // Client-Side Routing
+  // Statische Assets
+  app.use(express.static(buildPath, {
+    setHeaders: (res, path) => {
+      if (path.endsWith('.js')) {
+        res.setHeader('Content-Type', 'application/javascript');
+      } else if (path.endsWith('.css')) {
+        res.setHeader('Content-Type', 'text/css');
+      }
+      res.setHeader('Cache-Control', 'public, max-age=31536000');
+    }
+  }));
+  
+  // SPA Fallback - muss nach allen Routen kommen
   app.get('*', (req, res) => {
-    res.sendFile(path.join(buildPath, 'index.html'));
+    if (!req.path.startsWith('/api/')) {
+      return res.sendFile(path.join(buildPath, 'index.html'));
+    }
+    next();
   });
 }
 

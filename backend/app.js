@@ -34,55 +34,48 @@ const allowedOrigins = [
   'https://interaktive-umfrage-plattform.vercel.app',
   'https://interaktive-umfrage-plattform-git-main-array-stack.vercel.app',
   'https://interaktive-umfrage-plattform-array-stack.vercel.app',
-  'https://interaktive-umfrage-plattform-production.up.railway.app', // Railway Frontend
-  'https://interaktive-umfrage-plattform-backend.up.railway.app' // Railway Backend
+  'https://interaktive-umfrage-plattform-production.up.railway.app',
+  'https://interaktive-umfrage-plattform-backend.up.railway.app'
 ];
 
-// Aktiviere CORS für Preflight-Requests
-app.options('*', cors());
-
+// Einfache CORS-Konfiguration
 const corsOptions = {
-  origin: function(origin, callback) {
-    // allow requests with no origin (like mobile apps or curl)
+  origin: function (origin, callback) {
+    // Erlaube alle Subdomains von vercel.app und railway.app
+    const allowedPatterns = [
+      /^https?:\/\/localhost(:\d+)?$/,
+      /^https?:\/\/.*\.vercel\.app$/,
+      /^https?:\/\/.*\.railway\.app$/
+    ];
+
+    // Erlaube fehlenden Ursprung (z.B. bei nicht-Browser-Anfragen)
     if (!origin) return callback(null, true);
-    
-    // Logging für Debugging
-    console.log('Incoming origin:', origin);
-    
-    // Prüfe auf Übereinstimmung mit erlaubten Origins
-    if (allowedOrigins.some(allowedOrigin => 
-      origin === allowedOrigin || 
-      origin.startsWith(allowedOrigin.replace('https://', 'http://'))
-    )) {
+
+    // Erlaube explizit aufgeführte Domains
+    if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
-    
+
+    // Prüfe Muster
+    if (allowedPatterns.some(pattern => pattern.test(origin))) {
+      return callback(null, true);
+    }
+
     console.warn('Blocked by CORS:', origin);
-    return callback(new Error('Nicht erlaubte Origin: ' + origin), false);
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
-  allowedHeaders: [
-    'Content-Type',
-    'Authorization',
-    'X-Requested-With',
-    'Accept',
-    'Origin',
-    'Access-Control-Allow-Origin',
-    'Access-Control-Allow-Headers',
-    'Access-Control-Request-Method',
-    'Access-Control-Request-Headers',
-    'X-CSRF-Token',
-    'X-Requested-With',
-    'X-HTTP-Method-Override',
-    'Cache-Control',
-    'Pragma',
-    'Expires'
-  ],
-  exposedHeaders: ['Content-Range', 'X-Total-Count']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  exposedHeaders: ['Content-Range', 'X-Total-Count'],
+  optionsSuccessStatus: 200 // Einige ältere Browser benötigen dies
 };
 
+// CORS für alle Routen aktivieren
 app.use(cors(corsOptions));
+
+// Preflight für alle Routen erlauben
+app.options('*', cors(corsOptions));
 // ======================================
 
 // Body Parser Middleware

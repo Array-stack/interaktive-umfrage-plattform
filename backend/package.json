@@ -1,15 +1,22 @@
 {
-  "name": "backend",
+  "name": "umfrage-plattform-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "database.js",
+  "description": "Backend für die Interaktive Umfrage Plattform",
+  "main": "server.js",
+  "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "dev": "nodemon server.js",
+    "migrate": "node database.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["umfrage", "survey", "backend", "nodejs"],
+  "author": "Ihr Name",
   "license": "ISC",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
   "dependencies": {
     "async": "^3.2.6",
     "bcrypt": "^5.1.1",
@@ -19,5 +26,8 @@
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.9",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-      'process.env.API_BASE_URL': JSON.stringify(env.API_BASE_URL || 'https://interaktive-umfrage-plattform-backend.up.railway.app/api')
+      'import.meta.env.VITE_API_BASE_URL': JSON.stringify(env.VITE_API_BASE_URL || '/api')
     },
     resolve: {
       alias: {

@@ -27,55 +27,18 @@ const getClientIp = (req) => {
 app.set('trust proxy', true);
 
 // ======== CORS-Konfiguration =========
-const allowedOrigins = [
-  'https://interaktive-umfrage-plattform.vercel.app',
-  'http://localhost:3000',
-  'https://interaktive-umfrage-plattform-nechts.up.railway.app'
-];
-
-// CORS-Konfiguration
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Erlaube alle Anfragen ohne Origin-Header (z.B. cURL, Postman)
-    if (!origin) {
-      console.log('No origin header - allowing request');
-      return callback(null, true);
-    }
-    
-    // Debug-Ausgabe
-    console.log('Incoming request from origin:', origin);
-    
-    // Erlaube explizit aufgeführte Domains
-    if (allowedOrigins.some(allowed => 
-      origin.toLowerCase() === allowed.toLowerCase()
-    )) {
-      console.log('Origin allowed by whitelist:', origin);
-      return callback(null, true);
-    }
-    
-    // Erlaube lokale Entwicklung
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Allowing all origins in development');
-      return callback(null, true);
-    }
-    
-    // Blockiere nicht erlaubte Domains
-    console.log('Origin not allowed:', origin);
-    callback(new Error('Not allowed by CORS'));
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: [
-    'Content-Type', 
-    'Authorization', 
-    'X-Requested-With', 
-    'Accept'
+app.use(cors({
+  origin: [
+    'https://interaktive-umfrage-plattform.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3001',
+    'https://interaktive-umfrage-plattform-nechts.up.railway.app'
   ],
-  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
-  maxAge: 86400, // 24 Stunden
-  preflightContinue: false,
-  optionsSuccessStatus: 200
-};
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  maxAge: 86400
+}));
 
 // CORS für alle Routen aktivieren
 app.use(cors(corsOptions));

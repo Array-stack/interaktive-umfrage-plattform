@@ -67,25 +67,30 @@ async function handleApiResponse<T>(response: Response): Promise<T> {
  */
 function getAuthHeader(): HeadersInit {
   const headers: HeadersInit = {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   };
   
+  // Nur im Browser ausführen
+  if (typeof window === 'undefined') {
+    return headers;
+  }
+
   try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const token = localStorage.getItem('auth_token') || '';
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-        // Nur die ersten 10 Zeichen des Tokens für Debugging-Zwecke anzeigen
-        const tokenPreview = token.substring(0, 10) + '...';
-        console.log(`Auth-Token gefunden (Vorschau: ${tokenPreview})`);
-      } else {
-        console.warn('Kein Auth-Token im localStorage gefunden');
-      }
+    // Prüfe verschiedene mögliche Token-Speicherorte
+    const token = localStorage.getItem('auth_token') || 
+                 localStorage.getItem('token') || 
+                 '';
+    
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+      // Debug-Ausgabe (nur die ersten 5 Zeichen des Tokens)
+      console.log('Using auth token:', token.substring(0, 5) + '...');
     } else {
-      console.warn('localStorage ist nicht verfügbar');
+      console.warn('No auth token found in localStorage');
     }
   } catch (error) {
-    console.error('Fehler beim Lesen des Auth-Tokens:', error);
+    console.error('Error reading auth token:', error);
   }
   
   return headers;
@@ -902,11 +907,18 @@ export const surveyService = {
    */
   async getRecommendedSurveys(): Promise<any> {
     try {
-      console.log('Fetching recommended surveys from:', `${API_BASE_URL}/surveys/recommended`);
-      const response = await fetch(`${API_BASE_URL}/surveys/recommended`, {
+      const url = `${API_BASE_URL}/surveys/recommended`;
+      console.log('Fetching recommended surveys from:', url);
+      console.log('Using auth headers:', getAuthHeader());
+      
+      const response = await fetch(url, {
         method: 'GET',
-        headers: getAuthHeader()
+        headers: getAuthHeader(),
+        credentials: 'include'  // Wichtig für Cookies/Headers
       });
+      
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
       
       console.log('Recommended surveys response status:', response.status);
       

@@ -2,12 +2,11 @@ const { createServer } = require('http');
 const app = require('./app');
 const db = require('./database');
 
-const PORT = process.env.PORT || 8080; // Standardmäßig Port 8080 für Railway
+const PORT = process.env.PORT || 8080;
+const HOST = process.env.HOST || '0.0.0.0'; // Für IPv4-kompatiblen Fallback
 
-// Hilfsfunktion zur Datenbankinitialisierung
 async function initDatabase() {
   return new Promise((resolve, reject) => {
-    // Hier kommen Ihre Datenbankinitialisierungsroutinen
     console.log('Datenbankinitialisierung abgeschlossen');
     resolve();
   });
@@ -18,21 +17,20 @@ async function startServer() {
   try {
     // Datenbank initialisieren
     await initDatabase();
-    
-    // HTTP-Server erstellen
+
+    // HTTP-Server erstellen und starten
     const server = createServer(app);
-    
-    // Server starten
-    server.listen(PORT, () => {
-      console.log(`Server läuft auf Port ${PORT} (${process.env.NODE_ENV || 'development'})`);
+
+    server.listen(PORT, HOST, () => {
+      console.log(`Server läuft auf http://${HOST}:${PORT} (${process.env.NODE_ENV || 'development'})`);
       if (process.env.NODE_ENV === 'production') {
         console.log(`API erreichbar unter ${process.env.APP_URL || 'https://interaktive-umfrage-plattform-backend.up.railway.app'}/api`);
       } else {
-        console.log(`API erreichbar unter http://localhost:${PORT}/api`);
+        console.log(`API erreichbar unter http://${HOST}:${PORT}/api`);
         console.log('Hinweis: Für Railway wird Port 8080 verwendet, wenn keine PORT-Umgebungsvariable gesetzt ist');
       }
     });
-    
+
     return server;
   } catch (error) {
     console.error('Fehler beim Starten des Servers:', error);
@@ -40,7 +38,6 @@ async function startServer() {
   }
 }
 
-// Server starten, wenn diese Datei direkt ausgeführt wird
 if (require.main === module) {
   startServer().catch(error => {
     console.error('Kritischer Fehler:', error);
@@ -48,5 +45,4 @@ if (require.main === module) {
   });
 }
 
-// Für Tests
 module.exports = { startServer };

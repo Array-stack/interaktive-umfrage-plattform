@@ -27,12 +27,60 @@ const getClientIp = (req) => {
 app.set('trust proxy', true);
 
 // ======== CORS-Konfiguration =========
+<<<<<<< HEAD
 app.use(cors({
   origin: [
     'https://interaktive-umfrage-plattform.vercel.app',
     'http://localhost:5173',
     'http://localhost:3001',
     'https://interaktive-umfrage-plattform-nechts.up.railway.app'
+=======
+const allowedOrigins = [
+  'https://interaktive-umfrage-plattform.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3001',
+  'https://interaktive-umfrage-plattform-nechts.up.railway.app',
+];
+
+// CORS-Konfiguration
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Erlaube alle Anfragen ohne Origin-Header (z.B. cURL, Postman)
+    if (!origin) {
+      console.log('No origin header - allowing request');
+      return callback(null, true);
+    }
+    
+    // Debug-Ausgabe
+    console.log('Incoming request from origin:', origin);
+    
+    // Erlaube explizit aufgeführte Domains
+    if (allowedOrigins.some(allowed => 
+      origin.toLowerCase() === allowed.toLowerCase()
+    )) {
+      console.log('Origin allowed by whitelist:', origin);
+      return callback(null, true);
+    }
+    
+    // Erlaube lokale Entwicklung
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Allowing all origins in development');
+      return callback(null, true);
+    }
+    
+    // Blockiere nicht erlaubte Domains
+    console.log('Origin not allowed:', origin);
+    callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With', 
+    'Accept'
+>>>>>>> temp-fix-branch
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

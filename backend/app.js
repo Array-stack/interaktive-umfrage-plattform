@@ -27,14 +27,6 @@ const getClientIp = (req) => {
 app.set('trust proxy', true);
 
 // ======== CORS-Konfiguration =========
-<<<<<<< HEAD
-app.use(cors({
-  origin: [
-    'https://interaktive-umfrage-plattform.vercel.app',
-    'http://localhost:5173',
-    'http://localhost:3001',
-    'https://interaktive-umfrage-plattform-nechts.up.railway.app'
-=======
 const allowedOrigins = [
   'https://interaktive-umfrage-plattform.vercel.app',
   'http://localhost:5173',
@@ -80,13 +72,12 @@ const corsOptions = {
     'Authorization', 
     'X-Requested-With', 
     'Accept'
->>>>>>> temp-fix-branch
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  maxAge: 86400
-}));
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  maxAge: 86400, // 24 Stunden
+  preflightContinue: false,
+  optionsSuccessStatus: 200
+};
 
 // CORS für alle Routen aktivieren
 app.use(cors(corsOptions));
@@ -111,24 +102,17 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Response Header Middleware
 app.use((req, res, next) => {
-  // Cache-Control Header setzen
-  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '0');
-  res.setHeader('Surrogate-Control', 'no-store');
-  
   // Setze Standard-Header für alle Antworten
   res.setHeader('Content-Type', 'application/json');
   
   // CORS-Header
   const origin = req.headers.origin;
-  if (origin && allowedOrigins.includes(origin)) {
+  if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Max-Age', '0'); // Für Entwicklung
   
   // Security Headers
   res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -137,7 +121,7 @@ app.use((req, res, next) => {
   
   // Preflight Request Handling
   if (req.method === 'OPTIONS') {
-    return res.status(204).end();
+    return res.status(200).end();
   }
   
   next();
@@ -171,30 +155,11 @@ app.use('/api', apiRoutes);
 // Statische Dateien für Produktion
 if (process.env.NODE_ENV === 'production') {
   const buildPath = path.join(__dirname, '../dist');
+  app.use(express.static(buildPath));
   
-  // Statische Dateien mit korrekten Headern
-  app.use(express.static(buildPath, {
-    setHeaders: (res, path) => {
-      if (path.endsWith('.js')) {
-        res.setHeader('Content-Type', 'application/javascript');
-      } else if (path.endsWith('.css')) {
-        res.setHeader('Content-Type', 'text/css');
-      }
-      // Kein Caching für HTML
-      if (path.endsWith('.html')) {
-        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-      } else {
-        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-      }
-    }
-  }));
-
-  // SPA Fallback - muss nach allen Routen kommen
-  app.get('*', (req, res, next) => {
-    if (!req.path.startsWith('/api')) {
-      return res.sendFile(path.join(buildPath, 'index.html'));
-    }
-    next();
+  // Client-Side Routing
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
   });
 }
 

@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
       'import.meta.env.VITE_API_BASE_URL': JSON.stringify(
         mode === 'development'
-          ? 'http://localhost:3001/api'
+          ? 'http://localhost:8080/api'
           : env.VITE_API_BASE_URL || 'https://interaktive-umfrage-plattform-nechts.up.railway.app/api'
       )
     },
@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => {
       // Proxy-Konfiguration für die Entwicklung beibehalten
       proxy: {
         '/api': {
-          target: 'http://localhost:3001',
+          target: 'http://localhost:8080',
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path

@@ -14,38 +14,122 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
  * @desc    Empfohlene Umfragen abrufen (Testversion)
  * @access  Öffentlich
  */
-router.get('/recommended', async (req, res) => {
-  console.log('Test-Route /recommended aufgerufen');
+router.get('/recommended', asyncHandler(async (req, res) => {
+  // authenticateToken erlaubt diese Route als öffentlich (siehe authUtils.js)
+  const userId = req.user?.userId;
+  const userRole = req.user?.role;
+  console.log('Route /recommended aufgerufen');
   
   try {
-    // Testdaten
-    const testSurveys = [
-      {
-        id: 'test1',
-        title: 'Testumfrage 1',
-        description: 'Dies ist eine Testumfrage',
-        isPublic: true,
-        createdAt: new Date().toISOString(),
-        ownerId: 'system',
-        ownerName: 'System',
-        totalQuestions: 3,
-        responseCount: 5
-      },
-      {
-        id: 'test2',
-        title: 'Zweite Testumfrage',
-        description: 'Noch eine Testumfrage',
-        isPublic: true,
-        createdAt: new Date().toISOString(),
-        ownerId: 'system',
-        ownerName: 'System',
-        totalQuestions: 5,
-        responseCount: 2
-      }
-    ];
+    // Wenn kein Benutzer angemeldet ist, geben wir beliebte öffentliche Umfragen zurück
+    if (!userId) {
+      console.log('Kein Benutzer angemeldet, sende beliebte öffentliche Umfragen');
+      const publicSurveys = await new Promise((resolve, reject) => {
+        db.all(
+          `SELECT s.id, s.title, s.description, s.ownerId, s.createdAt, s.isPublic, s.access_type,
+                  u.name as ownerName, COUNT(DISTINCT q.id) as totalQuestions,
+                  COUNT(DISTINCT r.id) as responseCount
+           FROM surveys s
+           LEFT JOIN users u ON s.ownerId = u.id
+           LEFT JOIN questions q ON s.id = q.survey_id
+           LEFT JOIN responses r ON s.id = r.survey_id
+           WHERE s.isPublic = 1 OR s.access_type = 'public'
+           GROUP BY s.id
+           ORDER BY responseCount DESC, s.createdAt DESC
+           LIMIT 10`,
+          [],
+          (err, rows) => err ? reject(err) : resolve(rows || [])
+        );
+      });
+      return res.json(publicSurveys);
+    }
     
-    console.log('Sende Testumfragen:', testSurveys);
-    res.json(testSurveys);
+    // Für angemeldete Benutzer: Empfehlungen basierend auf bisherigen Antworten
+    console.log(`Empfehlungen für Benutzer ${userId} (${userRole}) generieren`);
+    
+    // 1. Hole alle Umfragen, die der Benutzer bereits beantwortet hat
+    const answeredSurveys = await new Promise((resolve, reject) => {
+      db.all(
+        `SELECT DISTINCT survey_id FROM responses WHERE respondentId = ?`,
+        [userId],
+        (err, rows) => err ? reject(err) : resolve(rows?.map(row => row.survey_id) || [])
+      );
+    });
+    
+    console.log('Bereits beantwortete Umfragen:', answeredSurveys);
+    
+    // 2. Hole die Antworten des Benutzers, um Präferenzen zu analysieren
+    const userAnswers = await new Promise((resolve, reject) => {
+      db.all(
+        `SELECT a.question_id, a.value, q.type 
+         FROM answers a
+         JOIN responses r ON a.response_id = r.id
+         JOIN questions q ON a.question_id = q.id
+         WHERE r.respondentId = ?`,
+        [userId],
+        (err, rows) => err ? reject(err) : resolve(rows || [])
+      );
+    });
+    
+    console.log('Benutzerantworten für Empfehlungen:', userAnswers.length);
+    
+    // 3. Empfehlungslogik basierend auf Benutzerrolle und Antworten
+    let recommendedSurveys = [];
+    
+    if (userRole === 'student') {
+      // Für Schüler: Umfragen von ihren Lehrern priorisieren und basierend auf Antworten empfehlen
+      recommendedSurveys = await new Promise((resolve, reject) => {
+        db.all(
+          `SELECT s.id, s.title, s.description, s.ownerId, s.createdAt, s.isPublic, s.access_type,
+                  u.name as ownerName, COUNT(DISTINCT q.id) as totalQuestions,
+                  COUNT(DISTINCT r.id) as responseCount,
+                  CASE 
+                    WHEN ts.teacher_id IS NOT NULL THEN 3 
+                    WHEN s.isPublic = 1 THEN 2
+                    ELSE 1 
+                  END as priority
+           FROM surveys s
+           LEFT JOIN users u ON s.ownerId = u.id
+           LEFT JOIN questions q ON s.id = q.survey_id
+           LEFT JOIN responses r ON s.id = r.survey_id
+           LEFT JOIN teacher_students ts ON s.ownerId = ts.teacher_id AND ts.student_id = ?
+           WHERE s.isPublic = 1
+           AND s.id NOT IN (${answeredSurveys.map(() => '?').join(',') || '\'dummy\''})
+           GROUP BY s.id
+           ORDER BY priority DESC, responseCount DESC, s.createdAt DESC
+           LIMIT 10`,
+          [userId, ...answeredSurveys],
+          (err, rows) => err ? reject(err) : resolve(rows || [])
+        );
+      });
+    } else if (userRole === 'teacher') {
+      // Für Lehrer: Ähnliche Umfragen zu ihren eigenen und beliebte öffentliche Umfragen
+      recommendedSurveys = await new Promise((resolve, reject) => {
+        db.all(
+          `SELECT s.id, s.title, s.description, s.ownerId, s.createdAt, s.isPublic, s.access_type,
+                  u.name as ownerName, COUNT(DISTINCT q.id) as totalQuestions,
+                  COUNT(DISTINCT r.id) as responseCount,
+                  CASE 
+                    WHEN s.ownerId = ? THEN 3 
+                    ELSE 1 
+                  END as priority
+           FROM surveys s
+           LEFT JOIN users u ON s.ownerId = u.id
+           LEFT JOIN questions q ON s.id = q.survey_id
+           LEFT JOIN responses r ON s.id = r.survey_id
+           WHERE (s.ownerId = ? OR s.isPublic = 1)
+           AND s.id NOT IN (${answeredSurveys.map(() => '?').join(',') || '\'dummy\''})
+           GROUP BY s.id
+           ORDER BY priority DESC, responseCount DESC, s.createdAt DESC
+           LIMIT 10`,
+          [userId, userId, ...answeredSurveys],
+          (err, rows) => err ? reject(err) : resolve(rows || [])
+        );
+      });
+    }
+    
+    console.log(`Sende ${recommendedSurveys.length} empfohlene Umfragen`);
+    res.json(recommendedSurveys);
     
   } catch (error) {
     console.error('Fehler in /recommended:', error);
@@ -55,7 +139,7 @@ router.get('/recommended', async (req, res) => {
       details: error.message 
     });
   }
-});
+}));
 
 /**
  * @route   GET /api/surveys

@@ -484,6 +484,7 @@ export const surveyService = {
       
       // Erstelle das Request-Objekt mit den erforderlichen Feldern
       const requestData = {
+        respondentId, // Füge respondentId zum Request hinzu
         answers: answers.map(answer => ({
           questionId: answer.questionId,
           value: answer.value
@@ -503,7 +504,7 @@ export const surveyService = {
       
       // Erste Anfrage mit Auth-Header senden
       const response = await fetch(
-        `${API_BASE_URL}/surveys/${surveyId}/responses`,
+        `${API_BASE_URL}/survey-responses/surveys/${surveyId}`,
         {
           method: 'POST',
           headers,
@@ -524,7 +525,7 @@ export const surveyService = {
         
         // Erneute Anfrage ohne Auth-Header
         const retryResponse = await fetch(
-          `${API_BASE_URL}/surveys/${surveyId}/responses`,
+          `${API_BASE_URL}/survey-responses/surveys/${surveyId}`,
           {
             method: 'POST',
             headers: headersWithoutAuth,
@@ -602,7 +603,7 @@ export const surveyService = {
    * Ruft alle Antworten zu einer bestimmten Umfrage ab
    */
   async getResponsesForSurvey(surveyId: string): Promise<SurveyResponse[]> {
-    const response = await fetch(`${API_BASE_URL}/surveys/${surveyId}/responses`, {
+    const response = await fetch(`${API_BASE_URL}/survey-responses/surveys/${surveyId}`, {
       headers: getAuthHeader()
     });
     
@@ -903,11 +904,16 @@ export const surveyService = {
       const url = `${API_BASE_URL}/surveys/recommended`;
       console.log('[getRecommendedSurveys] Starte Abfrage an:', url);
       
+      // Prüfe, ob ein Token vorhanden ist
+      const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
+      
       const requestOptions = {
         method: 'GET',
         headers: {
-          ...getAuthHeader(),
+          'Content-Type': 'application/json',
           'Accept': 'application/json',
+          // Nur Authorization-Header hinzufügen, wenn ein Token vorhanden ist
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
         credentials: 'include' as const
       };

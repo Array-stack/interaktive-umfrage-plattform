@@ -13,8 +13,10 @@ const API_PREFIX = '/api';
 
 // Verbinde Routen mit dem Hauptrouter
 router.use('/auth', authRoutes);
+// Behalte den ursprünglichen Pfad bei
 router.use('/surveys', surveyRoutes);
-router.use('/surveys', surveyResponseRoutes);
+// Ändere den Pfad für die Antworten-Routen zu einem spezifischeren Pfad
+router.use('/survey-responses', surveyResponseRoutes);
 router.use('/student', studentRoutes);
 router.use('/teacher', teacherRoutes); // Neue Zeile
 

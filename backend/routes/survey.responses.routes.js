@@ -12,7 +12,8 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
  * @desc    Antworten auf eine Umfrage speichern
  * @access  Privat
  */
-router.post('/:surveyId/responses', authenticateToken, asyncHandler(async (req, res) => {
+// Ändere von '/:surveyId/responses' zu '/surveys/:surveyId'
+router.post('/surveys/:surveyId', authenticateToken, asyncHandler(async (req, res) => {
   const { surveyId } = req.params;
   const { answers } = req.body;
   const userId = req.user.userId;

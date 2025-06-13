@@ -2,6 +2,24 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+// RTL-Sprachen definieren
+const RTL_LANGUAGES = ['ar'];
+
+// Funktion zum Setzen der Dokumentrichtung basierend auf der Sprache
+export const setDocumentDirection = (language: string) => {
+  const dir = RTL_LANGUAGES.includes(language) ? 'rtl' : 'ltr';
+  document.documentElement.dir = dir;
+  document.documentElement.lang = language;
+  
+  // Zusätzliche RTL-spezifische Styles hinzufügen oder entfernen
+  if (dir === 'rtl') {
+    document.documentElement.classList.add('rtl');
+  } else {
+    document.documentElement.classList.remove('rtl');
+  }
+};
+
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -19,6 +37,50 @@ i18n
           registrieren: 'Registrieren',
           abmelden: 'Abmelden',
           hallo: 'Hallo',
+          
+          // Auth Pages
+          auth_email: 'E-Mail',
+          auth_email_address: 'E-Mail-Adresse',
+          auth_your_email_address: 'Ihre E-Mail-Adresse',
+          auth_password: 'Passwort',
+          auth_login: 'Anmelden',
+          auth_register: 'Registrieren',
+          auth_forgot_password: 'Passwort vergessen?',
+          auth_no_account: 'Noch kein Konto?',
+          auth_create_account: 'Konto erstellen',
+          auth_already_account: 'Bereits ein Konto?',
+          auth_already_registered: 'Bereits registriert?',
+          auth_login_to_account: 'Bei Ihrem Konto anmelden',
+          auth_name: 'Name',
+          auth_confirm_password: 'Passwort bestätigen',
+          auth_role: 'Rolle',
+          auth_role_student: 'Schüler/Student',
+          auth_role_teacher: 'Lehrer/Dozent',
+          auth_reset_password: 'Passwort zurücksetzen',
+          auth_reset_password_instructions: 'Geben Sie Ihre E-Mail-Adresse ein, und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.',
+          auth_reset_password_submit: 'Link senden',
+          auth_send_reset_link: 'Link zum Zurücksetzen senden',
+          auth_reset_password_success: 'Wenn ein Konto mit dieser E-Mail existiert, haben wir einen Link zum Zurücksetzen des Passworts gesendet.',
+          auth_back_to_login: 'Zurück zum Login',
+          auth_set_new_password: 'Neues Passwort festlegen',
+          auth_new_password: 'Neues Passwort',
+          auth_change_password: 'Passwort ändern',
+          auth_to_login: 'Zum Login',
+          auth_checking_link: 'Überprüfe den Link...',
+          auth_resetting_password: 'Passwort wird zurückgesetzt...',
+          auth_please_wait: 'Bitte warten Sie',
+          auth_redirecting: 'Sie werden weitergeleitet...',
+          auth_invalid_or_missing_link: 'Ungültiger oder fehlender Link. Bitte fordern Sie einen neuen Link an.',
+          auth_invalid_or_expired_link: 'Ungültiger oder abgelaufener Link. Bitte fordern Sie einen neuen Link an.',
+          auth_fill_all_fields: 'Bitte füllen Sie alle Felder aus.',
+          auth_passwords_not_match: 'Die Passwörter stimmen nicht überein.',
+          auth_password_min_length_8: 'Das Passwort muss mindestens 8 Zeichen lang sein.',
+          auth_password_reset_success_login: 'Ihr Passwort wurde erfolgreich zurückgesetzt. Bitte melden Sie sich mit Ihrem neuen Passwort an.',
+          auth_unknown_error: 'Ein unbekannter Fehler ist aufgetreten',
+          auth_error_reset_password: 'Fehler: {{error}}. Bitte versuchen Sie es später erneut oder fordern Sie einen neuen Link an.',
+          auth_token_found_redirecting_reset: 'Token gefunden, leite zur Passwort-Reset-Seite weiter',
+          auth_email_found_redirecting_forgot: 'E-Mail gefunden, leite zur Passwort-Vergessen-Seite weiter',
+          auth_no_token_or_email_found: 'Kein Token oder E-Mail in der URL gefunden',
           
           // Common
           speichern: 'Speichern',
@@ -226,6 +288,50 @@ i18n
           abmelden: 'Logout',
           hallo: 'Hello',
           
+          // Auth Pages
+          auth_email: 'Email',
+          auth_email_address: 'Email address',
+          auth_your_email_address: 'Your email address',
+          auth_password: 'Password',
+          auth_login: 'Login',
+          auth_register: 'Register',
+          auth_forgot_password: 'Forgot password?',
+          auth_no_account: 'Don\'t have an account?',
+          auth_create_account: 'Create account',
+          auth_already_account: 'Already have an account?',
+          auth_already_registered: 'Already registered?',
+          auth_login_to_account: 'Login to your account',
+          auth_name: 'Name',
+          auth_confirm_password: 'Confirm password',
+          auth_role: 'Role',
+          auth_role_student: 'Student',
+          auth_role_teacher: 'Teacher',
+          auth_reset_password: 'Reset password',
+          auth_reset_password_instructions: 'Enter your email address and we will send you a link to reset your password.',
+          auth_reset_password_submit: 'Send link',
+          auth_send_reset_link: 'Send reset link',
+          auth_reset_password_success: 'If an account with this email exists, we have sent a password reset link.',
+          auth_back_to_login: 'Back to login',
+          auth_set_new_password: 'Set new password',
+          auth_new_password: 'New password',
+          auth_change_password: 'Change password',
+          auth_to_login: 'To login',
+          auth_checking_link: 'Checking link...',
+          auth_resetting_password: 'Resetting password...',
+          auth_please_wait: 'Please wait',
+          auth_redirecting: 'You are being redirected...',
+          auth_invalid_or_missing_link: 'Invalid or missing link. Please request a new link.',
+          auth_invalid_or_expired_link: 'Invalid or expired link. Please request a new link.',
+          auth_fill_all_fields: 'Please fill in all fields.',
+          auth_passwords_not_match: 'Passwords do not match.',
+          auth_password_min_length_8: 'Password must be at least 8 characters long.',
+          auth_password_reset_success_login: 'Your password has been successfully reset. Please login with your new password.',
+          auth_unknown_error: 'An unknown error occurred',
+          auth_error_reset_password: 'Error: {{error}}. Please try again later or request a new link.',
+          auth_token_found_redirecting_reset: 'Token found, redirecting to password reset page',
+          auth_email_found_redirecting_forgot: 'Email found, redirecting to forgot password page',
+          auth_no_token_or_email_found: 'No token or email found in URL',
+          
           // Common
           speichern: 'Save',
           abbrechen: 'Cancel',
@@ -432,6 +538,50 @@ i18n
           abmelden: 'خرج',
           hallo: 'سلام',
           
+          // Auth Pages
+          auth_email: 'البريد الإلكتروني',
+          auth_email_address: 'عنوان البريد الإلكتروني',
+          auth_your_email_address: 'عنوان بريدك الإلكتروني',
+          auth_password: 'كلمة المرور',
+          auth_login: 'تسجيل الدخول',
+          auth_register: 'تسجيل حساب',
+          auth_forgot_password: 'نسيت كلمة المرور؟',
+          auth_no_account: 'ليس لديك حساب؟',
+          auth_create_account: 'إنشاء حساب',
+          auth_already_account: 'لديك حساب بالفعل؟',
+          auth_already_registered: 'مسجل بالفعل؟',
+          auth_login_to_account: 'تسجيل الدخول إلى حسابك',
+          auth_name: 'الاسم',
+          auth_confirm_password: 'تأكيد كلمة المرور',
+          auth_role: 'الدور',
+          auth_role_student: 'طالب',
+          auth_role_teacher: 'معلم',
+          auth_reset_password: 'إعادة تعيين كلمة المرور',
+          auth_reset_password_instructions: 'أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور.',
+          auth_reset_password_submit: 'إرسال الرابط',
+          auth_send_reset_link: 'إرسال رابط إعادة التعيين',
+          auth_reset_password_success: 'إذا كان هناك حساب بهذا البريد الإلكتروني، فقد أرسلنا رابط إعادة تعيين كلمة المرور.',
+          auth_back_to_login: 'العودة إلى تسجيل الدخول',
+          auth_set_new_password: 'تعيين كلمة مرور جديدة',
+          auth_new_password: 'كلمة مرور جديدة',
+          auth_change_password: 'تغيير كلمة المرور',
+          auth_to_login: 'إلى تسجيل الدخول',
+          auth_checking_link: 'جاري التحقق من الرابط...',
+          auth_resetting_password: 'جاري إعادة تعيين كلمة المرور...',
+          auth_please_wait: 'الرجاء الانتظار',
+          auth_redirecting: 'جاري إعادة توجيهك...',
+          auth_invalid_or_missing_link: 'رابط غير صالح أو مفقود. الرجاء طلب رابط جديد.',
+          auth_invalid_or_expired_link: 'رابط غير صالح أو منتهي الصلاحية. الرجاء طلب رابط جديد.',
+          auth_fill_all_fields: 'الرجاء ملء جميع الحقول.',
+          auth_passwords_not_match: 'كلمات المرور غير متطابقة.',
+          auth_password_min_length_8: 'يجب أن تكون كلمة المرور 8 أحرف على الأقل.',
+          auth_password_reset_success_login: 'تمت إعادة تعيين كلمة المرور بنجاح. الرجاء تسجيل الدخول باستخدام كلمة المرور الجديدة.',
+          auth_unknown_error: 'حدث خطأ غير معروف',
+          auth_error_reset_password: 'خطأ: {{error}}. الرجاء المحاولة مرة أخرى لاحقًا أو طلب رابط جديد.',
+          auth_token_found_redirecting_reset: 'تم العثور على الرمز، جاري إعادة التوجيه إلى صفحة إعادة تعيين كلمة المرور',
+          auth_email_found_redirecting_forgot: 'تم العثور على البريد الإلكتروني، جاري إعادة التوجيه إلى صفحة نسيت كلمة المرور',
+          auth_no_token_or_email_found: 'لم يتم العثور على رمز أو بريد إلكتروني في عنوان URL',
+          
           // Common
           speichern: 'خزن',
           abbrechen: 'إلغاء',
@@ -607,6 +757,50 @@ i18n
           registrieren: 'Inscription',
           abmelden: 'Déconnexion',
           hallo: 'Bonjour',
+          
+          // Auth Pages
+          auth_email: 'E-mail',
+          auth_email_address: 'Adresse e-mail',
+          auth_your_email_address: 'Votre adresse e-mail',
+          auth_password: 'Mot de passe',
+          auth_login: 'Connexion',
+          auth_register: 'Inscription',
+          auth_forgot_password: 'Mot de passe oublié ?',
+          auth_no_account: 'Vous n\'avez pas de compte ?',
+          auth_create_account: 'Créer un compte',
+          auth_already_account: 'Vous avez déjà un compte ?',
+          auth_already_registered: 'Déjà inscrit ?',
+          auth_login_to_account: 'Connectez-vous à votre compte',
+          auth_name: 'Nom',
+          auth_confirm_password: 'Confirmer le mot de passe',
+          auth_role: 'Rôle',
+          auth_role_student: 'Étudiant',
+          auth_role_teacher: 'Enseignant',
+          auth_reset_password: 'Réinitialiser le mot de passe',
+          auth_reset_password_instructions: 'Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.',
+          auth_reset_password_submit: 'Envoyer le lien',
+          auth_send_reset_link: 'Envoyer le lien de réinitialisation',
+          auth_reset_password_success: 'Si un compte avec cet e-mail existe, nous avons envoyé un lien de réinitialisation du mot de passe.',
+          auth_back_to_login: 'Retour à la connexion',
+          auth_set_new_password: 'Définir un nouveau mot de passe',
+          auth_new_password: 'Nouveau mot de passe',
+          auth_change_password: 'Changer le mot de passe',
+          auth_to_login: 'Vers la connexion',
+          auth_checking_link: 'Vérification du lien...',
+          auth_resetting_password: 'Réinitialisation du mot de passe...',
+          auth_please_wait: 'Veuillez patienter',
+          auth_redirecting: 'Vous êtes redirigé...',
+          auth_invalid_or_missing_link: 'Lien invalide ou manquant. Veuillez demander un nouveau lien.',
+          auth_invalid_or_expired_link: 'Lien invalide ou expiré. Veuillez demander un nouveau lien.',
+          auth_fill_all_fields: 'Veuillez remplir tous les champs.',
+          auth_passwords_not_match: 'Les mots de passe ne correspondent pas.',
+          auth_password_min_length_8: 'Le mot de passe doit comporter au moins 8 caractères.',
+          auth_password_reset_success_login: 'Votre mot de passe a été réinitialisé avec succès. Veuillez vous connecter avec votre nouveau mot de passe.',
+          auth_unknown_error: 'Une erreur inconnue s\'est produite',
+          auth_error_reset_password: 'Erreur : {{error}}. Veuillez réessayer plus tard ou demander un nouveau lien.',
+          auth_token_found_redirecting_reset: 'Jeton trouvé, redirection vers la page de réinitialisation du mot de passe',
+          auth_email_found_redirecting_forgot: 'E-mail trouvé, redirection vers la page de mot de passe oublié',
+          auth_no_token_or_email_found: 'Aucun jeton ou e-mail trouvé dans l\'URL',
           
           // Common
           speichern: 'Enregistrer',

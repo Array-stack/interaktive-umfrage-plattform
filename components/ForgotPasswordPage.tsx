@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { authService } from '../services/authService';
+import { useTranslation } from 'react-i18next';
 
 const ForgotPasswordPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const [emailPreviewUrl, setEmailPreviewUrl] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email) {
       setStatus('error');
-      setMessage('Bitte geben Sie Ihre E-Mail-Adresse ein.');
+      setMessage(t('auth_enter_email'));
       return;
     }
 
@@ -27,13 +29,13 @@ const ForgotPasswordPage: React.FC = () => {
       }
     } catch (error) {
       setStatus('error');
-      setMessage(error instanceof Error ? error.message : 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+      setMessage(error instanceof Error ? error.message : t('auth_error_try_again'));
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-center mb-6">Passwort zurücksetzen</h1>
+      <h1 className="text-2xl font-bold text-center mb-6">{t('auth_reset_password')}</h1>
       
       {status === 'success' && (
         <div className="text-center">
@@ -45,14 +47,14 @@ const ForgotPasswordPage: React.FC = () => {
           <p className="mb-4">{message}</p>
           {emailPreviewUrl && (
             <div className="mb-4">
-              <p className="mb-2 text-sm text-gray-600">Für Entwicklungszwecke:</p>
+              <p className="mb-2 text-sm text-gray-600">{t('auth_for_development')}:</p>
               <a 
                 href={emailPreviewUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-primary hover:underline text-sm"
               >
-                E-Mail-Vorschau öffnen
+                {t('auth_open_email_preview')}
               </a>
             </div>
           )}
@@ -60,7 +62,7 @@ const ForgotPasswordPage: React.FC = () => {
             to="/login" 
             className="inline-block bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark transition-colors"
           >
-            Zurück zum Login
+            {t('auth_back_to_login')}
           </Link>
         </div>
       )}
@@ -68,7 +70,7 @@ const ForgotPasswordPage: React.FC = () => {
       {status === 'loading' && (
         <div className="flex flex-col items-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
-          <p>E-Mail wird gesendet...</p>
+          <p>{t('auth_sending_email')}</p>
         </div>
       )}
       
@@ -76,7 +78,7 @@ const ForgotPasswordPage: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              E-Mail-Adresse
+              {t('auth_email_address')}
             </label>
             <input
               type="email"
@@ -84,7 +86,7 @@ const ForgotPasswordPage: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-              placeholder="Ihre E-Mail-Adresse"
+              placeholder={t('auth_your_email_address')}
               required
             />
           </div>
@@ -99,12 +101,12 @@ const ForgotPasswordPage: React.FC = () => {
             type="submit"
             className="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark transition-colors"
           >
-            Link zum Zurücksetzen senden
+            {t('auth_send_reset_link')}
           </button>
           
           <div className="mt-4 text-center">
             <Link to="/login" className="text-primary hover:underline">
-              Zurück zum Login
+              {t('auth_back_to_login')}
             </Link>
           </div>
         </form>

@@ -2,6 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
+/* RTL-Unterstützung für Arabisch */
+html.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+/* RTL-spezifische Anpassungen für UI-Elemente */
+html.rtl .ml-auto {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+html.rtl .mr-auto {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+html.rtl .ml-1, html.rtl .ml-2, html.rtl .ml-3, html.rtl .ml-4, html.rtl .ml-5, html.rtl .ml-6 {
+  margin-left: 0;
+  margin-right: 0.25rem;
+  margin-right: var(--ml-value, 0.25rem);
+}
+
+html.rtl .mr-1, html.rtl .mr-2, html.rtl .mr-3, html.rtl .mr-4, html.rtl .mr-5, html.rtl .mr-6 {
+  margin-right: 0;
+  margin-left: 0.25rem;
+  margin-left: var(--mr-value, 0.25rem);
+}
+
+html.rtl .pl-1, html.rtl .pl-2, html.rtl .pl-3, html.rtl .pl-4, html.rtl .pl-5, html.rtl .pl-6 {
+  padding-left: 0;
+  padding-right: 0.25rem;
+  padding-right: var(--pl-value, 0.25rem);
+}
+
+html.rtl .pr-1, html.rtl .pr-2, html.rtl .pr-3, html.rtl .pr-4, html.rtl .pr-5, html.rtl .pr-6 {
+  padding-right: 0;
+  padding-left: 0.25rem;
+  padding-left: var(--pr-value, 0.25rem);
+}
+
+/* RTL-Anpassungen für Flex-Richtung */
+html.rtl .flex-row {
+  flex-direction: row-reverse;
+}
+
+/* RTL-Anpassungen für Text-Ausrichtung */
+html.rtl .text-left {
+  text-align: right;
+}
+
+html.rtl .text-right {
+  text-align: left;
+}
+
+/* RTL-Anpassungen für Formulare */
+html.rtl input, html.rtl textarea {
+  text-align: right;
+}
+
+/* RTL-Anpassungen für Icons und Symbole */
+html.rtl .icon-left {
+  transform: scaleX(-1);
+}
+
+/* RTL-Anpassungen für Navigationsmenüs */
+html.rtl .nav-item {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+html.rtl .nav-item:last-child {
+  margin-left: 0;
+}
+
 @layer base {
   :root {
     /* Primäre Farbpalette – Vertrauensvolles Blau für Seriosität und Klarheit */ 

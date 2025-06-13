@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
+import { setDocumentDirection } from './i18n';
 import { useTranslation } from 'react-i18next';
 import { HashRouter, Routes, Route, useParams, useNavigate, Link } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
@@ -1984,7 +1985,24 @@ const NotFoundPage: React.FC = () => (
 // Die Hauptanwendungskomponente
 function App() {
   // i18n Translation Hook
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  
+  // Setze die Dokumentrichtung basierend auf der aktuellen Sprache
+  useEffect(() => {
+    const currentLanguage = i18n.language || localStorage.getItem('i18nextLng') || 'de';
+    setDocumentDirection(currentLanguage);
+    
+    // Aktualisiere die Dokumentrichtung, wenn sich die Sprache ändert
+    const handleLanguageChange = () => {
+      setDocumentDirection(i18n.language);
+    };
+    
+    i18n.on('languageChanged', handleLanguageChange);
+    
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange);
+    };
+  }, [i18n]);
   
   // Cookie-Consent-Hook hinzufügen
   const { 

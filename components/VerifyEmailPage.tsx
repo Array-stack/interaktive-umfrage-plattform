@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const VerifyEmailPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Extrahiere Parameter aus der URL
@@ -18,13 +20,13 @@ const VerifyEmailPage: React.FC = () => {
     let targetUrl = '/';
     
     if (token) {
-      console.log('Token gefunden, leite zur Passwort-Reset-Seite weiter');
+      console.log(t('auth_token_found_redirecting_reset'));
       targetUrl = `/reset-password?token=${encodeURIComponent(token)}`;
     } else if (email) {
-      console.log('E-Mail gefunden, leite zur Passwort-Vergessen-Seite weiter');
+      console.log(t('auth_email_found_redirecting_forgot'));
       targetUrl = `/forgot-password?email=${encodeURIComponent(email)}`;
     } else {
-      console.error('Kein Token oder E-Mail in der URL gefunden');
+      console.error(t('auth_no_token_or_email_found'));
       targetUrl = '/';
     }
     
@@ -39,8 +41,8 @@ const VerifyEmailPage: React.FC = () => {
         <div className="flex justify-center mb-4">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         </div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Bitte warten Sie</h2>
-        <p className="text-gray-600">Sie werden weitergeleitet...</p>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">{t('auth_please_wait')}</h2>
+        <p className="text-gray-600">{t('auth_redirecting')}</p>
       </div>
     </div>
   );

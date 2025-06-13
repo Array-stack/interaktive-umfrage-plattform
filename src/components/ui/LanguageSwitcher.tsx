@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { setDocumentDirection } from '../../i18n';
 
 interface Language {
   code: string;
@@ -74,6 +75,8 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ onLanguageChange })
     i18n.changeLanguage(lng);
     // Explizit im localStorage speichern, um sicherzustellen, dass die Einstellung erhalten bleibt
     localStorage.setItem('i18nextLng', lng);
+    // Dokumentrichtung basierend auf der Sprache setzen
+    setDocumentDirection(lng);
     setIsOpen(false);
     // Wenn eine onLanguageChange-Funktion übergeben wurde, rufe sie auf
     if (onLanguageChange) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { authService } from '../services/authService';
+import { useTranslation } from 'react-i18next';
 
 // Hilfsfunktion zum Extrahieren von URL-Parametern
 function useQuery() {
@@ -14,6 +15,7 @@ const ResetPasswordPage: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const query = useQuery();
   
@@ -25,7 +27,7 @@ const ResetPasswordPage: React.FC = () => {
     if (!tokenFromUrl) {
       console.error('Kein Token in der URL gefunden');
       setStatus('error');
-      setMessage('Ungültiger oder fehlender Link. Bitte fordern Sie einen neuen Link an.');
+      setMessage(t('auth_invalid_or_missing_link'));
       return;
     }
     
@@ -41,7 +43,7 @@ const ResetPasswordPage: React.FC = () => {
     if (!token) {
       console.error('Kein Token vorhanden');
       setStatus('error');
-      setMessage('Ungültiger oder abgelaufener Link. Bitte fordern Sie einen neuen Link an.');
+      setMessage(t('auth_invalid_or_expired_link'));
       return;
     }
 
@@ -49,21 +51,21 @@ const ResetPasswordPage: React.FC = () => {
     if (!newPassword || !confirmPassword) {
       console.error('Nicht alle Felder ausgefüllt');
       setStatus('error');
-      setMessage('Bitte füllen Sie alle Felder aus.');
+      setMessage(t('auth_fill_all_fields'));
       return;
     }
 
     if (newPassword !== confirmPassword) {
       console.error('Passwörter stimmen nicht überein');
       setStatus('error');
-      setMessage('Die Passwörter stimmen nicht überein.');
+      setMessage(t('auth_passwords_not_match'));
       return;
     }
 
     if (newPassword.length < 8) {
       console.error('Passwort zu kurz');
       setStatus('error');
-      setMessage('Das Passwort muss mindestens 8 Zeichen lang sein.');
+      setMessage(t('auth_password_min_length_8'));
       return;
     }
 
@@ -88,7 +90,7 @@ const ResetPasswordPage: React.FC = () => {
           console.log('Navigiere zur Login-Seite');
           navigate('/login', { 
             state: { 
-              message: 'Ihr Passwort wurde erfolgreich zurückgesetzt. Bitte melden Sie sich mit Ihrem neuen Passwort an.'
+              message: t('auth_password_reset_success_login')
             },
             replace: true // Verhindert, dass der Benutzer mit dem Zurück-Button zurückkommt
           });
@@ -99,10 +101,10 @@ const ResetPasswordPage: React.FC = () => {
         throw new Error(errorMsg);
       }
     } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : 'Ein unbekannter Fehler ist aufgetreten';
+      const errorMsg = error instanceof Error ? error.message : t('auth_unknown_error');
       console.error('Fehler beim Zurücksetzen des Passworts:', error);
       setStatus('error');
-      setMessage(`Fehler: ${errorMsg}. Bitte versuchen Sie es später erneut oder fordern Sie einen neuen Link an.`);
+      setMessage(t('auth_error_reset_password', { error: errorMsg }));
     }
   };
 
@@ -112,7 +114,7 @@ const ResetPasswordPage: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>Überprüfe den Link...</p>
+          <p>{t('auth_checking_link')}</p>
         </div>
       </div>
     );
@@ -121,7 +123,7 @@ const ResetPasswordPage: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-center mb-6">Neues Passwort festlegen</h1>
+        <h1 className="text-2xl font-bold text-center mb-6">{t('auth_set_new_password')}</h1>
       
       {status === 'error' && !token ? (
         <div className="text-center">
@@ -135,7 +137,7 @@ const ResetPasswordPage: React.FC = () => {
             to="/forgot-password" 
             className="inline-block bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark transition-colors"
           >
-            Passwort zuru00fccksetzen
+            {t('auth_reset_password')}
           </Link>
         </div>
       ) : status === 'success' ? (
@@ -150,19 +152,19 @@ const ResetPasswordPage: React.FC = () => {
             onClick={() => navigate('/login')} 
             className="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark transition-colors"
           >
-            Zum Login
+            {t('auth_to_login')}
           </button>
         </div>
       ) : status === 'loading' ? (
         <div className="flex flex-col items-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
-          <p>Passwort wird zuru00fcckgesetzt...</p>
+          <p>{t('auth_resetting_password')}</p>
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
-              Neues Passwort
+              {t('auth_new_password')}
             </label>
             <input
               type="password"
@@ -170,7 +172,7 @@ const ResetPasswordPage: React.FC = () => {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-              placeholder="Neues Passwort"
+              placeholder={t('auth_new_password')}
               required
               minLength={8}
             />
@@ -178,7 +180,7 @@ const ResetPasswordPage: React.FC = () => {
           
           <div className="mb-4">
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-              Passwort bestu00e4tigen
+              {t('auth_confirm_password')}
             </label>
             <input
               type="password"
@@ -186,7 +188,7 @@ const ResetPasswordPage: React.FC = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-              placeholder="Passwort bestu00e4tigen"
+              placeholder={t('auth_confirm_password')}
               required
               minLength={8}
             />
@@ -202,7 +204,7 @@ const ResetPasswordPage: React.FC = () => {
             type="submit"
             className="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark transition-colors"
           >
-            Passwort u00e4ndern
+            {t('auth_change_password')}
           </button>
           
           <div className="mt-6 text-center">
@@ -210,7 +212,7 @@ const ResetPasswordPage: React.FC = () => {
               to="/login" 
               className="text-primary hover:underline font-medium"
             >
-              Zurück zum Login
+              {t('auth_back_to_login')}
             </Link>
           </div>
         </form>

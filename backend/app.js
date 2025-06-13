@@ -100,6 +100,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Response Header Middleware
+// Response Header Middleware
 app.use((req, res, next) => {
   // Setze Standard-Header für alle Antworten
   res.setHeader('Content-Type', 'application/json');
@@ -156,17 +157,24 @@ app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'API-Endpunkt nicht gefunden' });
 });
 
-// Statische Dateien für Produktion
+// Statische Dateien für Produktion - NACH den API-Routen
 if (process.env.NODE_ENV === 'production') {
   const buildPath = path.join(__dirname, '../dist');
-  app.use(express.static(buildPath));
+  
+  // Wichtig: Statische Dateien nur für Nicht-API-Pfade
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api/')) {
+      return next();
+    }
+    express.static(buildPath)(req, res, next);
+  });
   
   // Client-Side Routing - nur für Nicht-API-Pfade
-  app.get('*', (req, res) => {
-    // Stelle sicher, dass API-Anfragen nicht hier landen
-    if (!req.path.startsWith('/api/')) {
-      res.sendFile(path.join(buildPath, 'index.html'));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api/')) {
+      return next();
     }
+    res.sendFile(path.join(buildPath, 'index.html'));
   });
 }
 
@@ -193,3 +201,9 @@ process.on('SIGTERM', () => {
 });
 
 module.exports = app;
+// Vor den API-Routen
+app.use((req, res, next) => {
+  console.log(`[DEBUG] Anfrage an: ${req.method} ${req.path}`);
+  console.log(`[DEBUG] Headers: ${JSON.stringify(req.headers)}`);
+  next();
+});

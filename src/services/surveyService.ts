@@ -506,7 +506,7 @@ export const surveyService = {
       const response = await fetch(
         `${API_BASE_URL}/survey-responses/surveys/${surveyId}`,
         {
-          method: 'POST',
+          method: 'GET',
           headers,
           credentials: 'include',
           body: JSON.stringify(requestData)

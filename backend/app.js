@@ -31,7 +31,6 @@ const allowedOrigins = [
   'https://interaktive-umfrage-plattform.vercel.app',
   'http://localhost:5173',
   'http://localhost:5174',
-  'http://localhost:3001',
   'https://interaktive-umfrage-plattform-nechts.up.railway.app',
 ];
 

@@ -20,6 +20,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body class="bg-white text-neutral-dark font-sans antialiased">
+    <!-- Import Map für ESM-Module -->
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@^19.1.0",
+          "react-dom": "https://esm.sh/react-dom@^19.1.0",
+          "react-dom/client": "https://esm.sh/react-dom@^19.1.0/client",
+          "react-router-dom": "https://esm.sh/react-router-dom@^7.6.0",
+          "recharts": "https://esm.sh/recharts@^2.15.3"
+        }
+      }
+    </script>
     <noscript class="fixed inset-0 flex items-center justify-center bg-white p-8 text-center">
       <div class="max-w-md p-6 bg-white rounded-lg shadow-lg">
         <h1 class="text-2xl font-bold text-red-600 mb-4">JavaScript erforderlich</h1>
@@ -46,18 +58,7 @@
       });
     </script>
     
-    <!-- Import Map für ESM-Module -->
-    <script type="importmap">
-      {
-        "imports": {
-          "react": "https://esm.sh/react@^19.1.0",
-          "react-dom": "https://esm.sh/react-dom@^19.1.0",
-          "react-dom/client": "https://esm.sh/react-dom@^19.1.0/client",
-          "react-router-dom": "https://esm.sh/react-router-dom@^7.6.0",
-          "recharts": "https://esm.sh/recharts@^2.15.3"
-        }
-      }
-    </script>
+    
     <script type="module">
       // Dynamisches Laden des Einstiegspunkts
       import('/src/main.tsx').catch(err => {

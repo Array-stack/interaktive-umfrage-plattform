@@ -622,10 +622,8 @@ export const surveyService = {
         headers: {
           'Content-Type': 'application/json',
           ...getAuthHeader(),
-          'Cache-Control': 'no-cache'
         },
         credentials: 'include',
-        cache: 'no-store'
       });
       
       if (response.ok) {
@@ -779,12 +777,8 @@ export const surveyService = {
         headers: {
           'Content-Type': 'application/json',
           ...getAuthHeader(),
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
         },
         credentials: 'include',
-        cache: 'no-store' as RequestCache
       });
       
       // Logging für Debugging-Zwecke
@@ -833,7 +827,6 @@ export const surveyService = {
         headers: {
           'Content-Type': 'application/json',
           ...getAuthHeader(),
-          'Cache-Control': 'no-cache'
         },
         credentials: 'include'
       });
@@ -915,7 +908,6 @@ export const surveyService = {
         headers: {
           ...getAuthHeader(),
           'Accept': 'application/json',
-          'Cache-Control': 'no-cache'
         },
         credentials: 'include' as const
       };

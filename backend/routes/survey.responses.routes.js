@@ -320,11 +320,11 @@ router.get('/:surveyId/responses', authenticateToken, requireTeacherRole, asyncH
 }));
 
 /**
- * @route   GET /api/surveys/:surveyId/responses/check
+ * @route   GET /api/survey-responses/surveys/:surveyId/check
  * @desc    Überprüfen, ob der aktuelle Benutzer bereits an der Umfrage teilgenommen hat
  * @access  Privat
  */
-router.get('/:surveyId/responses/check', authenticateToken, asyncHandler(async (req, res) => {
+router.get('/surveys/:surveyId/check', authenticateToken, asyncHandler(async (req, res) => {
   const { surveyId } = req.params;
   const userId = req.user.userId;
 
@@ -602,4 +602,3 @@ router.get('/:surveyId/analysis', authenticateToken, asyncHandler(async (req, re
     // initialize().catch(console.error);
     
     module.exports = router;
-

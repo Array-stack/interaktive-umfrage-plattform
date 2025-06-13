@@ -616,7 +616,7 @@ export const surveyService = {
   async checkIfSurveyTaken(surveyId: string): Promise<boolean> {
     // Zuerst den Server fragen
     try {
-      const urlString = `${API_BASE_URL}/surveys/${surveyId}/responses/check?_t=${Date.now()}`;
+      const urlString = `${API_BASE_URL}/survey-responses/surveys/${surveyId}/check?_t=${Date.now()}`;
       
       const response = await fetch(urlString, {
         method: 'GET',

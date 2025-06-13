@@ -151,14 +151,22 @@ app.get('/', (req, res) => {
 const apiRoutes = require('./routes');
 app.use('/api', apiRoutes);
 
+// 404 Handler für API-Routen
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ error: 'API-Endpunkt nicht gefunden' });
+});
+
 // Statische Dateien für Produktion
 if (process.env.NODE_ENV === 'production') {
   const buildPath = path.join(__dirname, '../dist');
   app.use(express.static(buildPath));
   
-  // Client-Side Routing
+  // Client-Side Routing - nur für Nicht-API-Pfade
   app.get('*', (req, res) => {
-    res.sendFile(path.join(buildPath, 'index.html'));
+    // Stelle sicher, dass API-Anfragen nicht hier landen
+    if (!req.path.startsWith('/api/')) {
+      res.sendFile(path.join(buildPath, 'index.html'));
+    }
   });
 }
 

@@ -1,27 +1,45 @@
-import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
+import React, { useState, useEffect, createContext, useContext, useCallback, lazy, Suspense } from 'react';
 import { setDocumentDirection } from './i18n';
 import { useTranslation } from 'react-i18next';
 import { HashRouter, Routes, Route, useParams, useNavigate, Link } from 'react-router-dom';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Survey, Question, QuestionType, NewSurvey, NewQuestion, SurveyResponse, NewSurveyResponse, Answer, ChartDataPoint } from './types';
 import { surveyService } from './services/surveyService';
 import { AuthProvider } from '../contexts/AuthContext';
-import LoginPage from '../components/LoginPage';
-import RegisterPage from '../components/RegisterPage';
 import ProtectedRoute from '../components/ProtectedRoute';
 import AuthNavbar from './components/AuthNavbar';
-import VerifyEmailPage from '../components/VerifyEmailPage';
-import ForgotPasswordPage from '../components/ForgotPasswordPage';
-import ResetPasswordPage from '../components/ResetPasswordPage';
-import { StudentDashboard } from './pages/student';
-import StudentManagement from './components/teacher/StudentManagement';
 import Loader from './components/ui/Loader';
-import HomePage from './pages/HomePage';
-import DatenschutzPage from './pages/DatenschutzPage';
-import NutzungsbedingungenPage from './pages/NutzungsbedingungenPage';
-import ImpressumPage from './pages/ImpressumPage';
-import KontaktPage from './pages/KontaktPage';
 import { CookieConsentBanner, CookieSettingsButton, useCookieConsent } from './components/ui/CookieConsent';
+
+// Dynamische Importe für Komponenten
+const LoginPage = lazy(() => import('../components/LoginPage'));
+const RegisterPage = lazy(() => import('../components/RegisterPage'));
+const VerifyEmailPage = lazy(() => import('../components/VerifyEmailPage'));
+const ForgotPasswordPage = lazy(() => import('../components/ForgotPasswordPage'));
+const ResetPasswordPage = lazy(() => import('../components/ResetPasswordPage'));
+const StudentDashboard = lazy(() => import('./pages/student').then(module => ({ default: module.StudentDashboard })));
+const StudentManagement = lazy(() => import('./components/teacher/StudentManagement'));
+const HomePage = lazy(() => import('./pages/HomePage'));
+const DatenschutzPage = lazy(() => import('./pages/DatenschutzPage'));
+const NutzungsbedingungenPage = lazy(() => import('./pages/NutzungsbedingungenPage'));
+const ImpressumPage = lazy(() => import('./pages/ImpressumPage'));
+const KontaktPage = lazy(() => import('./pages/KontaktPage'));
+
+// Dynamischer Import für Recharts-Komponenten (nur wenn benötigt)
+const ChartsComponents = lazy(() => import('recharts').then(module => ({
+  default: {
+    BarChart: module.BarChart,
+    Bar: module.Bar,
+    XAxis: module.XAxis,
+    YAxis: module.YAxis,
+    CartesianGrid: module.CartesianGrid,
+    Tooltip: module.Tooltip,
+    Legend: module.Legend,
+    ResponsiveContainer: module.ResponsiveContainer,
+    PieChart: module.PieChart,
+    Pie: module.Pie,
+    Cell: module.Cell
+  }
+})));
 
 // ======== GERMAN LOCALIZATION HELPERS ======== //
 const questionTypeDisplayNames: Record<QuestionType, string> = {
@@ -2040,43 +2058,45 @@ function App() {
           <div className="flex flex-col min-h-screen">
             <AuthNavbar />
             <main className="flex-grow container mx-auto px-2 sm:px-4 py-8">
-              <Routes>
-                {/* Öffentliche Routen */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/verify-email" element={<VerifyEmailPage />} />
-                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-                <Route path="/reset-password" element={<ResetPasswordPage />} />
-                <Route path="/survey/:surveyId" element={<TakeSurveyPage />} />
-                
-                {/* Geschützte Routen (nur für authentifizierte Benutzer) */}
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/teacher/results/:surveyId" element={<SurveyResultsPageWrapper />} />
-                </Route>
-                
-                {/* Geschützte Routen für Studenten */}
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/student" element={<StudentDashboard />} />
-                </Route>
-                
-                {/* Geschützte Routen (nur für Lehrer) */}
-                <Route element={<ProtectedRoute requireTeacher={true} />}>
-                  <Route path="/teacher" element={<TeacherDashboardPage />} />
-                  <Route path="/teacher/create" element={<CreateSurveyPage />} />
-                  <Route path="/teacher/edit/:surveyId" element={<EditSurveyPage />} />
-                  <Route path="/teacher/students" element={<StudentManagement />} />
-                </Route>
-                
-                {/* Footer-Seiten */}
-                <Route path="/datenschutz" element={<DatenschutzPage />} />
-                <Route path="/nutzungsbedingungen" element={<NutzungsbedingungenPage />} />
-                <Route path="/impressum" element={<ImpressumPage />} />
-                <Route path="/kontakt" element={<KontaktPage />} />
-                
-                {/* 404 Seite */}
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
+              <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loader size="large" /></div>}>
+                <Routes>
+                  {/* Öffentliche Routen */}
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/verify-email" element={<VerifyEmailPage />} />
+                  <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                  <Route path="/reset-password" element={<ResetPasswordPage />} />
+                  <Route path="/survey/:surveyId" element={<TakeSurveyPage />} />
+                  
+                  {/* Geschützte Routen (nur für authentifizierte Benutzer) */}
+                  <Route element={<ProtectedRoute />}>
+                    <Route path="/teacher/results/:surveyId" element={<SurveyResultsPageWrapper />} />
+                  </Route>
+                  
+                  {/* Geschützte Routen für Studenten */}
+                  <Route element={<ProtectedRoute />}>
+                    <Route path="/student" element={<StudentDashboard />} />
+                  </Route>
+                  
+                  {/* Geschützte Routen (nur für Lehrer) */}
+                  <Route element={<ProtectedRoute requireTeacher={true} />}>
+                    <Route path="/teacher" element={<TeacherDashboardPage />} />
+                    <Route path="/teacher/create" element={<CreateSurveyPage />} />
+                    <Route path="/teacher/edit/:surveyId" element={<EditSurveyPage />} />
+                    <Route path="/teacher/students" element={<StudentManagement />} />
+                  </Route>
+                  
+                  {/* Footer-Seiten */}
+                  <Route path="/datenschutz" element={<DatenschutzPage />} />
+                  <Route path="/nutzungsbedingungen" element={<NutzungsbedingungenPage />} />
+                  <Route path="/impressum" element={<ImpressumPage />} />
+                  <Route path="/kontakt" element={<KontaktPage />} />
+                  
+                  {/* 404 Seite */}
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
             </main>
             <footer className="bg-primary-dark py-8 text-center text-white text-sm border-t border-primary relative">
               <div className="container mx-auto px-4">

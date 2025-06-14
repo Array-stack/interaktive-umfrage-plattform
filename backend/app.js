@@ -3,6 +3,10 @@ const envPath = process.env.NODE_ENV === 'production'
   ? './.env.production' 
   : '.env';
 require('dotenv').config({ path: envPath });
+
+// Setze die Umgebungsvariable für den Datenbankpfad explizit
+process.env.DATABASE_PATH = process.env.DATABASE_PATH || './data/surveys.db';
+console.log('Datenbankpfad in app.js:', process.env.DATABASE_PATH);
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -95,7 +99,13 @@ app.use((req, res, next) => {
   next();
 });
 
-console.log('Achtung: Authentifizierung ist deaktiviert!');
+// Authentifizierungsstatus basierend auf Umgebungsvariable
+const authEnabled = process.env.ENABLE_AUTH === 'true';
+if (authEnabled) {
+  console.log('Authentifizierung ist aktiviert.');
+} else {
+  console.log('Achtung: Authentifizierung ist deaktiviert!');
+}
 
 // API-Routen
 const apiRoutes = require('./routes');

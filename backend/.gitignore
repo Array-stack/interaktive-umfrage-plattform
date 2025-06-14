@@ -7,6 +7,7 @@
 .env
 .env.*
 !.env.example
+!.env.production.example
 
 # Logs
 logs
@@ -22,3 +23,4352 @@ temp/
 /data/
 *.sqlite
 *.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+
+# Abhängigkeiten
+node_modules/
+
+# Temporäre Dateien
+tmp/
+temp/
+# In .gitignore
+/data/
+*.sqlite
+*.sqlite3
+
+# Umgeb

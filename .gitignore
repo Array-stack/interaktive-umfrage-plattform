@@ -15,6 +15,7 @@
 .env
 .env.*
 !.env.example
+!.env.production.example
 
 # Logs
 logs
@@ -62,3 +63,3645 @@ Thumbs.db
 d
 was zutun.txt
 Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+# Lokale Entwicklung
+*.local
+
+# SQLite-Datenbank
+*.db
+*.db-shm
+*.db-wal
+
+# Temporäre und Backup-Dateien
+*.backup
+*.backup.*
+*.timestamp-*
+*.update
+d
+was zutun.txt
+Agent-hosting-Prompt
+
+# Umgebungsvariablen
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor-Verzeichnisse und -Dateien
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+*.orig
+*.sublime-*
+*.sublime-workspace
+
+# Testabdeckung
+/coverage
+.nyc_output
+
+#

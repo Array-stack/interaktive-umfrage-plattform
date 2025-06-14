@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
       'import.meta.env.VITE_API_BASE_URL': JSON.stringify(
         mode === 'development'
           ? 'http://localhost:8080/api'
-          : env.VITE_API_BASE_URL || 'https://interaktive-umfrage-plattform-nechts.up.railway.app/api'
+          : env.VITE_API_BASE_URL || '/api' // Änderung hier: Verwenden Sie relativen Pfad
       )
     },
     resolve: {

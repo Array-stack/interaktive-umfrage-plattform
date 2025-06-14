@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Lade Umgebungsvariablen basierend auf der aktuellen Umgebung
 const envPath = process.env.NODE_ENV === 'production' 
   ? './.env.production' 
@@ -99,11 +100,17 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Response Header Middleware
+// Debug-Middleware VOR den Routen platzieren
+app.use((req, res, next) => {
+  console.log(`[DEBUG] Anfrage an: ${req.method} ${req.originalUrl}`);
+  console.log(`[DEBUG] Headers: ${JSON.stringify(req.headers)}`);
+  next();
+});
+
 // Response Header Middleware
 app.use((req, res, next) => {
   // Setze Content-Type NUR für API-Routen, nicht für statische Dateien
-  if (req.path.startsWith('/api/')) {
+  if (req.originalUrl.startsWith('/api/')) {
     res.setHeader('Content-Type', 'application/json');
   }
   
@@ -152,46 +159,40 @@ app.get('/', (req, res) => {
 });
 
 // API-Routen einbinden
-const authRoutes = require('./routes/auth.routes');
-const surveyRoutes = require('./routes/survey.routes');
-const surveyResponseRoutes = require('./routes/survey.responses.routes');
-const studentRoutes = require('./routes/student.routes');
-const teacherRoutes = require('./routes/teacher.routes');
-
-// Direkte Einbindung der Routen unter /api
-app.use('/api/auth', authRoutes);
-app.use('/api/surveys', surveyRoutes);
-app.use('/api/survey-responses', surveyResponseRoutes);
-app.use('/api/student', studentRoutes);
-app.use('/api/teacher', teacherRoutes);
+const apiRoutes = require('./routes');
+app.use('/api', apiRoutes);
 
 // 404 Handler für API-Routen - MUSS VOR der statischen Datei-Middleware stehen
 app.use('/api/*', (req, res) => {
+  // Explizit JSON Content-Type setzen
+  res.setHeader('Content-Type', 'application/json');
   res.status(404).json({ error: 'API-Endpunkt nicht gefunden' });
 });
 
 // Statische Dateien für Produktion - NACH den API-Routen
-if (process.env.NODE_ENV === 'production') { 
-  const buildPath = path.join(__dirname, '../dist'); 
+if (process.env.NODE_ENV === 'production') {
+  const buildPath = path.join(__dirname, '../dist');
 
-  // Statische Dateien bereitstellen, aber API-Anfragen STRIKT überspringen
-  app.use((req, res, next) => { 
-    if (req.path.startsWith('/api/')) {
-      return next(); 
+  // Statische Dateien nur für Nicht-API-Routen
+  app.use((req, res, next) => {
+    // Strikte Prüfung auf API-Pfade mit originalUrl
+    if (req.originalUrl.startsWith('/api/')) {
+      return next();
     }
-    express.static(buildPath)(req, res, next); 
-  }); 
+    express.static(buildPath)(req, res, next);
+  });
 
-  // SPA-Fallback NUR für Nicht-API-Routen - WICHTIG: Diese Middleware darf keine API-Anfragen abfangen
-  app.get('*', (req, res, next) => { 
-    if (req.path.startsWith('/api/')) {
-      return next(); 
+  // ❗ Wichtig: Fallback auf index.html nur für Nicht-API
+  app.get('*', (req, res, next) => {
+    // Strikte Prüfung auf API-Pfade mit originalUrl
+    if (req.originalUrl.startsWith('/api/')) {
+      return next(); // Weiter zu API-Handler oder 404
     }
-    res.sendFile(path.join(buildPath, 'index.html')); 
-  }); 
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
 }
 
-// Globaler 404 Handler für alle anderen Routen
+// 404 Handler
 app.use(notFoundHandler);
 
 // Globaler Fehlerhandler
@@ -211,13 +212,6 @@ process.on('SIGTERM', () => {
     console.log('Server heruntergefahren');
     process.exit(0);
   });
-});
-
-// Debug-Middleware VOR dem Export platzieren
-app.use((req, res, next) => {
-  console.log(`[DEBUG] Anfrage an: ${req.method} ${req.path}`);
-  console.log(`[DEBUG] Headers: ${JSON.stringify(req.headers)}`);
-  next();
 });
 
 module.exports = app;

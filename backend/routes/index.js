@@ -8,15 +8,17 @@ const surveyResponseRoutes = require('./survey.responses.routes');
 const studentRoutes = require('./student.routes');
 const teacherRoutes = require('./teacher.routes'); // Neue Zeile
 
-// API-Versionspräfix wird nicht mehr benötigt, da es in app.js verwendet wird
-// const API_PREFIX = '/api';
+// API-Versionspräfix
+const API_PREFIX = '/api';
 
 // Verbinde Routen mit dem Hauptrouter
 router.use('/auth', authRoutes);
+// Behalte den ursprünglichen Pfad bei
 router.use('/surveys', surveyRoutes);
+// Ändere den Pfad für die Antworten-Routen zu einem spezifischeren Pfad
 router.use('/survey-responses', surveyResponseRoutes);
 router.use('/student', studentRoutes);
-router.use('/teacher', teacherRoutes);
+router.use('/teacher', teacherRoutes); // Neue Zeile
 
 // Health Check Endpunkt
 router.get('/health', (req, res) => {

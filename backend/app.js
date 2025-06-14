@@ -100,11 +100,16 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Response Header Middleware
-// Response Header Middleware
+// Response Header Middleware - ENTFERNEN oder ÄNDERN
+// Diese Middleware setzt den Content-Type für ALLE Antworten auf application/json
+// Das verhindert, dass HTML-Dateien korrekt ausgeliefert werden
 app.use((req, res, next) => {
-  // Setze Standard-Header für alle Antworten
-  res.setHeader('Content-Type', 'application/json');
+  // Setze Content-Type NUR für API-Routen, nicht für statische Dateien
+  if (req.path.startsWith('/api/')) {
+    res.setHeader('Content-Type', 'application/json');
+  }
   
+  // Rest der Middleware unverändert lassen
   // CORS-Header
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -160,23 +165,24 @@ app.use('/api/*', (req, res) => {
 // Statische Dateien für Produktion - NACH den API-Routen
 if (process.env.NODE_ENV === 'production') {
   const buildPath = path.join(__dirname, '../dist');
-  
-  // Wichtig: Statische Dateien nur für Nicht-API-Pfade
+
+  // Statische Dateien nur für Nicht-API-Routen
   app.use((req, res, next) => {
     if (req.path.startsWith('/api/')) {
       return next();
     }
     express.static(buildPath)(req, res, next);
   });
-  
-  // Client-Side Routing - nur für Nicht-API-Pfade
+
+  // ❗ Wichtig: Fallback auf index.html nur für Nicht-API
   app.get('*', (req, res, next) => {
     if (req.path.startsWith('/api/')) {
-      return next();
+      return next(); // Weiter zu API-Handler oder 404
     }
     res.sendFile(path.join(buildPath, 'index.html'));
   });
 }
+
 
 // 404 Handler
 app.use(notFoundHandler);
@@ -200,10 +206,11 @@ process.on('SIGTERM', () => {
   });
 });
 
-module.exports = app;
-// Vor den API-Routen
+// Debug-Middleware VOR dem Export platzieren
 app.use((req, res, next) => {
   console.log(`[DEBUG] Anfrage an: ${req.method} ${req.path}`);
   console.log(`[DEBUG] Headers: ${JSON.stringify(req.headers)}`);
   next();
 });
+
+module.exports = app;

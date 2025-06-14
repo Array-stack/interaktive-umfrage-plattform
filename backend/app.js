@@ -132,10 +132,6 @@ app.use((req, res, next) => {
     };
   }
   
-  next();
-});
-
-// Rest der Middleware unverändert lassen
   // CORS-Header
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -160,6 +156,7 @@ app.use((req, res, next) => {
 
 // Request Logging
 app.use((req, res, next) => {
+  // @ts-ignore
   const start = Date.now();
   const clientIp = getClientIp(req);
   

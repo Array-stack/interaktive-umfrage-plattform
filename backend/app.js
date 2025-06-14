@@ -100,9 +100,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Response Header Middleware
-// Response Header Middleware - ENTFERNEN oder ÄNDERN
-// Diese Middleware setzt den Content-Type für ALLE Antworten auf application/json
-// Das verhindert, dass HTML-Dateien korrekt ausgeliefert werden
+// Response Header Middleware
 app.use((req, res, next) => {
   // Setze Content-Type NUR für API-Routen, nicht für statische Dateien
   if (req.path.startsWith('/api/')) {
@@ -154,33 +152,43 @@ app.get('/', (req, res) => {
 });
 
 // API-Routen einbinden
-const apiRoutes = require('./routes');
-app.use('/api', apiRoutes);
+const authRoutes = require('./routes/auth.routes');
+const surveyRoutes = require('./routes/survey.routes');
+const surveyResponseRoutes = require('./routes/survey.responses.routes');
+const studentRoutes = require('./routes/student.routes');
+const teacherRoutes = require('./routes/teacher.routes');
 
-// 404 Handler für API-Routen
+// Direkte Einbindung der Routen unter /api
+app.use('/api/auth', authRoutes);
+app.use('/api/surveys', surveyRoutes);
+app.use('/api/survey-responses', surveyResponseRoutes);
+app.use('/api/student', studentRoutes);
+app.use('/api/teacher', teacherRoutes);
+
+// 404 Handler für API-Routen - VOR der statischen Datei-Middleware
 app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'API-Endpunkt nicht gefunden' });
 });
 
 // Statische Dateien für Produktion - NACH den API-Routen
-if (process.env.NODE_ENV === 'production') {
-  const buildPath = path.join(__dirname, '../dist');
+if (process.env.NODE_ENV === 'production') { 
+  const buildPath = path.join(__dirname, '../dist'); 
 
-  // Statische Dateien nur für Nicht-API-Routen
-  app.use((req, res, next) => {
+  // Statische Dateien bereitstellen, aber API-Anfragen überspringen
+  app.use((req, res, next) => { 
     if (req.path.startsWith('/api/')) {
-      return next();
+      return next(); 
     }
-    express.static(buildPath)(req, res, next);
-  });
+    express.static(buildPath)(req, res, next); 
+  }); 
 
-  // ❗ Wichtig: Fallback auf index.html nur für Nicht-API
-  app.get('*', (req, res, next) => {
+  // SPA-Fallback NUR für Nicht-API-Routen
+  app.get('*', (req, res, next) => { 
     if (req.path.startsWith('/api/')) {
-      return next(); // Weiter zu API-Handler oder 404
+      return next(); 
     }
-    res.sendFile(path.join(buildPath, 'index.html'));
-  });
+    res.sendFile(path.join(buildPath, 'index.html')); 
+  }); 
 }
 
 

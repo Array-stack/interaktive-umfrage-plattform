@@ -4,7 +4,7 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { 
+      "config": {
         "distDir": "dist",
         "cleanUrls": true,
         "trailingSlash": false
@@ -24,6 +24,12 @@
       }
     },
     {
+      "src": "/api/.*",
+      "status": 404,
+      "headers": { "Content-Type": "application/json" },
+      "body": "{\"error\":\"API route not found\"}"
+    },
+    {
       "src": "/assets/(.*)",
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"
@@ -36,8 +42,5 @@
         "Cache-Control": "no-cache, no-store, must-revalidate"
       }
     }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

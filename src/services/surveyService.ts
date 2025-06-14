@@ -104,6 +104,13 @@ function transformSurveyApiResponse(data: any): Survey[] {
     console.warn('transformSurveyApiResponse: Keine Daten empfangen');
     return [];
   }
+  
+  // Neue Sicherheitsüberprüfung: Wenn data kein Array ist und kein gültiges Survey-Objekt
+  if (!Array.isArray(data) && (!data.id || !data.title)) {
+    console.error('transformSurveyApiResponse: Unerwartetes API-Antwortformat', data);
+    throw new Error("Unexpected API response format");
+  }
+  
   if (data.id && data.title) {
     console.log('transformSurveyApiResponse: Daten sind bereits ein gültiges Survey-Objekt');
     return [{
@@ -951,7 +958,7 @@ export const surveyService = {
           contentType,
           responsePreview: responseText.substring(0, 200) // Erste 200 Zeichen der Antwort
         });
-        return [];
+        throw new Error('Unexpected API response: Content-Type is not application/json');
       }
       
       // JSON-Antwort verarbeiten
@@ -959,6 +966,12 @@ export const surveyService = {
         console.error('[getRecommendedSurveys] Fehler beim Parsen der JSON-Antwort:', error);
         throw new Error('Ungültiges JSON-Format in der Antwort');
       });
+      
+      // Überprüfen, ob die Antwort ein Array ist
+      if (!Array.isArray(responseData)) {
+        console.error('[getRecommendedSurveys] Unerwartetes Antwortformat: Kein Array erhalten', responseData);
+        throw new Error('Unexpected API response: Not an array');
+      }
       
       // Bei HTTP-Fehlern
       if (!response.ok) {

@@ -68,8 +68,12 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Sicherheits- und Response-Header Middleware
+// Sicherheits- und Response-Header Middleware
 app.use((req, res, next) => {
-  res.setHeader('Content-Type', 'application/json');
+  // Nur für API-Routen den Content-Type auf application/json setzen
+  if (req.path.startsWith('/api/')) {
+    res.setHeader('Content-Type', 'application/json');
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
   res.setHeader('Access-Control-Allow-Credentials', 'true');

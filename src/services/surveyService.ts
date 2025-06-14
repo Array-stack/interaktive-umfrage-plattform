@@ -48,8 +48,26 @@ console.log('Using API_BASE_URL:', API_BASE_URL);
  * Verarbeitet API-Antworten und wirft Fehler bei HTTP-Fehlern
  */
 async function handleApiResponse<T>(response: Response): Promise<T> {
-  const data = await response.json().catch(() => ({}));
+  // Content-Type überprüfen
+  const contentType = response.headers.get('content-type');
+  const isJson = contentType && contentType.includes('application/json');
   
+  if (!isJson) {
+    console.error('API Error: Ungültiger Content-Type', {
+      status: response.status,
+      contentType,
+      url: response.url
+    });
+    throw new Error(`Unerwarteter Content-Type: ${contentType || 'unbekannt'}`);
+  }
+  
+  // Versuche, die Antwort als JSON zu parsen
+  const data = await response.json().catch(error => {
+    console.error('API Error: Ungültiges JSON-Format', error);
+    throw new Error('Ungültiges JSON-Format in der Antwort');
+  });
+  
+  // Überprüfe HTTP-Status
   if (!response.ok) {
     console.error('API Error:', response.status, data);
     throw new Error(
@@ -241,14 +259,26 @@ export const surveyService = {
         return [];
       }
       
-      const data = await handleApiResponse<any[]>(response);
-      console.log('API Response:', data);
-      const surveys = transformSurveyApiResponse(data);
-      console.log('Transformed surveys:', surveys);
-      return surveys;
+      try {
+        const data = await handleApiResponse<any[]>(response);
+        console.log('API Response:', data);
+        
+        // Überprüfen, ob die Antwort ein Array ist
+        if (!Array.isArray(data)) {
+          console.error('Unerwartetes Antwortformat: Kein Array erhalten', data);
+          return [];
+        }
+        
+        const surveys = transformSurveyApiResponse(data);
+        console.log('Transformed surveys:', surveys);
+        return surveys;
+      } catch (apiError) {
+        console.error('API-Verarbeitungsfehler:', apiError);
+        return [];
+      }
     } catch (error) {
       console.error('Error in getSurveys:', error);
-      throw error;
+      return []; // Leeres Array zurückgeben, anstatt den Fehler weiterzuwerfen
     }
   },
 
@@ -272,16 +302,28 @@ export const surveyService = {
         return null;
       }
       
-      const data = await response.json().catch(e => {
+      // Content-Type überprüfen
+      const contentType = response.headers.get('content-type');
+      const isJson = contentType && contentType.includes('application/json');
+      
+      if (!isJson) {
+        console.error(`Umfrage mit ID ${surveyId}: Ungültiger Content-Type:`, contentType);
+        return null;
+      }
+      
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
         console.error('Fehler beim Parsen der Antwort:', e);
         return null;
-      });
+      }
       
       console.log('Rohdaten der API-Antwort:', JSON.stringify(data, null, 2));
       
       if (!response.ok) {
-        console.error('Fehler beim Laden der Umfrage:', data.message || 'Unbekannter Fehler');
-        throw new Error(data.message || 'Fehler beim Laden der Umfrage');
+        console.error('Fehler beim Laden der Umfrage:', data?.message || 'Unbekannter Fehler');
+        return null; // Null zurückgeben anstatt einen Fehler zu werfen
       }
       
       // Stelle sicher, dass die Daten als Array an transformSurveyApiResponse übergeben werden
@@ -437,10 +479,32 @@ export const surveyService = {
         return;
       }
 
-      // Versuche, die Antwort als JSON zu parsen
-      const errorData = await response.json().catch(() => ({
-        error: `HTTP-Fehler ${response.status}: ${response.statusText}`
-      }));
+      // Content-Type überprüfen
+      const contentType = response.headers.get('content-type');
+      const isJson = contentType && contentType.includes('application/json');
+      
+      let errorData: any = {};
+      
+      if (isJson) {
+        // Versuche, die Antwort als JSON zu parsen
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          console.error('Fehler beim Parsen der Fehlerantwort:', e);
+          errorData = { error: `HTTP-Fehler ${response.status}: ${response.statusText}` };
+        }
+      } else {
+        // Bei nicht-JSON-Antworten
+        try {
+          const textResponse = await response.text();
+          errorData = { 
+            error: `HTTP-Fehler ${response.status}: ${response.statusText}`,
+            responseText: textResponse.substring(0, 200) // Erste 200 Zeichen der Antwort
+          };
+        } catch (e) {
+          errorData = { error: `HTTP-Fehler ${response.status}: ${response.statusText}` };
+        }
+      }
       
       console.error('API Error beim Löschen:', response.status, errorData);
       
@@ -457,14 +521,8 @@ export const surveyService = {
       
       throw new Error(errorMessage);
     } catch (error) {
-      // Wenn der Fehler bereits ein Error-Objekt ist, wirf es weiter
-      if (error instanceof Error) {
-        throw error;
-      }
-      
-      // Ansonsten erstelle einen neuen Fehler mit besserer Beschreibung
-      console.error('Unerwarteter Fehler beim Löschen:', error);
-      throw new Error('Unerwarteter Fehler beim Löschen der Umfrage');
+      console.error('Fehler beim Löschen der Umfrage:', error);
+      throw error;
     }
   },
 
@@ -506,6 +564,7 @@ export const surveyService = {
       // Erstelle die ursprünglichen Request-Header
       const headers: HeadersInit = {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
         ...authHeaders
       };
       
@@ -513,7 +572,7 @@ export const surveyService = {
       const response = await fetch(
         `${API_BASE_URL}/survey-responses/surveys/${surveyId}`,
         {
-          method: 'GET',
+          method: 'POST', // Korrigiert von GET zu POST
           headers,
           credentials: 'include',
           body: JSON.stringify(requestData)
@@ -556,11 +615,23 @@ export const surveyService = {
    * Verarbeitet die Antwort des Servers nach dem Absenden einer Umfrage
    */
   async handleSubmitResponse(response: Response, surveyId: string): Promise<SurveyResponse> {
+    // Content-Type überprüfen
+    const contentType = response.headers.get('content-type');
+    const isJson = contentType && contentType.includes('application/json');
+    
     // Versuche, die Antwort zu parsen, auch wenn ein Fehler aufgetreten ist
     let responseData;
     try {
-      const responseText = await response.text();
-      responseData = responseText ? JSON.parse(responseText) : {};
+      if (isJson) {
+        responseData = await response.json();
+      } else {
+        const responseText = await response.text();
+        console.warn('[handleSubmitResponse] Nicht-JSON-Antwort erhalten:', {
+          contentType,
+          preview: responseText.substring(0, 200)
+        });
+        responseData = { message: 'Ungültige Antwort vom Server (kein JSON)' };
+      }
     } catch (e) {
       console.error('[handleSubmitResponse] Fehler beim Parsen der Antwort:', e);
       responseData = { message: 'Ungültige Antwort vom Server' };
@@ -594,7 +665,7 @@ export const surveyService = {
       if (!participatedSurveys.includes(surveyId)) {
         participatedSurveys.push(surveyId);
         localStorage.setItem(
-          'participated_surveys', 
+          'participated_surveys',
           JSON.stringify(participatedSurveys)
         );
         console.log(`[handleSubmitResponse] Umfrage ${surveyId} zur Teilnahmeliste hinzugefügt`);
@@ -958,19 +1029,38 @@ export const surveyService = {
           contentType,
           responsePreview: responseText.substring(0, 200) // Erste 200 Zeichen der Antwort
         });
-        throw new Error('Unexpected API response: Content-Type is not application/json');
+        return []; // Leeres Array zurückgeben anstatt einen Fehler zu werfen
       }
       
       // JSON-Antwort verarbeiten
-      const responseData = await response.json().catch(error => {
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch (error) {
         console.error('[getRecommendedSurveys] Fehler beim Parsen der JSON-Antwort:', error);
-        throw new Error('Ungültiges JSON-Format in der Antwort');
-      });
+        return []; // Leeres Array zurückgeben bei JSON-Parsing-Fehlern
+      }
       
       // Überprüfen, ob die Antwort ein Array ist
       if (!Array.isArray(responseData)) {
         console.error('[getRecommendedSurveys] Unerwartetes Antwortformat: Kein Array erhalten', responseData);
-        throw new Error('Unexpected API response: Not an array');
+        
+        // Versuchen, ein Array aus der Antwort zu extrahieren, falls es ein Objekt mit einer Array-Eigenschaft ist
+        if (responseData && typeof responseData === 'object') {
+          // Suche nach Array-Eigenschaften im Objekt
+          const possibleArrays = Object.values(responseData).filter(value => Array.isArray(value));
+          if (possibleArrays.length > 0) {
+            // Verwende das erste gefundene Array
+            console.log('[getRecommendedSurveys] Array-Eigenschaft im Objekt gefunden, verwende diese');
+            responseData = possibleArrays[0];
+          } else {
+            // Wenn keine Array-Eigenschaft gefunden wurde, leeres Array zurückgeben
+            console.error('[getRecommendedSurveys] Keine Array-Eigenschaft im Objekt gefunden');
+            return [];
+          }
+        } else {
+          return [];
+        }
       }
       
       // Bei HTTP-Fehlern

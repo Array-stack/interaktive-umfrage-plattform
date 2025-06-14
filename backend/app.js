@@ -14,6 +14,13 @@ const db = require('./database');
 const app = express();
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+// Debug-Middleware VOR allen anderen Middlewares platzieren
+app.use((req, res, next) => {
+  console.log(`[DEBUG] Anfrage an: ${req.method} ${req.originalUrl}`);
+  console.log(`[DEBUG] Headers: ${JSON.stringify(req.headers)}`);
+  next();
+});
+
 // Hilfsfunktion zur Ermittlung der Client-IP
 const getClientIp = (req) => {
   const forwarded = req.headers['x-forwarded-for'];
@@ -100,13 +107,7 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Debug-Middleware VOR den Routen platzieren
-app.use((req, res, next) => {
-  console.log(`[DEBUG] Anfrage an: ${req.method} ${req.originalUrl}`);
-  console.log(`[DEBUG] Headers: ${JSON.stringify(req.headers)}`);
-  next();
-});
-
+// Response Header Middleware
 // Response Header Middleware
 app.use((req, res, next) => {
   // Setze Content-Type NUR für API-Routen, nicht für statische Dateien
@@ -158,9 +159,19 @@ app.get('/', (req, res) => {
   res.json({ message: 'Willkommen zur Umfrage-API' });
 });
 
-// API-Routen einbinden
-const apiRoutes = require('./routes');
-app.use('/api', apiRoutes);
+// API-Routen einbinden - WICHTIG: Direkte Einbindung der einzelnen Routen
+const authRoutes = require('./routes/auth.routes');
+const surveyRoutes = require('./routes/survey.routes');
+const surveyResponseRoutes = require('./routes/survey.responses.routes');
+const studentRoutes = require('./routes/student.routes');
+const teacherRoutes = require('./routes/teacher.routes');
+
+// Direkte Einbindung der Routen unter /api
+app.use('/api/auth', authRoutes);
+app.use('/api/surveys', surveyRoutes);
+app.use('/api/survey-responses', surveyResponseRoutes);
+app.use('/api/student', studentRoutes);
+app.use('/api/teacher', teacherRoutes);
 
 // 404 Handler für API-Routen - MUSS VOR der statischen Datei-Middleware stehen
 app.use('/api/*', (req, res) => {

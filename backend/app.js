@@ -108,14 +108,34 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Response Header Middleware
-// Response Header Middleware
+// Response Header Middleware - MUSS VOR allen anderen Middlewares stehen
 app.use((req, res, next) => {
-  // Setze Content-Type NUR für API-Routen, nicht für statische Dateien
+  // Strikte Prüfung auf API-Pfade mit originalUrl
   if (req.originalUrl.startsWith('/api/')) {
+    // Explizit Content-Type setzen und sicherstellen, dass er nicht überschrieben wird
     res.setHeader('Content-Type', 'application/json');
+    
+    // Wichtig: Originale res.send und res.json Methoden speichern
+    const originalSend = res.send;
+    const originalJson = res.json;
+    
+    // res.send überschreiben, um sicherzustellen, dass Content-Type erhalten bleibt
+    res.send = function(body) {
+      res.setHeader('Content-Type', 'application/json');
+      return originalSend.call(this, body);
+    };
+    
+    // res.json überschreiben, um sicherzustellen, dass Content-Type erhalten bleibt
+    res.json = function(body) {
+      res.setHeader('Content-Type', 'application/json');
+      return originalJson.call(this, body);
+    };
   }
   
-  // Rest der Middleware unverändert lassen
+  next();
+});
+
+// Rest der Middleware unverändert lassen
   // CORS-Header
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {

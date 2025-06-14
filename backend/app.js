@@ -165,7 +165,7 @@ app.use('/api/survey-responses', surveyResponseRoutes);
 app.use('/api/student', studentRoutes);
 app.use('/api/teacher', teacherRoutes);
 
-// 404 Handler für API-Routen - VOR der statischen Datei-Middleware
+// 404 Handler für API-Routen - MUSS VOR der statischen Datei-Middleware stehen
 app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'API-Endpunkt nicht gefunden' });
 });
@@ -174,7 +174,7 @@ app.use('/api/*', (req, res) => {
 if (process.env.NODE_ENV === 'production') { 
   const buildPath = path.join(__dirname, '../dist'); 
 
-  // Statische Dateien bereitstellen, aber API-Anfragen überspringen
+  // Statische Dateien bereitstellen, aber API-Anfragen STRIKT überspringen
   app.use((req, res, next) => { 
     if (req.path.startsWith('/api/')) {
       return next(); 
@@ -182,7 +182,7 @@ if (process.env.NODE_ENV === 'production') {
     express.static(buildPath)(req, res, next); 
   }); 
 
-  // SPA-Fallback NUR für Nicht-API-Routen
+  // SPA-Fallback NUR für Nicht-API-Routen - WICHTIG: Diese Middleware darf keine API-Anfragen abfangen
   app.get('*', (req, res, next) => { 
     if (req.path.startsWith('/api/')) {
       return next(); 
@@ -191,8 +191,7 @@ if (process.env.NODE_ENV === 'production') {
   }); 
 }
 
-
-// 404 Handler
+// Globaler 404 Handler für alle anderen Routen
 app.use(notFoundHandler);
 
 // Globaler Fehlerhandler

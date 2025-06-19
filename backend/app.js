@@ -89,9 +89,21 @@ app.options('*', cors(corsOptions));
  */
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (origin && (allowedOrigins.includes(origin) || /^https?:\/\/.*\.railway\.app$/.test(origin))) {
+  // Erweiterte Prüfung für Vercel und Railway Domains
+  if (origin && (
+    allowedOrigins.includes(origin.toLowerCase()) || 
+    /^https?:\/\/.*\.railway\.app$/.test(origin) ||
+    /^https?:\/\/.*\.vercel\.app$/.test(origin)
+  )) {
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Credentials', 'true');
+    // Für OPTIONS-Anfragen alle notwendigen CORS-Header setzen
+    if (req.method === 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+      res.header('Access-Control-Max-Age', '86400');
+      return res.status(200).end();
+    }
   }
   next();
 });
@@ -112,13 +124,11 @@ app.use((req, res, next) => {
   // if (req.path.startsWith('/api/')) {
   //   res.setHeader('Content-Type', 'application/json');
   // }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  // Sicherheitsheader setzen (keine CORS-Header hier, die werden in der CORS-Middleware gesetzt)
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-XSS-Protection', '1; mode=block');
-  if (req.method === 'OPTIONS') return res.status(200).end();
+  // OPTIONS-Anfragen werden bereits in der CORS-Middleware behandelt
   next();
 });
 

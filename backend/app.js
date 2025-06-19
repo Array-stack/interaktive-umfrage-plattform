@@ -89,19 +89,20 @@ app.options('*', cors(corsOptions));
  */
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  // Erweiterte Prüfung für Vercel und Railway Domains
+  // Erweiterte Prüfung für Vercel und Railway Domains mit verbesserten Regex-Patterns
   if (origin && (
     allowedOrigins.includes(origin.toLowerCase()) || 
     /^https?:\/\/.*\.railway\.app$/.test(origin) ||
-    /^https?:\/\/.*\.vercel\.app$/.test(origin)
+    /^https?:\/\/.*interaktive-umfrage-plattform.*\.vercel\.app$/.test(origin)
   )) {
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Credentials', 'true');
-    // Für OPTIONS-Anfragen alle notwendigen CORS-Header setzen
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+    res.header('Access-Control-Max-Age', '86400');
+    
+    // Für OPTIONS-Anfragen sofort mit 200 antworten
     if (req.method === 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
-      res.header('Access-Control-Max-Age', '86400');
       return res.status(200).end();
     }
   }
@@ -112,23 +113,17 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Sicherheits- und Response-Header Middleware
+// Sicherheits-Header Middleware (getrennt von CORS-Headern)
 /**
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
  */
 app.use((req, res, next) => {
-  // Diese Zeile wurde entfernt, da sie mit res.json() in Konflikt geraten könnte
-  // und zu 'Unexpected Content-Type: text/plain'-Fehlern führen kann
-  // if (req.path.startsWith('/api/')) {
-  //   res.setHeader('Content-Type', 'application/json');
-  // }
-  // Sicherheitsheader setzen (keine CORS-Header hier, die werden in der CORS-Middleware gesetzt)
+  // Sicherheitsheader setzen (keine CORS-Header hier)
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-XSS-Protection', '1; mode=block');
-  // OPTIONS-Anfragen werden bereits in der CORS-Middleware behandelt
   next();
 });
 

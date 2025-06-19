@@ -12,7 +12,9 @@ export default defineConfig(({ mode }) => {
         mode === 'development'
           ? '/api'  // ✅ Kein doppeltes /api im Dev
           : env.VITE_API_BASE_URL || 'https://interaktive-umfrage-plattform-nechts.up.railway.app/api'
-      )
+      ),
+      // Explizit den Content-Type für API-Anfragen setzen
+      'import.meta.env.VITE_API_CONTENT_TYPE': JSON.stringify('application/json')
     },
     resolve: {
       alias: {

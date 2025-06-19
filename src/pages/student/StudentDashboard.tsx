@@ -279,17 +279,32 @@ const StudentDashboard: React.FC = () => {
       }
     } catch (err) {
       console.error(t('student_dashboard_error') + ':', err);
-      const errorMessage = err instanceof Error ? err.message : t('student_dashboard_error');
-      setError(`${t('student_dashboard_error')}: ${errorMessage}`);
       
-      // Füge Debug-Informationen hinzu
+      // Verbesserte Fehlerbehandlung mit mehr Details
+      let errorMessage = t('student_dashboard_error');
+      
       if (err instanceof Error) {
+        // Spezifische Fehlerbehandlung für API-Fehler
+        if (err.message.includes('HTML statt JSON')) {
+          errorMessage = 'API-Verbindungsfehler: Der Server hat HTML statt JSON zurückgegeben. ' +
+            'Bitte überprüfen Sie die API-Konfiguration und stellen Sie sicher, dass der Backend-Server erreichbar ist.';
+        } else if (err.message.includes('Ungültiges JSON-Format')) {
+          errorMessage = 'API-Fehler: Ungültiges Antwortformat vom Server. ' +
+            'Bitte überprüfen Sie die API-Konfiguration und stellen Sie sicher, dass der Backend-Server korrekt antwortet.';
+        } else {
+          errorMessage = err.message;
+        }
+        
+        // Füge Debug-Informationen hinzu
         console.error('Fehlerdetails:', {
           name: err.name,
           message: err.message,
           stack: err.stack
         });
       }
+      
+      // Setze die Fehlermeldung für die Benutzeroberfläche
+      setError(errorMessage);
     } finally {
       setLoading(false);
       setIsRefreshing(false);

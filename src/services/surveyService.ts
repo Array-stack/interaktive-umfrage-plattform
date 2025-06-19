@@ -60,9 +60,26 @@ async function handleApiResponse<T>(response: Response): Promise<T> {
         `HTTP-Fehler ${response.status}: ${response.statusText}`
       );
     } catch (parseError) {
-      // Wenn das Parsen fehlschlägt, werfen wir einen allgemeinen Fehler
-      console.error('API Error: Konnte Fehlerantwort nicht parsen', parseError);
-      throw new Error(`HTTP-Fehler ${response.status}: ${response.statusText}`);
+      // Wenn das Parsen fehlschlägt, versuchen wir, den Text zu lesen
+      try {
+        const errorText = await response.clone().text();
+        // Überprüfen, ob es sich um HTML handelt
+        if (errorText.includes('<!DOCTYPE') || errorText.includes('<html')) {
+          console.error('API Error: HTML-Antwort erhalten statt JSON', {
+            status: response.status,
+            url: response.url,
+            textPreview: errorText.substring(0, 100) + '...'
+          });
+          throw new Error(`API-Fehler: Server hat HTML statt JSON zurückgegeben. Möglicherweise ist der API-Server nicht erreichbar oder falsch konfiguriert.`);
+        } else {
+          console.error('API Error: Konnte Fehlerantwort nicht parsen', parseError, 'Antworttext:', errorText);
+          throw new Error(`HTTP-Fehler ${response.status}: ${response.statusText}`);
+        }
+      } catch (textError) {
+        // Wenn auch das Lesen des Texts fehlschlägt
+        console.error('API Error: Konnte Fehlerantwort nicht lesen', textError);
+        throw new Error(`HTTP-Fehler ${response.status}: ${response.statusText}`);
+      }
     }
   }
 
@@ -89,6 +106,16 @@ async function handleApiResponse<T>(response: Response): Promise<T> {
       return {} as T; // Leeres Objekt zurückgeben
     }
     
+    // Überprüfen, ob es sich um HTML handelt
+    if (text.includes('<!DOCTYPE') || text.includes('<html')) {
+      console.error('API Error: HTML-Antwort erhalten statt JSON', {
+        status: response.status,
+        url: response.url,
+        textPreview: text.substring(0, 100) + '...'
+      });
+      throw new Error(`API-Fehler: Server hat HTML statt JSON zurückgegeben. Möglicherweise ist der API-Server nicht erreichbar oder falsch konfiguriert.`);
+    }
+    
     // Versuche, den Text als JSON zu parsen
     try {
       const data = JSON.parse(text);
@@ -109,7 +136,9 @@ async function handleApiResponse<T>(response: Response): Promise<T> {
 function getAuthHeader(): HeadersInit {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    // Explizit den Content-Type setzen
+    'X-Requested-With': 'XMLHttpRequest'
   };
   
   // Nur im Browser ausführen
@@ -273,35 +302,62 @@ export const surveyService = {
   async getSurveys(): Promise<Survey[]> {
     try {
       console.log('Fetching surveys from:', `${API_BASE_URL}/surveys`);
-      const response = await fetch(`${API_BASE_URL}/surveys`, {
-        headers: getAuthHeader()
-      });
+      console.log('Using headers:', getAuthHeader());
       
-      if (response.status === 404) {
-        console.log('No surveys found (404)');
-        return [];
-      }
+      // Timeout für die Anfrage setzen (10 Sekunden)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
       
       try {
-        const data = await handleApiResponse<any[]>(response);
-        console.log('API Response:', data);
+        const response = await fetch(`${API_BASE_URL}/surveys`, {
+          headers: getAuthHeader(),
+          signal: controller.signal
+        });
         
-        // Überprüfen, ob die Antwort ein Array ist
-        if (!Array.isArray(data)) {
-          console.error('Unerwartetes Antwortformat: Kein Array erhalten', data);
+        clearTimeout(timeoutId); // Timeout aufheben
+        
+        console.log('API response status:', response.status);
+        console.log('API response headers:', [...response.headers.entries()]);
+        
+        if (response.status === 404) {
+          console.log('No surveys found (404)');
           return [];
         }
         
-        const surveys = transformSurveyApiResponse(data);
-        console.log('Transformed surveys:', surveys);
-        return surveys;
-      } catch (apiError) {
-        console.error('API-Verarbeitungsfehler:', apiError);
-        return [];
+        try {
+          const data = await handleApiResponse<any[]>(response);
+          console.log('API Response data type:', typeof data);
+          console.log('API Response is array:', Array.isArray(data));
+          console.log('API Response preview:', JSON.stringify(data).substring(0, 200) + '...');
+          
+          // Überprüfen, ob die Antwort ein Array ist
+          if (!Array.isArray(data)) {
+            console.error('Unerwartetes Antwortformat: Kein Array erhalten', data);
+            return [];
+          }
+          
+          const surveys = transformSurveyApiResponse(data);
+          console.log('Transformed surveys count:', surveys.length);
+          return surveys;
+        } catch (apiError) {
+          console.error('API-Verarbeitungsfehler:', apiError);
+          // Fehler an die UI weitergeben
+          throw apiError;
+        }
+      } catch (fetchError) {
+        clearTimeout(timeoutId); // Timeout aufheben
+        
+        if (fetchError instanceof Error && fetchError.name === 'AbortError') {
+          console.error('API-Anfrage hat das Timeout überschritten (10s)');
+          throw new Error('API-Anfrage hat das Timeout überschritten. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.');
+        }
+        
+        console.error('Fetch-Fehler in getSurveys:', fetchError);
+        throw fetchError;
       }
     } catch (error) {
       console.error('Error in getSurveys:', error);
-      return []; // Leeres Array zurückgeben, anstatt den Fehler weiterzuwerfen
+      throw error; // Fehler weitergeben, damit die UI ihn anzeigen kann
     }
   },
 

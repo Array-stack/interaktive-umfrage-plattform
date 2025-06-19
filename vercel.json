@@ -16,11 +16,12 @@
       "src": "/api/(?<path>.*)",
       "dest": "https://interaktive-umfrage-plattform-nechts.up.railway.app/api/$path",
       "headers": {
-        "Access-Control-Allow-Origin": "https://interaktive-umfrage-plattform.vercel.app",
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
         "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization",
         "Access-Control-Allow-Credentials": "true",
-        "X-Content-Type-Options": "nosniff"
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json"
       }
     },
     {

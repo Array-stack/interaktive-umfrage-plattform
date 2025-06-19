@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
       'import.meta.env.VITE_API_BASE_URL': JSON.stringify(
         mode === 'development'
           ? '/api'  // ✅ Kein doppeltes /api im Dev
-          : env.VITE_API_BASE_URL || '/api'
+          : env.VITE_API_BASE_URL || 'https://interaktive-umfrage-plattform-nechts.up.railway.app/api'
       )
     },
     resolve: {
@@ -40,7 +40,7 @@ export default defineConfig(({ mode }) => {
       minify: 'terser',
       terserOptions: {
         compress: {
-          drop_console: true,
+          drop_console: false, // Konsolen-Logs für Debugging beibehalten
           drop_debugger: true
         }
       },

@@ -27,8 +27,7 @@
     {
       "src": "/api/.*",
       "status": 404,
-      "headers": { "Content-Type": "application/json" },
-      "body": "{\"error\":\"API route not found\"}"
+      "headers": { "Content-Type": "application/json" }
     },
     {
       "src": "/assets/(.*)",

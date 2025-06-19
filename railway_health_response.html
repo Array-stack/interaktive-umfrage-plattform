@@ -12,15 +12,32 @@
     <title>OpinionBase - Professionelle Umfrageplattform</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon-DyOapm2s.svg" />
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@^19.1.0",
+          "react-dom": "https://esm.sh/react-dom@^19.1.0",
+          "react-dom/client": "https://esm.sh/react-dom@^19.1.0/client",
+          "react-router-dom": "https://esm.sh/react-router-dom@^7.6.0",
+          "recharts": "https://esm.sh/recharts@^2.15.3"
+        }
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-Ck9cG0En.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-CtRVvrpK.js">
+    <link rel="modulepreload" crossorigin href="/assets/i18n-DatnLVuH.js">
+    <link rel="modulepreload" crossorigin href="/assets/charts-rdkiVpNA.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BBq-Y30C.css">
   </head>
   <body class="bg-white text-neutral-dark font-sans antialiased">
-    <!-- Keine Import Map - Wir verwenden die von Vite gebündelten Module -->
+    <!-- Import Map für ESM-Module -->
+
     <noscript class="fixed inset-0 flex items-center justify-center bg-white p-8 text-center">
       <div class="max-w-md p-6 bg-white rounded-lg shadow-lg">
         <h1 class="text-2xl font-bold text-red-600 mb-4">JavaScript erforderlich</h1>
@@ -31,7 +48,11 @@
     
     <div id="root" class="min-h-screen flex flex-col"></div>
     
-    <!-- Hauptanwendungsskript - Nur ein einziger Einstiegspunkt -->
-    <script type="module" src="/src/main.tsx"></script>
+    <!-- Vite HMR Client -->
+    
+    <!-- Fallback für Produktion -->
+    
+    
+    <!-- Hauptanwendungsskript -->
   </body>
 </html>

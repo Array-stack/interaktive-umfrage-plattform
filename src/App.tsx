@@ -9,7 +9,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import AuthNavbar from './components/AuthNavbar';
 import Loader from './components/ui/Loader';
 import { CookieConsentBanner, CookieSettingsButton, useCookieConsent } from './components/ui/CookieConsent';
-
+import { Bar, Pie } from 'recharts';
 // Dynamische Importe für Komponenten
 const LoginPage = lazy(() => import('../components/LoginPage'));
 const RegisterPage = lazy(() => import('../components/RegisterPage'));
@@ -25,21 +25,19 @@ const ImpressumPage = lazy(() => import('./pages/ImpressumPage'));
 const KontaktPage = lazy(() => import('./pages/KontaktPage'));
 
 // Dynamischer Import für Recharts-Komponenten (nur wenn benötigt)
-const ChartsComponents = lazy(() => import('recharts').then(module => ({
-  default: {
-    BarChart: module.BarChart,
-    Bar: module.Bar,
-    XAxis: module.XAxis,
-    YAxis: module.YAxis,
-    CartesianGrid: module.CartesianGrid,
-    Tooltip: module.Tooltip,
-    Legend: module.Legend,
-    ResponsiveContainer: module.ResponsiveContainer,
-    PieChart: module.PieChart,
-    Pie: module.Pie,
-    Cell: module.Cell
-  }
-})));
+
+// Einzelne Komponenten lazy laden
+const BarChart = lazy(() => import('recharts').then(module => ({ default: module.BarChart })));
+const XAxis = lazy(() => import('recharts').then(module => ({ default: module.XAxis })));
+const YAxis = lazy(() => import('recharts').then(module => ({ default: module.YAxis })));
+const CartesianGrid = lazy(() => import('recharts').then(module => ({ default: module.CartesianGrid })));
+const Tooltip = lazy(() => import('recharts').then(module => ({ default: module.Tooltip })));
+const Legend = lazy(() => import('recharts').then(module => ({ default: module.Legend })));
+const ResponsiveContainer = lazy(() => import('recharts').then(module => ({ default: module.ResponsiveContainer })));
+const PieChart = lazy(() => import('recharts').then(module => ({ default: module.PieChart })));
+// Pie Komponente ohne explizite Typisierung für lazy loading  
+const Cell = lazy(() => import('recharts').then(module => ({ default: module.Cell })));
+
 
 // ======== GERMAN LOCALIZATION HELPERS ======== //
 const questionTypeDisplayNames: Record<QuestionType, string> = {
@@ -575,6 +573,7 @@ const EditSurveyPage: React.FC = () => {
   const { getSurveyById, updateSurvey, isLoading } = useSurveyApp();
   const navigate = useNavigate();
   const { surveyId } = useParams<{ surveyId: string }>();
+  const { t } = useTranslation(); // Hinzufügen des useTranslation-Hooks
   
   const [surveyData, setSurveyData] = useState<{
     title: string;
@@ -711,7 +710,7 @@ const EditSurveyPage: React.FC = () => {
       
       setQuestions(newQuestions);
     } else {
-      alert("Eine Frage muss mindestens eine Antwortoption haben.");
+      alert(t('create_survey_validation_min_option'));
     }
   };
 
@@ -720,7 +719,7 @@ const EditSurveyPage: React.FC = () => {
       const newQuestions = questions.filter((_, i) => i !== index);
       setQuestions(newQuestions);
     } else {
-      alert("Eine Umfrage muss mindestens eine Frage haben.");
+      alert(t('create_survey_validation_min_question'));
     }
   };
 
@@ -918,6 +917,7 @@ const EditSurveyPage: React.FC = () => {
 
 const CreateSurveyPage: React.FC = () => {
   const { addSurvey, isLoading } = useSurveyApp(); // isLoading here is for survey creation
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -928,10 +928,13 @@ const CreateSurveyPage: React.FC = () => {
     options: [],
     required: true 
   }]);
+  
+  // RTL-Unterstützung nur für Arabisch aktivieren
+  const isRTL = i18n.language === 'ar';
 
   const handleAddQuestion = () => {
     setQuestions([...questions, { 
-      text: `Frage ${questions.length + 1}`, 
+      text: `${t('create_survey_question')} ${questions.length + 1}`, 
       type: QuestionType.TEXT, 
       options: [],
       required: true 
@@ -954,13 +957,15 @@ const CreateSurveyPage: React.FC = () => {
         if (questionType === QuestionType.SINGLE_CHOICE || questionType === QuestionType.MULTIPLE_CHOICE) {
           // Stelle sicher, dass options ein Array ist und mindestens eine Option enthält
           updatedQuestion.options = ['Option 1', 'Option 2'];
+          
+          // Initialisiere auch das choices-Feld, das vom Backend erwartet wird
+          updatedQuestion.choices = [
+            { id: 'option-0', text: 'Option 1' },
+            { id: 'option-1', text: 'Option 2' }
+          ];
         } else {
           // Lösche Optionen für nicht-auswählbare Fragetypen
           delete updatedQuestion.options;
-        }
-        
-        // Lösche veraltete choices-Eigenschaft, falls vorhanden
-        if ('choices' in updatedQuestion) {
           delete updatedQuestion.choices;
         }
       } else {
@@ -985,6 +990,21 @@ const CreateSurveyPage: React.FC = () => {
       // Aktualisiere die Frage mit den neuen Optionen
       question.options = newOptions;
       
+      // Aktualisiere auch das choices-Feld für das Backend
+      if (!question.choices) {
+        question.choices = [];
+      }
+      
+      // Stelle sicher, dass choices ein Array ist und genug Elemente hat
+      const newChoices = Array.isArray(question.choices) ? [...question.choices] : [];
+      while (newChoices.length <= cIndex) {
+        newChoices.push({ id: `option-${newChoices.length}`, text: '' });
+      }
+      
+      // Aktualisiere die entsprechende Choice
+      newChoices[cIndex] = { ...newChoices[cIndex], text: value };
+      question.choices = newChoices;
+      
       // Aktualisiere die Frage in der Liste
       newQuestions[qIndex] = question;
       setQuestions(newQuestions);
@@ -1006,10 +1026,23 @@ const CreateSurveyPage: React.FC = () => {
       const optionNumber = currentOptions.length + 1;
       const newOption = `Option ${optionNumber}`;
       
-      // Aktualisiere die Frage mit den neuen Optionen
+      // Aktualisiere die options
+      const updatedOptions = [...currentOptions, newOption];
+      
+      // Initialisiere choices als leeres Array, falls nicht vorhanden
+      const currentChoices = Array.isArray(question.choices) ? [...question.choices] : [];
+      
+      // Erstelle eine neue Choice mit der gleichen Nummer
+      const newChoice = {
+        id: `option-${currentChoices.length}`,
+        text: newOption
+      };
+      
+      // Aktualisiere die Frage mit den neuen Optionen und Choices
       const updatedQuestion = {
         ...question,
-        options: [...currentOptions, newOption]
+        options: updatedOptions,
+        choices: [...currentChoices, newChoice]
       };
       
       // Aktualisiere die Frage in der Liste
@@ -1028,19 +1061,35 @@ const CreateSurveyPage: React.FC = () => {
         const newOptions = [...question.options];
         newOptions.splice(cIndex, 1);
         
-        // Aktualisiere die Frage mit dem neuen options-Array
+        // Aktualisiere auch das choices-Array
+        let newChoices: Array<{ id: string; text: string }> = [];
+        if (Array.isArray(question.choices)) {
+          newChoices = [...question.choices];
+          newChoices.splice(cIndex, 1);
+          
+          // Aktualisiere die IDs der verbleibenden Choices
+          newChoices = newChoices.map((choice, idx) => ({
+            ...choice,
+            id: `option-${idx}`
+          }));
+        }
+        
+        // Aktualisiere die Frage mit dem neuen options-Array und choices-Array
         question.options = newOptions;
+        question.choices = newChoices;
+        
         newQuestions[qIndex] = question;
         setQuestions(newQuestions);
       } catch (error) {
         console.error('Fehler beim Entfernen der Option:', error);
         // Falls ein Fehler auftritt, setze auf ein leeres Array mit einer Standardoption
         question.options = ['Option 1'];
+        question.choices = [{ id: 'option-0', text: 'Option 1' }];
         newQuestions[qIndex] = question;
         setQuestions(newQuestions);
       }
     } else {
-      alert("Eine Frage muss mindestens eine Antwortoption haben.");
+      alert(t('create_survey_validation_min_option'));
     }
   };
 
@@ -1058,14 +1107,14 @@ const CreateSurveyPage: React.FC = () => {
     
     // Validierung
     if (!title.trim() || !description.trim()) {
-      alert("Titel und Beschreibung sind erforderlich.");
+      alert(t('create_survey_validation_title_description'));
       return;
     }
     
     // Überprüfe, ob alle Fragen einen Text haben
     const emptyQuestionTexts = questions.some(q => !q.text.trim());
     if (emptyQuestionTexts) {
-      alert("Alle Fragen müssen einen Text haben.");
+      alert(t('create_survey_validation_question_text'));
       return;
     }
     
@@ -1078,7 +1127,7 @@ const CreateSurveyPage: React.FC = () => {
     });
     
     if (invalidOptions) {
-      alert("Alle Antwortoptionen für Einfach-/Mehrfachauswahl-Fragen müssen einen Text haben.");
+      alert(t('create_survey_validation_options'));
       return;
     }
 
@@ -1097,12 +1146,27 @@ const CreateSurveyPage: React.FC = () => {
           
           // Füge nur Optionen für die entsprechenden Fragetypen hinzu
           if (q.type === QuestionType.SINGLE_CHOICE || q.type === QuestionType.MULTIPLE_CHOICE) {
-            question.options = q.options ? q.options.map(opt => opt.trim()).filter(opt => opt) : [];
+            // Stelle sicher, dass options ein Array ist
+            const validOptions = q.options ? q.options.map(opt => opt.trim()).filter(opt => opt) : [];
+            
+            // Speichere die bereinigten Optionen im options-Feld
+            question.options = validOptions;
+            
             // Konvertiere options zu choices mit dem erwarteten Format
-            question.choices = q.options ? q.options.map((opt, index) => ({
+            // Das Backend erwartet die Antwortoptionen im choices-Feld
+            question.choices = validOptions.map((opt, index) => ({
               id: `option-${index}`,
-              text: opt.trim()
-            })).filter(opt => opt.text) : [];
+              text: opt
+            }));
+            
+            // Stelle sicher, dass choices nicht leer ist
+            if (question.choices.length === 0) {
+              question.choices = [
+                { id: 'default-1', text: 'Option 1' },
+                { id: 'default-2', text: 'Option 2' }
+              ];
+              question.options = ['Option 1', 'Option 2'];
+            }
             
             // Logging hinzufügen
             console.log(`Frage vom Typ ${q.type} mit ${question.options.length} Optionen:`, question.options);
@@ -1117,24 +1181,24 @@ const CreateSurveyPage: React.FC = () => {
       const newSurvey = await addSurvey(surveyData);
       
       if (newSurvey) {
-        alert('Umfrage erfolgreich erstellt!');
+        alert(t('create_survey_success'));
         navigate('/teacher');
       } else {
-        throw new Error('Keine Daten vom Server erhalten');
+        throw new Error(t('create_survey_error_no_data'));
       }
     } catch (error) {
-      console.error('Fehler beim Erstellen der Umfrage:', error);
-      alert(`Fehler beim Erstellen der Umfrage: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`);
+      console.error(t('create_survey_error_log'), error);
+      alert(`${t('create_survey_error')}: ${error instanceof Error ? error.message : t('create_survey_error_unknown')}`);
     }
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 animate-fadeIn">
-      <h1 className="text-3xl font-bold text-neutral mb-8">Neue Umfrage erstellen</h1>
+    <div className="max-w-3xl mx-auto p-6 animate-fadeIn" dir={isRTL ? 'rtl' : 'ltr'}>
+      <h1 className="text-3xl font-bold text-neutral mb-8">{t('create_survey_title')}</h1>
       <form onSubmit={handleSubmit} className="space-y-8">
         <Card>
-          <Input label="Umfragetitel" value={title} onChange={e => setTitle(e.target.value)} required placeholder="z.B. Kurs-Feedback" />
-          <Textarea label="Umfragebeschreibung" value={description} onChange={e => setDescription(e.target.value)} required className="mt-4" placeholder="z.B. Helfen Sie uns, uns zu verbessern, indem Sie Ihr Feedback geben." />
+          <Input label={t('create_survey_survey_title')} value={title} onChange={e => setTitle(e.target.value)} required placeholder={t('create_survey_title_placeholder')} />
+          <Textarea label={t('create_survey_description')} value={description} onChange={e => setDescription(e.target.value)} required className="mt-4" placeholder={t('create_survey_description_placeholder')} />
           
           <div className="mt-4 flex items-center">
             <input
@@ -1145,40 +1209,40 @@ const CreateSurveyPage: React.FC = () => {
               onChange={e => setIsPublic(e.target.checked)}
               className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
             />
-            <label htmlFor="isPublic" className="ml-2 block text-sm text-gray-700">
-              Öffentliche Umfrage (für alle sichtbar)
+            <label htmlFor="isPublic" className={`${isRTL ? 'mr-2' : 'ml-2'} block text-sm text-gray-700`}>
+              {t('create_survey_public')}
             </label>
           </div>
         </Card>
 
         {questions.map((q, qIndex) => (
           <Card key={`question-${qIndex}`} className="relative">
-            <h3 className="text-lg font-semibold text-neutral mb-4">Frage {qIndex + 1}</h3>
+            <h3 className="text-lg font-semibold text-neutral mb-4">{t('create_survey_question')} {qIndex + 1}</h3>
             {questions.length > 1 && (
-              <Button type="button" onClick={() => handleRemoveQuestion(qIndex)} variant="danger" size="sm" className="absolute top-4 right-4 !p-1.5">
+              <Button type="button" onClick={() => handleRemoveQuestion(qIndex)} variant="danger" size="sm" className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} !p-1.5`}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
               </Button>
             )}
-            <Textarea label="Fragetext" value={q.text} onChange={e => handleQuestionChange(qIndex, 'text', e.target.value)} required placeholder="z.B. Was hat Ihnen am besten gefallen?" />
+            <Textarea label={t('create_survey_question_text')} value={q.text} onChange={e => handleQuestionChange(qIndex, 'text', e.target.value)} required placeholder={t('create_survey_question_placeholder')} />
             <Select
-              label="Fragetyp"
+              label={t('create_survey_question_type')}
               value={q.type}
               onChange={e => handleQuestionChange(qIndex, 'type', e.target.value as QuestionType)}
-              options={Object.values(QuestionType).map(type => ({ value: type, label: questionTypeDisplayNames[type] }))}
+              options={Object.values(QuestionType).map(type => ({ value: type, label: t(`question_type_${type.toLowerCase()}`) }))}
               className="mt-4"
             />
             {(q.type === QuestionType.SINGLE_CHOICE || q.type === QuestionType.MULTIPLE_CHOICE) && (
-              <div className="mt-4 space-y-3 pl-4 border-l-2 border-primary">
-                <h4 className="text-sm font-medium text-gray-700">Antwortoptionen:</h4>
+              <div className={`mt-4 space-y-3 ${isRTL ? 'pr-4 border-r-2' : 'pl-4 border-l-2'} border-primary`}>
+                <h4 className="text-sm font-medium text-gray-700">{t('create_survey_answer_options')}:</h4>
                 {q.options?.map((option, cIndex) => (
-                  <div key={`option-${qIndex}-${cIndex}`} className="flex items-center space-x-2">
+                  <div key={`option-${qIndex}-${cIndex}`} className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-2`}>
                     <Input 
                       type="text" 
                       value={option} 
                       onChange={e => handleChoiceChange(qIndex, cIndex, e.target.value)} 
-                      placeholder={`Option ${cIndex + 1}`} 
+                      placeholder={`${t('create_survey_option')} ${cIndex + 1}`} 
                       className="flex-grow" 
                       required 
                     />
@@ -1197,16 +1261,16 @@ const CreateSurveyPage: React.FC = () => {
                     }
                   </div>
                 ))}
-                <Button type="button" onClick={() => handleAddChoice(qIndex)} variant="ghost" size="sm">Option hinzufügen</Button>
+                <Button type="button" onClick={() => handleAddChoice(qIndex)} variant="ghost" size="sm">{t('create_survey_add_option')}</Button>
               </div>
             )}
           </Card>
         ))}
         
         <div className="flex justify-between items-center">
-            <Button type="button" onClick={handleAddQuestion} variant="secondary">Weitere Frage hinzufügen</Button>
+            <Button type="button" onClick={handleAddQuestion} variant="secondary">{t('create_survey_add_question')}</Button>
             <Button type="submit" disabled={isLoading} variant="primary" size="lg">
-              {isLoading ? <LoadingSpinner text="Wird gespeichert..." /> : 'Umfrage speichern'}
+              {isLoading ? <LoadingSpinner text={t('create_survey_saving')} /> : t('create_survey_save')}
             </Button>
         </div>
       </form>
@@ -1942,29 +2006,32 @@ const SurveyResultsPage: React.FC<{ surveyIdProp: string }> = ({ surveyIdProp })
                 )}
                 {(q.type === QuestionType.SINGLE_CHOICE || q.type === QuestionType.MULTIPLE_CHOICE || q.type === QuestionType.RATING_SCALE) && chartData.length > 0 && (
                 <div className="h-80 md:h-96">
-                    <ResponsiveContainer width="100%" height="100%">
-                    { q.type === QuestionType.SINGLE_CHOICE ? (
-                        <PieChart>
-                        <Pie data={chartData} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={100} label fill="#8884d8">
-                            {chartData.map((_, idx) => (
-                            <Cell key={`cell-${idx}`} fill={PIE_CHART_COLORS[idx % PIE_CHART_COLORS.length]} />
-                            ))}
-                        </Pie>
-                        <Tooltip />
-                        <Legend />
-                        </PieChart>
-                    ) : (
-                        <BarChart data={chartData} margin={{ top: 5, right: 20, left: -20, bottom: 50 }}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" angle={-35} textAnchor="end" interval={0} height={80} />
-                        <YAxis allowDecimals={false} />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="count" fill={q.type === QuestionType.RATING_SCALE ? '#FFBB28' : '#82CA9D'} />
-                        </BarChart>
-                    )
-                    }
-                </ResponsiveContainer>
+                    <Suspense fallback={<div className="flex items-center justify-center h-full">Lade Diagramm...</div>}>
+                      <ResponsiveContainer width="100%" height="100%">
+                      { q.type === QuestionType.SINGLE_CHOICE ? (
+                          <PieChart>
+                          <Pie data={chartData} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={100} label fill="#8884d8">
+                              {chartData.map((_, idx) => (
+                              <Cell key={`cell-${idx}`} fill={PIE_CHART_COLORS[idx % PIE_CHART_COLORS.length]} />
+                              ))}
+                          </Pie>
+                          <Tooltip />
+                          <Legend />
+                          </PieChart>
+                      ) : (
+                          <BarChart data={chartData} margin={{ top: 5, right: 20, left: -20, bottom: 50 }}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" angle={-35} textAnchor="end" interval={0} height={80} />
+                          <YAxis allowDecimals={false} />
+                          <Tooltip />
+                          <Legend />
+                          // NACHHER:
+                          <Bar dataKey="count" fill={q.type === QuestionType.RATING_SCALE ? '#FFBB28' : '#82CA9D'} />;
+                          </BarChart>
+                      )
+                      }
+                      </ResponsiveContainer>
+                    </Suspense>
                 </div>
                 )}
                 {(q.type === QuestionType.SINGLE_CHOICE || q.type === QuestionType.MULTIPLE_CHOICE || q.type === QuestionType.RATING_SCALE) && chartData.length === 0 && (
@@ -2058,7 +2125,7 @@ function App() {
           <div className="flex flex-col min-h-screen">
             <AuthNavbar />
             <main className="flex-grow container mx-auto px-2 sm:px-4 py-8">
-              <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loader size="large" /></div>}>
+              <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loader size="lg" /></div>}>
                 <Routes>
                   {/* Öffentliche Routen */}
                   <Route path="/" element={<HomePage />} />

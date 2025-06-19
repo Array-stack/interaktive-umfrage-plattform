@@ -13,10 +13,108 @@ const {
   sendPasswordResetEmail 
 } = require('../emailUtils');
 
-// Hilfsfunktion zur ID-Generierung
+/**
+ * @typedef {Object} LoginRequest
+ * @property {string} email - E-Mail-Adresse des Benutzers
+ * @property {string} password - Passwort des Benutzers
+ */
+
+/**
+ * @typedef {Object} RegisterRequest
+ * @property {string} email - E-Mail-Adresse des Benutzers
+ * @property {string} password - Passwort des Benutzers
+ * @property {string} name - Name des Benutzers
+ * @property {string} role - Rolle des Benutzers (teacher oder student)
+ */
+
+/**
+ * @typedef {Object} User
+ * @property {string} id - User ID
+ * @property {string} email - User email
+ * @property {string} name - User name
+ * @property {string} role - User role
+ * @property {string} password - Hashed password
+ * @property {number} email_verified - Email verification flag
+ * @property {string} verification_token - Email verification token
+ * @property {string} verification_token_expires - Token expiration date
+ * @property {string} created_at - Creation date
+ * @property {string} last_login - Last login date
+ */
+
+/**
+ * @typedef {Object} LoginResponse
+ * @property {string} message - Erfolgsmeldung
+ * @property {string} token - JWT-Token für die Authentifizierung
+ * @property {Object} user - Benutzerinformationen
+ * @property {string} user.id - ID des Benutzers
+ * @property {string} user.email - E-Mail-Adresse des Benutzers
+ * @property {string} user.name - Name des Benutzers
+ * @property {string} user.role - Rolle des Benutzers
+ * @property {boolean} user.emailVerified - Gibt an, ob die E-Mail bestätigt wurde
+ */
+
+/**
+ * @typedef {Object} VerifyEmailRequest
+ * @property {string} token - Verifizierungstoken aus der E-Mail
+ */
+
+/**
+ * @typedef {Object} VerifyEmailResponse
+ * @property {string} message - Erfolgsmeldung
+ * @property {string} email - E-Mail-Adresse des Benutzers
+ * @property {string} redirect - URL für die Weiterleitung
+ */
+
+/**
+ * @typedef {Object} ForgotPasswordRequest
+ * @property {string} email - E-Mail-Adresse des Benutzers
+ */
+
+/**
+ * @typedef {Object} ForgotPasswordResponse
+ * @property {string} message - Erfolgsmeldung
+ * @property {string} [emailPreviewUrl] - URL für die Vorschau der E-Mail (nur in Entwicklungsumgebung)
+ */
+
+/**
+ * @typedef {Object} ResetPasswordRequest
+ * @property {string} token - Token für die Passwort-Zurücksetzung
+ * @property {string} newPassword - Neues Passwort des Benutzers
+ */
+
+/**
+ * @typedef {Object} ResetPasswordResponse
+ * @property {string} message - Erfolgsmeldung
+ */
+
+/**
+ * @typedef {Object} ProfileResponse
+ * @property {Object} [user] - Benutzerinformationen oder null, wenn nicht authentifiziert
+ * @property {string} user.id - ID des Benutzers
+ * @property {string} user.email - E-Mail-Adresse des Benutzers
+ * @property {string} user.name - Name des Benutzers
+ * @property {string} user.role - Rolle des Benutzers
+ * @property {string} user.createdAt - Erstellungsdatum des Benutzers
+ * @property {string} user.lastLogin - Zeitpunkt des letzten Logins
+ * @property {boolean} isAuthenticated - Gibt an, ob der Benutzer authentifiziert ist
+ */
+
+/**
+ * Generiert eine zufällige ID für neue Datensätze
+ * @function generateId
+ * @returns {string} Eine zufällig generierte ID
+ */
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
-// Login
+/**
+ * @route   POST /api/auth/login
+ * @desc    Authentifiziert einen Benutzer und gibt ein JWT-Token zurück
+ * @param   {import('express').Request<{}, {}, LoginRequest>} req - Express Request-Objekt
+ * @param   {import('express').Response} res - Express Response-Objekt
+ * @returns {Promise<void>} - Promise, der nach Abschluss aufgelöst wird
+ * @throws  {Error} - Fehler bei der Datenbankabfrage oder Authentifizierung
+ * @access  Public
+ */
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   console.log('Login-Versuch für E-Mail:', email);
@@ -27,51 +125,174 @@ router.post('/login', async (req, res) => {
   }
 
   try {
-    db.get('SELECT * FROM users WHERE email = ?', [email], async (err, user) => {
-      if (err) {
-        console.error('Datenbankfehler beim Login:', err.message);
-        return res.status(500).json({ error: 'Serverfehler beim Login.' });
-      }
+    /**
+     * @type {Promise<User|null>}
+     */
+    const userPromise = new Promise((resolve, reject) => {
+      db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
+        if (err) {
+          console.error('Datenbankfehler beim Login:', err.message);
+          return reject(err);
+        }
+        resolve(user || null);
+      });
+    });
 
-      console.log('Gefundener Benutzer:', user ? 'Ja' : 'Nein');
+    const user = await userPromise;
+    console.log('Gefundener Benutzer:', user ? 'Ja' : 'Nein');
 
-      if (!user) {
-        console.log('Kein Benutzer mit dieser E-Mail gefunden');
-        return res.status(401).json({ error: 'Ungültige Anmeldedaten.' });
-      }
+    if (!user) {
+      console.log('Kein Benutzer mit dieser E-Mail gefunden');
+      return res.status(401).json({ error: 'Ungültige Anmeldedaten.' });
+    }
 
-      console.log('Überprüfe Passwort...');
-      const isPasswordValid = await comparePassword(password, user.password);
-      console.log('Passwort gültig:', isPasswordValid);
+    console.log('Überprüfe Passwort...');
+    const isPasswordValid = await comparePassword(password, user.password);
+    console.log('Passwort gültig:', isPasswordValid);
 
-      if (!isPasswordValid) {
-        console.log('Ungültiges Passwort');
-        return res.status(401).json({ error: 'Ungültige Anmeldedaten.' });
-      }
+    if (!isPasswordValid) {
+      console.log('Ungültiges Passwort');
+      return res.status(401).json({ error: 'Ungültige Anmeldedaten.' });
+    }
 
-      console.log('Generiere Token...');
-      const token = generateAuthToken(user.id, user.email, user.role);
+    console.log('Generiere Token...');
+    const token = generateAuthToken(user.id, user.email, user.role);
 
-      const lastLogin = new Date().toISOString();
+    const lastLogin = new Date().toISOString();
+    /**
+     * @type {Promise<void>}
+     */
+    const updatePromise = new Promise((resolve, reject) => {
       db.run('UPDATE users SET last_login = ? WHERE id = ?', [lastLogin, user.id], (err) => {
         if (err) {
           console.error('Fehler beim Aktualisieren des letzten Logins:', err.message);
+          return reject(err);
         }
-
-        console.log('Login erfolgreich für Benutzer:', user.email);
-        res.json({
-          message: 'Erfolgreich eingeloggt',
-          token,
-          user: {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-            emailVerified: user.email_verified === 1
-          }
-        });
+        resolve();
       });
     });
+
+    await updatePromise;
+    console.log('Login erfolgreich für Benutzer:', user.email);
+    
+    /**
+     * @type {LoginResponse}
+     */
+    const response = {
+      message: 'Erfolgreich eingeloggt',
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        emailVerified: user.email_verified === 1
+      }
+    };
+    
+    res.json(response);
+  } catch (error) {
+    console.error('Fehler beim Login:', error);
+    res.status(500).json({ error: 'Interner Serverfehler bei der Anmeldung.' });
+  }
+});
+
+// Registrierung
+/**
+ * @route   POST /api/auth/login
+ * @desc    Authentifiziert einen Benutzer und gibt ein JWT-Token zurück
+ * @param   {import('express').Request<{}, {}, LoginRequest>} req - Express Request-Objekt
+ * @param   {import('express').Response} res - Express Response-Objekt
+ * @returns {Promise<void>}
+ * @throws  {Error} Wenn die Authentifizierung fehlschlägt oder ein Datenbankfehler auftritt
+ */
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  console.log('Login-Versuch für E-Mail:', email);
+
+  if (!email || !password) {
+    console.log('Fehlende Anmeldedaten');
+    return res.status(400).json({ error: 'E-Mail und Passwort sind erforderlich.' });
+  }
+
+  try {
+    /**
+     * @typedef {Object} User
+     * @property {string} id - User ID
+     * @property {string} email - User email
+     * @property {string} name - User name
+     * @property {string} role - User role
+     * @property {string} password - Hashed password
+     * @property {number} email_verified - Email verification flag
+     * @property {string} verification_token - Email verification token
+     * @property {string} verification_token_expires - Token expiration date
+     * @property {string} created_at - Creation date
+     * @property {string} last_login - Last login date
+     */
+
+    const userPromise = new Promise((resolve, reject) => {
+      db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
+        if (err) {
+          console.error('Datenbankfehler beim Login:', err.message);
+          return reject(err);
+        }
+        resolve(user || null);
+      });
+    });
+
+    const user = await userPromise;
+    console.log('Gefundener Benutzer:', user ? 'Ja' : 'Nein');
+
+    if (!user) {
+      console.log('Kein Benutzer mit dieser E-Mail gefunden');
+      return res.status(401).json({ error: 'Ungültige Anmeldedaten.' });
+    }
+
+    console.log('Überprüfe Passwort...');
+    const isPasswordValid = await comparePassword(password, user.password);
+    console.log('Passwort gültig:', isPasswordValid);
+
+    if (!isPasswordValid) {
+      console.log('Ungültiges Passwort');
+      return res.status(401).json({ error: 'Ungültige Anmeldedaten.' });
+    }
+
+    console.log('Generiere Token...');
+    const token = generateAuthToken(user.id, user.email, user.role);
+
+    const lastLogin = new Date().toISOString();
+    /**
+     * @type {Promise<void>}
+     */
+    const updatePromise = new Promise((resolve, reject) => {
+      db.run('UPDATE users SET last_login = ? WHERE id = ?', [lastLogin, user.id], (err) => {
+        if (err) {
+          console.error('Fehler beim Aktualisieren des letzten Logins:', err.message);
+          return reject(err);
+        }
+        resolve();
+      });
+    });
+
+    await updatePromise;
+    console.log('Login erfolgreich für Benutzer:', user.email);
+    
+    /**
+     * @type {LoginResponse}
+     */
+    const response = {
+      message: 'Erfolgreich eingeloggt',
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        emailVerified: user.email_verified === 1
+      }
+    };
+    
+    res.json(response);
   } catch (error) {
     console.error('Fehler beim Login:', error);
     res.status(500).json({ error: 'Interner Serverfehler bei der Anmeldung.' });
@@ -160,7 +381,7 @@ router.post('/register', async (req, res) => {
     if (!res.headersSent) {
       res.status(500).json({ 
         error: 'Interner Serverfehler bei der Registrierung.',
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        details: process.env.NODE_ENV === 'development' ? /** @type {Error} */(error).message : undefined
       });
     }
   }

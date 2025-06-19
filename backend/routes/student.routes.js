@@ -2,10 +2,27 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database');
 
+/**
+ * @typedef {Object} Survey
+ * @property {string} id - Eindeutige ID der Umfrage
+ * @property {string} title - Titel der Umfrage
+ * @property {string} description - Beschreibung der Umfrage
+ * @property {string} ownerId - ID des Besitzers
+ * @property {string} createdAt - Erstellungsdatum
+ * @property {boolean} isPublic - Öffentlichkeitsstatus
+ * @property {string} access_type - Zugriffstyp (public, private, students_only)
+ * @property {number} totalQuestions - Gesamtzahl der Fragen
+ */
+
 // Temporäre Dummy-Middleware für die Entwicklung
+/**
+ * @param {import('express').Request} req - Express Request-Objekt
+ * @param {import('express').Response} res - Express Response-Objekt
+ * @param {import('express').NextFunction} next - Express Next-Funktion
+ */
 const authenticateToken = (req, res, next) => { 
   // Füge einen Dummy-Benutzer für die Entwicklung hinzu
-  req.user = { id: 'dev-user-id', email: 'dev@example.com' };
+  req.user = { userId: 'dev-user-id', email: 'dev@example.com', role: 'student' };
   next(); 
 };
 
@@ -19,7 +36,7 @@ router.get('/surveys', authenticateToken, async (req, res) => {
     
     // In der GET /surveys Route, ändere die SQL-Abfrage
     
-    const studentId = req.user.userId;
+    const studentId = req.user?.userId || 'anonymous';
     
     // 1. Hole alle verfügbaren Umfragen mit der Anzahl der Fragen
     const publicSurveys = await new Promise((resolve, reject) => {
@@ -52,7 +69,7 @@ router.get('/surveys', authenticateToken, async (req, res) => {
 
     // 2. Für jede Umfrage prüfen, ob der aktuelle Benutzer bereits geantwortet hat
     const surveysWithStatus = await Promise.all(
-      publicSurveys.map(async (survey) => {
+      publicSurveys.map(async (/** @type {Survey} */ survey) => {
         try {
           // Verwende die Client-IP oder eine Standard-IP, falls nicht verfügbar
           const clientIp = req.ip || '127.0.0.1';
@@ -61,8 +78,8 @@ router.get('/surveys', authenticateToken, async (req, res) => {
               `SELECT COUNT(DISTINCT a.question_id) as answeredQuestions 
                FROM responses r
                JOIN answers a ON r.id = a.response_id
-               WHERE r.surveyId = ? AND (r.respondentId = ? OR r.ip_address = ?)`,
-              [survey.id, req.user?.id || 'dev-user-id', clientIp],
+               WHERE r.survey_id = ? AND (r.respondentId = ? OR r.ip_address = ?)`,
+              [survey.id, req.user?.userId || 'dev-user-id', clientIp],
               (err, row) => {
                 if (err) {
                   console.error('Fehler beim Abrufen der Antworten:', err);
@@ -122,7 +139,7 @@ router.get('/surveys', authenticateToken, async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Interner Serverfehler beim Abrufen der Umfragen',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      details: process.env.NODE_ENV === 'development' ? (/** @type {Error} */(error)).message : undefined,
       timestamp: new Date().toISOString()
     });
   }

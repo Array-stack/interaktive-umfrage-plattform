@@ -5,10 +5,14 @@ const db = require('./database');
 const PORT = process.env.PORT || 8080;
 const HOST = process.env.HOST || '0.0.0.0'; // Für IPv4-kompatiblen Fallback
 
+/**
+ * Initialisiert die Datenbank
+ * @returns {Promise<void>} Promise, das nach Abschluss der Initialisierung aufgelöst wird
+ */
 async function initDatabase() {
   return new Promise((resolve, reject) => {
     console.log('Datenbankinitialisierung abgeschlossen');
-    resolve();
+    resolve(undefined);
   });
 }
 
@@ -21,7 +25,8 @@ async function startServer() {
     // HTTP-Server erstellen und starten
     const server = createServer(app);
 
-    server.listen(PORT, HOST, () => {
+    // PORT als Nummer konvertieren, da TypeScript eine Nummer erwartet
+    server.listen(Number(PORT), HOST, () => {
       console.log(`Server läuft auf http://${HOST}:${PORT} (${process.env.NODE_ENV || 'development'})`);
       if (process.env.NODE_ENV === 'production') {
         console.log(`API erreichbar unter ${process.env.APP_URL || 'https://interaktive-umfrage-plattform-backend.up.railway.app'}/api`);

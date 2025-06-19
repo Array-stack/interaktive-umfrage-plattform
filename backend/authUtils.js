@@ -6,7 +6,7 @@ const { createError } = require('./middleware/errorHandler');
 // Konfiguration aus Umgebungsvariablen mit Fallback-Werten
 const JWT_SECRET = process.env.JWT_SECRET || 'umfrage-plattform-secret-key-2025';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '24h'; // Standard: 24 Stunden
-const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS) || 10;
+const BCRYPT_SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? '10') || 10;
 const TOKEN_EXPIRATION = {
   PASSWORD_RESET: 3600000, // 1 Stunde in Millisekunden
   EMAIL_VERIFICATION: 86400000, // 24 Stunden in Millisekunden
@@ -58,6 +58,7 @@ const generateAuthToken = (userId, email, role) => {
     throw createError('Fehlende erforderliche Felder für Token-Generierung', 500, 'TOKEN_GENERATION_ERROR');
   }
   
+  // @ts-ignore - JWT_SECRET ist ein gültiger Secret-Typ für jwt.sign
   return jwt.sign(
     { 
       userId, 
@@ -88,7 +89,7 @@ const verifyAuthToken = (token) => {
       audience: ['web', 'mobile']
     });
   } catch (error) {
-    console.error('Token-Verifizierungsfehler:', error.message);
+    console.error('Token-Verifizierungsfehler:', error instanceof Error ? error.message : 'Unbekannter Fehler');
     return null;
   }
 };
@@ -138,7 +139,7 @@ const authenticateToken = (req, res, next) => {
 
 /**
  * Middleware zur Überprüfung, ob der Benutzer ein Lehrer ist
- * @returns {Function} Middleware-Funktion
+ * @returns {void}
  */
 const requireTeacherRole = (req, res, next) => {
   if (!req.user) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Survey } from '../../../types';
-import { surveyService } from '../../../services/surveyService';
+import { Survey } from '../../types';
+import { surveyService } from '../../services/surveyService';
 
 const PublicSurveysSection: React.FC = () => {
   const [surveys, setSurveys] = useState<Survey[]>([]);

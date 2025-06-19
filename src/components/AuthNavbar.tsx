@@ -3,6 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './ui/LanguageSwitcher';
+import i18n from 'i18next';
+
+// RTL-Sprachen definieren
+const RTL_LANGUAGES = ['ar'];
 
 const AuthNavbar: React.FC = () => {
   const { user, isAuthenticated, isTeacher, logout } = useAuth();
@@ -40,7 +44,7 @@ const AuthNavbar: React.FC = () => {
             </Link>
             
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex space-x-6">
+            <div className={`hidden md:flex ${RTL_LANGUAGES.includes(i18n.language) ? 'space-x-reverse space-x-6' : 'space-x-6'}`}>
               <Link to="/" className="text-white hover:text-neutral-light transition-colors duration-200 font-medium">{t('startseite')}</Link>
               
               {isTeacher ? (

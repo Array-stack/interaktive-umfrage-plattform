@@ -239,27 +239,41 @@ const StudentDashboard: React.FC = () => {
       // Aktualisiere den Status basierend auf dem lokalen Speicher
       try {
         // Prüfe auf abgeschlossene Umfragen im lokalen Speicher
+        // Überprüfe beide möglichen Speicherorte für abgeschlossene Umfragen
         const takenSurveys = JSON.parse(localStorage.getItem('taken_surveys') || '[]');
+        const participatedSurveys = JSON.parse(localStorage.getItem('participated_surveys') || '[]');
+        
+        // Kombiniere beide Listen
+        const completedSurveyIds = [...new Set([...takenSurveys, ...participatedSurveys])];
         
         // Prüfe auf Umfragen mit gespeichertem Fortschritt
         const savedProgress = JSON.parse(localStorage.getItem('incomplete_survey_answers') || '{}');
         
+        console.log('Lokaler Speicher Status:', {
+          completedSurveyIds,
+          savedProgressIds: Object.keys(savedProgress)
+        });
+        
         // Aktualisiere den Status der Umfragen basierend auf dem lokalen Speicher
-        setSurveys(prevSurveys => 
-          prevSurveys.map(survey => {
-            // Wenn die Umfrage als abgeschlossen markiert ist
-            if (takenSurveys.includes(survey.id)) {
-              return { ...survey, status: 'completed' as const, progress: 100 };
-            }
-            
-            // Wenn die Umfrage gespeicherten Fortschritt hat
-            if (savedProgress[survey.id]) {
-              return { ...survey, status: 'in_progress' as const };
-            }
-            
-            return survey;
-          })
-        );
+        // Verwende setTimeout, um sicherzustellen, dass dies nach dem Rendern der Umfragen geschieht
+        setTimeout(() => {
+          setSurveys(prevSurveys => 
+            prevSurveys.map(survey => {
+              // Wenn die Umfrage als abgeschlossen markiert ist
+              if (completedSurveyIds.includes(survey.id)) {
+                return { ...survey, status: 'completed' as const, progress: 100 };
+              }
+              
+              // Wenn die Umfrage gespeicherten Fortschritt hat
+              if (savedProgress[survey.id]) {
+                return { ...survey, status: 'in_progress' as const };
+              }
+              
+              return survey;
+            })
+          );
+          console.log('Umfragestatus wurden aktualisiert basierend auf lokalem Speicher');
+        }, 0);
       } catch (error) {
         console.error('Fehler beim Aktualisieren der Umfragestatus aus dem lokalen Speicher:', error);
       }
@@ -304,21 +318,31 @@ const StudentDashboard: React.FC = () => {
   useEffect(() => {
     if (surveys.length === 0) return;
     
-    console.log('Aktualisiere Umfragestatus basierend auf lokalem Speicher...');
+    console.log('useEffect: Aktualisiere Umfragestatus basierend auf lokalem Speicher...');
     
     // Prüfe, ob Umfragen im lokalen Speicher als abgeschlossen markiert sind
     try {
       // Prüfe auf abgeschlossene Umfragen im lokalen Speicher
+      // Überprüfe beide möglichen Speicherorte für abgeschlossene Umfragen
       const takenSurveys = JSON.parse(localStorage.getItem('taken_surveys') || '[]');
+      const participatedSurveys = JSON.parse(localStorage.getItem('participated_surveys') || '[]');
+      
+      // Kombiniere beide Listen
+      const completedSurveyIds = [...new Set([...takenSurveys, ...participatedSurveys])];
       
       // Prüfe auf Umfragen mit gespeichertem Fortschritt
       const savedProgress = JSON.parse(localStorage.getItem('incomplete_survey_answers') || '{}');
+      
+      console.log('useEffect: Lokaler Speicher Status:', {
+        completedSurveyIds,
+        savedProgressIds: Object.keys(savedProgress)
+      });
       
       // Aktualisiere den Status der Umfragen basierend auf dem lokalen Speicher
       setSurveys(prevSurveys => 
         prevSurveys.map(survey => {
           // Wenn die Umfrage als abgeschlossen markiert ist
-          if (takenSurveys.includes(survey.id)) {
+          if (completedSurveyIds.includes(survey.id)) {
             return { ...survey, status: 'completed' as const, progress: 100 };
           }
           
@@ -331,11 +355,11 @@ const StudentDashboard: React.FC = () => {
         })
       );
       
-      console.log('Umfragestatus wurden aktualisiert');
+      console.log('useEffect: Umfragestatus wurden aktualisiert');
     } catch (error) {
       console.error('Fehler beim Aktualisieren der Umfragestatus aus dem lokalen Speicher:', error);
     }
-  }, [surveys.length]);
+  }, [surveys.length]); // Zurück zu surveys.length, um Endlosschleifen zu vermeiden, da wir surveys in setSurveys aktualisieren
 
   const handleStartSurvey = async (survey: SurveyWithStatus) => {
     console.log('Starte Umfrage:', survey.id);

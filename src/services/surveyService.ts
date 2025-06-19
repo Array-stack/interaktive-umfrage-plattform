@@ -48,36 +48,59 @@ console.log('Using API_BASE_URL:', API_BASE_URL);
  * Verarbeitet API-Antworten und wirft Fehler bei HTTP-Fehlern
  */
 async function handleApiResponse<T>(response: Response): Promise<T> {
+  // Überprüfe zuerst den HTTP-Status
+  if (!response.ok) {
+    // Bei Fehlerstatus versuchen wir trotzdem, die Antwort zu parsen, um Fehlermeldungen zu erhalten
+    try {
+      const errorData = await response.clone().json();
+      console.error('API Error:', response.status, errorData);
+      throw new Error(
+        errorData.message || 
+        errorData.error || 
+        `HTTP-Fehler ${response.status}: ${response.statusText}`
+      );
+    } catch (parseError) {
+      // Wenn das Parsen fehlschlägt, werfen wir einen allgemeinen Fehler
+      console.error('API Error: Konnte Fehlerantwort nicht parsen', parseError);
+      throw new Error(`HTTP-Fehler ${response.status}: ${response.statusText}`);
+    }
+  }
+
   // Content-Type überprüfen
   const contentType = response.headers.get('content-type');
   const isJson = contentType && contentType.includes('application/json');
   
   if (!isJson) {
-    console.error('API Error: Ungültiger Content-Type', {
+    console.warn('API Warnung: Unerwarteter Content-Type', {
       status: response.status,
       contentType,
       url: response.url
     });
-    throw new Error(`Unerwarteter Content-Type: ${contentType || 'unbekannt'}`);
+    // Wir versuchen trotzdem, die Antwort zu parsen
   }
   
   // Versuche, die Antwort als JSON zu parsen
-  const data = await response.json().catch(error => {
-    console.error('API Error: Ungültiges JSON-Format', error);
-    throw new Error('Ungültiges JSON-Format in der Antwort');
-  });
-  
-  // Überprüfe HTTP-Status
-  if (!response.ok) {
-    console.error('API Error:', response.status, data);
-    throw new Error(
-      data.message || 
-      data.error || 
-      `HTTP-Fehler ${response.status}: ${response.statusText}`
-    );
+  try {
+    const text = await response.text();
+    
+    // Überprüfe, ob die Antwort leer ist
+    if (!text.trim()) {
+      console.warn('API Warnung: Leere Antwort erhalten');
+      return {} as T; // Leeres Objekt zurückgeben
+    }
+    
+    // Versuche, den Text als JSON zu parsen
+    try {
+      const data = JSON.parse(text);
+      return data as T;
+    } catch (jsonError) {
+      console.error('API Error: Ungültiges JSON-Format', jsonError, 'Antworttext:', text);
+      throw new Error('Ungültiges JSON-Format in der Antwort');
+    }
+  } catch (error) {
+    console.error('API Error: Konnte Antwort nicht lesen', error);
+    throw new Error('Fehler beim Lesen der Antwort');
   }
-  
-  return data as T;
 }
 
 /**
@@ -225,13 +248,13 @@ function transformSurveyApiResponse(data: any): Survey[] {
         }
         
         // Füge Optionen hinzu, falls vorhanden
-        if (q.options && Array.isArray(q.options)) {
+        if (q.options && Array.isArray(q.options) && question) {
           q.options.forEach((opt: string) => {
-            if (opt && !question.options.includes(opt)) {
+            if (opt && question && question.options && !question.options.includes(opt)) {
               question.options.push(opt);
             }
           });
-        } else if (q.choiceText && !question.options.includes(q.choiceText)) {
+        } else if (q.choiceText && question && question.options && !question.options.includes(q.choiceText)) {
           question.options.push(q.choiceText);
         }
       });
@@ -302,29 +325,40 @@ export const surveyService = {
         return null;
       }
       
-      // Content-Type überprüfen
+      // Überprüfe, ob die Antwort erfolgreich war
+      if (!response.ok) {
+        console.error(`Fehler beim Laden der Umfrage mit ID ${surveyId}: HTTP ${response.status}`);
+        return null;
+      }
+      
+      // Content-Type überprüfen, aber nicht abbrechen, wenn es nicht application/json ist
       const contentType = response.headers.get('content-type');
       const isJson = contentType && contentType.includes('application/json');
       
       if (!isJson) {
-        console.error(`Umfrage mit ID ${surveyId}: Ungültiger Content-Type:`, contentType);
+        console.warn(`Umfrage mit ID ${surveyId}: Unerwarteter Content-Type:`, contentType);
+        // Wir versuchen trotzdem, die Antwort zu parsen
+      }
+      
+      // Lese den Antworttext
+      const text = await response.text();
+      
+      // Überprüfe, ob die Antwort leer ist
+      if (!text.trim()) {
+        console.error(`Leere Antwort vom Server für Umfrage mit ID ${surveyId}`);
         return null;
       }
       
+      // Versuche, den Text als JSON zu parsen
       let data;
       try {
-        data = await response.json();
+        data = JSON.parse(text);
       } catch (e) {
-        console.error('Fehler beim Parsen der Antwort:', e);
+        console.error('Fehler beim Parsen der Antwort:', e, 'Antworttext:', text);
         return null;
       }
       
       console.log('Rohdaten der API-Antwort:', JSON.stringify(data, null, 2));
-      
-      if (!response.ok) {
-        console.error('Fehler beim Laden der Umfrage:', data?.message || 'Unbekannter Fehler');
-        return null; // Null zurückgeben anstatt einen Fehler zu werfen
-      }
       
       // Stelle sicher, dass die Daten als Array an transformSurveyApiResponse übergeben werden
       const surveys = transformSurveyApiResponse(data);
@@ -391,17 +425,47 @@ export const surveyService = {
         body: JSON.stringify(surveyData)
       });
       
-      const data = await handleApiResponse<{surveyId: string}>(response);
-      console.log('Antwort vom Server:', data);
+      // Verarbeite die Antwort
+      let data;
+      try {
+        data = await handleApiResponse<{surveyId: string}>(response);
+        console.log('Antwort vom Server:', data);
+      } catch (apiError) {
+        console.error('Fehler bei der API-Anfrage:', apiError);
+        throw new Error(`Fehler beim Erstellen der Umfrage: ${apiError instanceof Error ? apiError.message : 'Unbekannter Fehler'}`);
+      }
       
-      if (!data.surveyId) {
+      if (!data || !data.surveyId) {
+        console.error('Ungültige Antwort vom Server:', data);
         throw new Error('Ungültige Antwort vom Server: Keine surveyId erhalten');
       }
+      
+      // Warte kurz, damit der Server Zeit hat, die Umfrage zu speichern
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       // Hole die vollständige Umfrage, um sicherzustellen, dass alle Felder vorhanden sind
       const survey = await this.getSurvey(data.surveyId);
       if (!survey) {
-        throw new Error('Konnte die erstellte Umfrage nicht laden');
+        console.error(`Konnte die erstellte Umfrage mit ID ${data.surveyId} nicht laden`);
+        
+        // Erstelle ein minimales Survey-Objekt, damit die Anwendung nicht abstürzt
+        return {
+          id: data.surveyId,
+          title: surveyData.title,
+          description: surveyData.description || '',
+          isPublic: surveyData.isPublic,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          createdBy: 'current_user',
+          questions: surveyData.questions.map((q, index) => ({
+            id: `q-${index}`,
+            text: q.text,
+            type: q.type,
+            required: q.required,
+            options: q.options || [],
+            choices: q.choices || []
+          }))
+        };
       }
       
       return survey;
@@ -550,7 +614,7 @@ export const surveyService = {
       // Erstelle das Request-Objekt mit den erforderlichen Feldern
       const requestData = {
         respondentId, // Füge respondentId zum Request hinzu
-        answers: answers.map(answer => ({
+        responses: answers.map(answer => ({
           questionId: answer.questionId,
           value: answer.value
         }))

@@ -70,7 +70,7 @@ async function initializeTransporter() {
       
       console.log('Entwicklungs-E-Mail-Transporter initialisiert');
       console.log('Test-E-Mail-Konto:', testAccount.user);
-      console.log('Ethereal URL zum Anzeigen der E-Mails:', nodemailer.getTestMessageUrl({}));
+      console.log('Ethereal URL zum Anzeigen der E-Mails:', `https://ethereal.email/message/login mit ${testAccount.user}`);
     }
 
     // Teste die Verbindung
@@ -84,12 +84,14 @@ async function initializeTransporter() {
     console.error('Fehler bei der Initialisierung des E-Mail-Transporters:', error);
     
     // Spezifische Fehlermeldungen für häufige Probleme
-    if (error.code === 'ECONNECTION') {
-      console.error('\x1b[31m%s\x1b[0m', 'Fehler: Konnte keine Verbindung zum E-Mail-Server herstellen.');
-      console.error('Bitte überprüfen Sie Ihre Internetverbindung und die SMTP-Einstellungen in der .env-Datei.');
-    } else if (error.code === 'EAUTH') {
-      console.error('\x1b[31m%s\x1b[0m', 'Fehler: Authentifizierung fehlgeschlagen.');
-      console.error('Bitte überprüfen Sie die Anmeldedaten in der .env-Datei.');
+    if (error && typeof error === 'object' && 'code' in error) {
+      if (error.code === 'ECONNECTION') {
+        console.error('\x1b[31m%s\x1b[0m', 'Fehler: Konnte keine Verbindung zum E-Mail-Server herstellen.');
+        console.error('Bitte überprüfen Sie Ihre Internetverbindung und die SMTP-Einstellungen in der .env-Datei.');
+      } else if (error.code === 'EAUTH') {
+        console.error('\x1b[31m%s\x1b[0m', 'Fehler: Authentifizierung fehlgeschlagen.');
+        console.error('Bitte überprüfen Sie die Anmeldedaten in der .env-Datei.');
+      }
     }
     
     throw new Error('E-Mail-Konfiguration fehlgeschlagen. Bitte überprüfen Sie die Einstellungen in der .env-Datei.');
@@ -296,15 +298,22 @@ async function sendVerificationEmail(email, name, token, baseUrl) {
     console.log('Bestätigungs-E-Mail gesendet');
   } catch (err) {
     console.error('Fehler beim Senden der Passwort-Zurücksetzungs-E-Mail:', err);
-    error = `E-Mail konnte nicht gesendet werden: ${err.message}`;
+    
+    if (err && typeof err === 'object' && 'message' in err) {
+      error = `E-Mail konnte nicht gesendet werden: ${err.message}`;
+    } else {
+      error = 'E-Mail konnte nicht gesendet werden: Unbekannter Fehler';
+    }
     
     // Spezifische Fehlerbehandlung für Gmail
-    if (err.code === 'EAUTH') {
-      error = 'Authentifizierungsfehler bei der E-Mail. Bitte überprüfen Sie die Anmeldedaten in der .env-Datei.';
-    } else if (err.code === 'ECONNECTION') {
-      error = 'Verbindung zum E-Mail-Server fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung.';
-    } else if (err.responseCode === 550) {
-      error = 'Die E-Mail-Adresse existiert nicht oder ist ungültig.';
+    if (err && typeof err === 'object') {
+      if ('code' in err && err.code === 'EAUTH') {
+        error = 'Authentifizierungsfehler bei der E-Mail. Bitte überprüfen Sie die Anmeldedaten in der .env-Datei.';
+      } else if ('code' in err && err.code === 'ECONNECTION') {
+        error = 'Verbindung zum E-Mail-Server fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung.';
+      } else if ('responseCode' in err && err.responseCode === 550) {
+        error = 'Die E-Mail-Adresse existiert nicht oder ist ungültig.';
+      }
     }
   }
 
@@ -510,15 +519,22 @@ async function sendPasswordResetEmail(email, name, token, baseUrl) {
     console.log('Passwort-Zurücksetzungs-E-Mail gesendet');
   } catch (err) {
     console.error('Fehler beim Senden der Passwort-Zurücksetzungs-E-Mail:', err);
-    error = `E-Mail konnte nicht gesendet werden: ${err.message}`;
+    
+    if (err && typeof err === 'object' && 'message' in err) {
+      error = `E-Mail konnte nicht gesendet werden: ${err.message}`;
+    } else {
+      error = 'E-Mail konnte nicht gesendet werden: Unbekannter Fehler';
+    }
     
     // Spezifische Fehlerbehandlung für Gmail
-    if (err.code === 'EAUTH') {
-      error = 'Authentifizierungsfehler bei der E-Mail. Bitte überprüfen Sie die Anmeldedaten in der .env-Datei.';
-    } else if (err.code === 'ECONNECTION') {
-      error = 'Verbindung zum E-Mail-Server fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung.';
-    } else if (err.responseCode === 550) {
-      error = 'Die E-Mail-Adresse existiert nicht oder ist ungültig.';
+    if (err && typeof err === 'object') {
+      if ('code' in err && err.code === 'EAUTH') {
+        error = 'Authentifizierungsfehler bei der E-Mail. Bitte überprüfen Sie die Anmeldedaten in der .env-Datei.';
+      } else if ('code' in err && err.code === 'ECONNECTION') {
+        error = 'Verbindung zum E-Mail-Server fehlgeschlagen. Bitte überprüfen Sie Ihre Internetverbindung.';
+      } else if ('responseCode' in err && err.responseCode === 550) {
+        error = 'Die E-Mail-Adresse existiert nicht oder ist ungültig.';
+      }
     }
   }
 

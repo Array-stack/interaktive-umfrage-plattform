@@ -13,6 +13,14 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
  * @access  Privat (nur Lehrer)
  */
 router.get('/students', authenticateToken, requireTeacherRole, asyncHandler(async (req, res) => {
+  // TypeScript-Fehler vermeiden: req.user wird durch requireTeacherRole garantiert
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      error: 'Nicht authentifiziert'
+    });
+  }
+  
   const teacherId = req.user.userId;
   
   const students = await new Promise((resolve, reject) => {
@@ -45,6 +53,14 @@ router.get('/students', authenticateToken, requireTeacherRole, asyncHandler(asyn
  * @access  Privat (nur Lehrer)
  */
 router.post('/students/add-by-survey', authenticateToken, requireTeacherRole, asyncHandler(async (req, res) => {
+  // TypeScript-Fehler vermeiden: req.user wird durch requireTeacherRole garantiert
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      error: 'Nicht authentifiziert'
+    });
+  }
+  
   const teacherId = req.user.userId;
   const { surveyId } = req.body;
   
@@ -123,7 +139,7 @@ router.post('/students/add-by-survey', authenticateToken, requireTeacherRole, as
               added_at: now,
               survey_id: surveyId
             });
-            resolve();
+            resolve(undefined);
           }
         );
       });
@@ -148,6 +164,14 @@ router.post('/students/add-by-survey', authenticateToken, requireTeacherRole, as
  * @access  Privat (nur Lehrer)
  */
 router.delete('/students/:studentId', authenticateToken, requireTeacherRole, asyncHandler(async (req, res) => {
+  // TypeScript-Fehler vermeiden: req.user wird durch requireTeacherRole garantiert
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      error: 'Nicht authentifiziert'
+    });
+  }
+  
   const teacherId = req.user.userId;
   const { studentId } = req.params;
   
@@ -181,6 +205,14 @@ router.delete('/students/:studentId', authenticateToken, requireTeacherRole, asy
  * @access  Privat (nur Lehrer)
  */
 router.get('/surveys', authenticateToken, requireTeacherRole, asyncHandler(async (req, res) => {
+  // TypeScript-Fehler vermeiden: req.user wird durch requireTeacherRole garantiert
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      error: 'Nicht authentifiziert'
+    });
+  }
+  
   const teacherId = req.user.userId;
   
   const sql = `

@@ -46,6 +46,8 @@ app.set('trust proxy', true);
 const allowedOrigins = [
   'https://interaktive-umfrage-plattform.vercel.app',
   'https://interaktive-umfrage-plattform-icn72borz.vercel.app',
+  'https://interaktive-umfrage-plattform-git-main-nechts.vercel.app',
+  'https://interaktive-umfrage-plattform-nechts.vercel.app',
   'http://localhost:5173',
   'http://localhost:5174',
   'https://interaktive-umfrage-plattform-nechts.up.railway.app',

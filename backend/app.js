@@ -89,22 +89,9 @@ app.options('*', cors(corsOptions));
  */
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  // Erweiterte Prüfung für Vercel und Railway Domains mit verbesserten Regex-Patterns
-  if (origin && (
-    allowedOrigins.includes(origin.toLowerCase()) || 
-    /^https?:\/\/.*\.railway\.app$/.test(origin) ||
-    /^https?:\/\/.*interaktive-umfrage-plattform.*\.vercel\.app$/.test(origin)
-  )) {
+  if (origin && (allowedOrigins.includes(origin) || /^https?:\/\/.*\.railway\.app$/.test(origin))) {
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
-    res.header('Access-Control-Max-Age', '86400');
-    
-    // Für OPTIONS-Anfragen sofort mit 200 antworten
-    if (req.method === 'OPTIONS') {
-      return res.status(200).end();
-    }
   }
   next();
 });
@@ -113,17 +100,25 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Sicherheits-Header Middleware (getrennt von CORS-Headern)
+// Sicherheits- und Response-Header Middleware
 /**
  * @param {Request} req
  * @param {Response} res
  * @param {NextFunction} next
  */
 app.use((req, res, next) => {
-  // Sicherheitsheader setzen (keine CORS-Header hier)
+  // Diese Zeile wurde entfernt, da sie mit res.json() in Konflikt geraten könnte
+  // und zu 'Unexpected Content-Type: text/plain'-Fehlern führen kann
+  // if (req.path.startsWith('/api/')) {
+  //   res.setHeader('Content-Type', 'application/json');
+  // }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-XSS-Protection', '1; mode=block');
+  if (req.method === 'OPTIONS') return res.status(200).end();
   next();
 });
 

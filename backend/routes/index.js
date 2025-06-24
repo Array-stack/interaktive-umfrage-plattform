@@ -7,6 +7,7 @@ const surveyRoutes = require('./survey.routes');
 const surveyResponseRoutes = require('./survey.responses.routes');
 const studentRoutes = require('./student.routes');
 const teacherRoutes = require('./teacher.routes'); // Neue Zeile
+const healthRoutes = require('./health'); // Gesundheitscheck-Endpunkt
 
 // API-Versionspräfix
 const API_PREFIX = '/api';
@@ -19,16 +20,9 @@ router.use('/surveys', surveyRoutes);
 router.use('/survey-responses', surveyResponseRoutes);
 router.use('/student', studentRoutes);
 router.use('/teacher', teacherRoutes); // Neue Zeile
+router.use('/health', healthRoutes); // Gesundheitscheck-Endpunkt
 
-// Health Check Endpunkt
-router.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    version: process.env.npm_package_version || '1.0.0'
-  });
-});
+// Health Check Endpunkt wird jetzt über die health.js-Datei bereitgestellt
 
 // 404 Handler für API-Routes
 router.use('*', (req, res, next) => {

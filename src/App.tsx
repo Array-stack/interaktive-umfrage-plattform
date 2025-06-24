@@ -3,7 +3,7 @@ import { setDocumentDirection } from './i18n';
 import { useTranslation } from 'react-i18next';
 import { HashRouter, Routes, Route, useParams, useNavigate, Link } from 'react-router-dom';
 import { Survey, Question, QuestionType, NewSurvey, NewQuestion, SurveyResponse, NewSurveyResponse, Answer, ChartDataPoint } from './types';
-import { surveyService } from './services/surveyService';
+import surveyService from './services/surveyService';
 import { AuthProvider } from '../contexts/AuthContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import AuthNavbar from './components/AuthNavbar';

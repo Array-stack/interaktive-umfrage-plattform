@@ -39,6 +39,8 @@ app.set('trust proxy', true);
 // ======== CORS-Konfiguration =========
 const allowedOrigins = [
     'https://interaktive-umfrage-plattform.vercel.app',
+    'https://interaktive-umfrage-plattform-icn72borz.vercel.app',
+    'https://interaktive-umfrage-plattform.vercel.app',
     'http://localhost:5173',
     'http://localhost:5174',
     'https://interaktive-umfrage-plattform-nechts.up.railway.app',
@@ -48,12 +50,18 @@ const corsOptions = {
         if (!origin) {
             return callback(null, true); // Same-origin, erlaubt
         }
+        // Vercel-Domain explizit überprüfen
+        if (origin.includes('vercel.app')) {
+            console.log('Vercel-Domain erkannt, CORS erlaubt:', origin);
+            return callback(null, true);
+        }
         if (allowedOrigins.includes(origin.toLowerCase())) {
             return callback(null, true); // Whitelisted, erlaubt
         }
         if (process.env.NODE_ENV === 'development') {
             return callback(null, true); // Im Entwicklungsmodus alles erlauben
         }
+        console.log('CORS-Anfrage abgelehnt für Origin:', origin);
         // KORRIGIERTER AUFRUF:
         // Übergeben Sie den Fehler UND den Status 'false' für nicht erlaubt.
         callback(new Error('Not allowed by CORS'), false);
@@ -76,9 +84,19 @@ app.options('*', cors(corsOptions));
  */
 app.use((req, res, next) => {
     const origin = req.headers.origin;
-    if (origin && (allowedOrigins.includes(origin) || /^https?:\/\/.*\.railway\.app$/.test(origin))) {
+    // Vercel-Domain oder erlaubte Ursprünge oder Railway-App
+    if (origin && (allowedOrigins.includes(origin) ||
+        /^https?:\/\/.*\.railway\.app$/.test(origin) ||
+        /^https?:\/\/.*\.vercel\.app$/.test(origin))) {
+        console.log('CORS-Header gesetzt für Origin:', origin);
         res.header('Access-Control-Allow-Origin', origin);
         res.header('Access-Control-Allow-Credentials', 'true');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+        // Bei OPTIONS-Anfragen sofort antworten
+        if (req.method === 'OPTIONS') {
+            return res.status(200).end();
+        }
     }
     next();
 });

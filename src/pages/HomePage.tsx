@@ -35,15 +35,41 @@ const HomePage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await surveyService.getRecommendedSurveys();
+      console.log('Starte Abruf der empfohlenen Umfragen...');
+      
+      // Maximal 3 Versuche
+      let attempts = 0;
+      let response = null;
+      let lastError = null;
+      
+      while (attempts < 3 && response === null) {
+        try {
+          attempts++;
+          console.log(`Versuch ${attempts} von 3...`);
+          response = await surveyService.getRecommendedSurveys();
+        } catch (attemptError) {
+          lastError = attemptError;
+          console.warn(`Fehler beim Versuch ${attempts}:`, attemptError);
+          // Kurze Pause vor dem nächsten Versuch
+          if (attempts < 3) await new Promise(resolve => setTimeout(resolve, 500));
+        }
+      }
+      
+      if (response === null && lastError) {
+        throw lastError; // Wirf den letzten Fehler, wenn alle Versuche fehlgeschlagen sind
+      }
+      
       // Überprüfe, ob die Antwort das Format { success: true, data: [...] } hat
       if (response && response.success && Array.isArray(response.data)) {
+        console.log('Empfohlene Umfragen im Format {success, data} erhalten:', response.data.length);
         setRecommendedSurveys(response.data);
       } else if (Array.isArray(response)) {
         // Falls die Antwort bereits ein Array ist
+        console.log('Empfohlene Umfragen als Array erhalten:', response.length);
         setRecommendedSurveys(response);
       } else {
         // Fallback für unerwartete Antwortformate
+        console.warn('Unerwartetes Antwortformat, verwende leeres Array');
         setRecommendedSurveys([]);
       }
     } catch (err) {

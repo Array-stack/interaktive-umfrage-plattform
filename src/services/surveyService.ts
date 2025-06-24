@@ -22,9 +22,9 @@ export interface SurveyAnalysis {
       respondentId: string;
       value: any;
       isCorrect?: boolean;
-    }>;
+    }>
     answerDistribution?: number[];
-  }>;
+  }>
 }
 
 export interface StudentSurvey extends Omit<Survey, 'questions'> {
@@ -295,69 +295,119 @@ function transformSurveyApiResponse(data: any): Survey[] {
   return result;
 }
 
-export const surveyService = {
+const surveyService = {
   /**
    * Ruft alle öffentlichen Umfragen ab
    */
   async getSurveys(): Promise<Survey[]> {
     try {
-      console.log('Fetching surveys from:', `${API_BASE_URL}/surveys`);
-      console.log('Using headers:', getAuthHeader());
+      const url = `${API_BASE_URL}/surveys`;
+      console.log('[getSurveys] Starte Abfrage an:', url);
       
-      // Timeout für die Anfrage setzen (10 Sekunden)
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
       
-      try {
-        const response = await fetch(`${API_BASE_URL}/surveys`, {
-          headers: getAuthHeader(),
-          signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId); // Timeout aufheben
-        
-        console.log('API response status:', response.status);
-        console.log('API response headers:', [...response.headers.entries()]);
-        
-        if (response.status === 404) {
-          console.log('No surveys found (404)');
-          return [];
-        }
+      // Maximale Anzahl von Versuchen
+      const maxRetries = 3;
+      let currentTry = 1;
+      let response: Response | undefined;
+      
+      // Basis-Request-Optionen
+      const getRequestOptions = (includeCreds = true) => ({
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        credentials: includeCreds ? 'include' as const : 'omit' as const,
+        mode: 'cors' as const
+      });
+      
+      console.log('[getSurveys] Request Options:', JSON.stringify({
+        url,
+        headers: getRequestOptions().headers,
+        credentials: getRequestOptions().credentials
+      }, null, 2));
+      
+      // Versuche mit Wiederholungen
+      while (currentTry <= maxRetries) {
+        console.log(`[getSurveys] Versuch ${currentTry} von ${maxRetries}`);
         
         try {
-          const data = await handleApiResponse<any[]>(response);
-          console.log('API Response data type:', typeof data);
-          console.log('API Response is array:', Array.isArray(data));
-          console.log('API Response preview:', JSON.stringify(data).substring(0, 200) + '...');
-          
-          // Überprüfen, ob die Antwort ein Array ist
-          if (!Array.isArray(data)) {
-            console.error('Unerwartetes Antwortformat: Kein Array erhalten', data);
-            return [];
+          // Versuche zuerst über den Proxy
+          if (currentTry === 1) {
+            response = await fetch(url, getRequestOptions());
+          } 
+          // Bei weiteren Versuchen direkt die Railway-API ansprechen
+          else {
+            const directUrl = 'https://interaktive-umfrage-plattform-nechts.up.railway.app/api/surveys';
+            console.log(`[getSurveys] Direkter Versuch an: ${directUrl}`);
+            response = await fetch(directUrl, getRequestOptions(false));
           }
           
-          const surveys = transformSurveyApiResponse(data);
-          console.log('Transformed surveys count:', surveys.length);
-          return surveys;
-        } catch (apiError) {
-          console.error('API-Verarbeitungsfehler:', apiError);
-          // Fehler an die UI weitergeben
-          throw apiError;
+          console.log(`[getSurveys] Response Status: ${response.status} ${response.statusText}`);
+          
+          // Content-Type überprüfen
+          const contentType = response.headers.get('content-type');
+          const isJson = contentType && contentType.includes('application/json');
+          
+          // Response-Header loggen
+          console.log('[getSurveys] Response Headers:', 
+            Object.fromEntries(response.headers.entries()));
+          
+          // Wenn JSON-Antwort und OK, dann verarbeiten
+          if (isJson && response.ok) {
+            break; // Erfolgreiche Antwort, Schleife verlassen
+          }
+          
+          // Wenn keine JSON-Antwort, Fehler loggen und nächsten Versuch starten
+          if (!isJson) {
+            const responseText = await response.text();
+            console.warn(`[getSurveys] Versuch ${currentTry}: Keine JSON-Antwort erhalten`);
+            console.error('[getSurveys] Ungültiges Antwortformat. Erwartet: JSON, Erhalten:', {
+              status: response.status,
+              statusText: response.statusText,
+              contentType,
+              preview: responseText.substring(0, 150) + (responseText.length > 150 ? '...' : '')
+            });
+            
+            // Nächster Versuch
+            currentTry++;
+            continue;
+          }
+          
+          // Bei anderen Fehlern (nicht 2xx) auch nächsten Versuch starten
+          if (!response.ok) {
+            console.warn(`[getSurveys] Versuch ${currentTry}: Fehlerhafte Antwort (${response.status})`);
+            currentTry++;
+            continue;
+          }
+        } catch (networkError) {
+          // Netzwerkfehler abfangen und nächsten Versuch starten
+          console.error(`[getSurveys] Versuch ${currentTry}: Netzwerkfehler:`, networkError);
+          currentTry++;
+          continue;
         }
-      } catch (fetchError) {
-        clearTimeout(timeoutId); // Timeout aufheben
-        
-        if (fetchError instanceof Error && fetchError.name === 'AbortError') {
-          console.error('API-Anfrage hat das Timeout überschritten (10s)');
-          throw new Error('API-Anfrage hat das Timeout überschritten. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.');
-        }
-        
-        console.error('Fetch-Fehler in getSurveys:', fetchError);
-        throw fetchError;
+      }
+      
+      // Wenn wir hier ankommen, haben wir entweder eine erfolgreiche Antwort oder alle Versuche sind fehlgeschlagen
+      if (currentTry > maxRetries || !response) {
+        console.error('[getSurveys] Alle Versuche fehlgeschlagen');
+        throw new Error('Alle Versuche, Umfragen abzurufen, sind fehlgeschlagen');
+      }
+      
+      // Versuche die Antwort als JSON zu parsen
+      try {
+        const data = await response.json();
+        console.log('[getSurveys] Daten erfolgreich empfangen:', data);
+        return Array.isArray(data) ? data : [];
+      } catch (error) {
+        console.error('[getSurveys] Fehler beim Parsen der JSON-Antwort:', error);
+        throw new Error('Fehler beim Parsen der Umfragedaten');
       }
     } catch (error) {
-      console.error('Error in getSurveys:', error);
-      throw error; // Fehler weitergeben, damit die UI ihn anzeigen kann
+      console.error('Failed to fetch surveys:', error);
+      throw error;
     }
   },
 
@@ -1075,6 +1125,56 @@ export const surveyService = {
   },
 
   /**
+   * Ruft alle Umfragen ab, die vom eingeloggten Lehrer erstellt wurden
+   */
+  async getTeacherSurveys(): Promise<Survey[]> { 
+     try { 
+       // Überprüfe, ob ein Auth-Token vorhanden ist 
+       const token = localStorage.getItem('auth_token'); 
+       if (!token) { 
+         console.warn('getTeacherSurveys: Kein Auth-Token vorhanden'); 
+         return []; 
+       } 
+       
+       console.log('Fetching teacher surveys from:', `${API_BASE_URL}/teacher/surveys`); 
+       console.log('Auth headers:', getAuthHeader()); 
+       
+       const response = await fetch(`${API_BASE_URL}/teacher/surveys`, { 
+         headers: getAuthHeader(), 
+         // Verhindere Caching der Anfrage 
+         cache: 'no-store' 
+       }); 
+       
+       console.log('Teacher surveys response status:', response.status); 
+       
+       if (response.status === 401) { 
+         console.warn('Authentifizierungsfehler beim Abrufen der Lehrerumfragen (401)'); 
+         return []; 
+       } 
+       
+       if (response.status === 403) { 
+         console.warn('Keine Berechtigung zum Abrufen der Lehrerumfragen (403)'); 
+         return []; 
+       } 
+       
+       if (response.status === 404) { 
+         console.log('Keine Lehrerumfragen gefunden (404)'); 
+         return []; 
+       } 
+       
+       const data = await handleApiResponse<any[]>(response); 
+       console.log('API Response:', data); 
+       const surveys = transformSurveyApiResponse(data); 
+       console.log('Transformed teacher surveys:', surveys); 
+       return surveys; 
+     } catch (error) { 
+       console.error('Error in getTeacherSurveys:', error); 
+       // Fehler abfangen, aber leeres Array zurückgeben, um UI-Fehler zu vermeiden 
+       return []; 
+     } 
+   },
+
+  /**
    * Entfernt eine Umfrage aus der Liste der teilgenommenen Umfragen
    */
   resetSurveyParticipation(surveyId: string): void {
@@ -1096,6 +1196,7 @@ export const surveyService = {
   
   /**
    * Ruft empfohlene Umfragen ab mit verbesserter Fehlerbehandlung
+   * und Unterstützung für HTML-Antworten
    */
   async getRecommendedSurveys(): Promise<any> {
     try {
@@ -1105,7 +1206,13 @@ export const surveyService = {
       // Prüfe, ob ein Token vorhanden ist
       const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
       
-      const requestOptions = {
+      // Maximale Anzahl von Versuchen
+      const maxRetries = 3;
+      let currentTry = 1;
+      let response: Response | undefined;
+      
+      // Basis-Request-Optionen
+      const getRequestOptions = (includeCreds = true) => ({
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -1113,48 +1220,95 @@ export const surveyService = {
           // Nur Authorization-Header hinzufügen, wenn ein Token vorhanden ist
           ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
-        credentials: 'include' as const
-      };
+        credentials: includeCreds ? 'include' as const : 'omit' as const,
+        mode: 'cors' as const
+      });
       
       console.log('[getRecommendedSurveys] Request Options:', JSON.stringify({
         url,
-        headers: requestOptions.headers,
-        credentials: requestOptions.credentials
+        headers: getRequestOptions().headers,
+        credentials: getRequestOptions().credentials
       }, null, 2));
       
-      const response = await fetch(url, requestOptions);
-      
-      console.log(`[getRecommendedSurveys] Response Status: ${response.status} ${response.statusText}`);
-      
-      // Content-Type überprüfen
-      const contentType = response.headers.get('content-type');
-      const isJson = contentType && contentType.includes('application/json');
-      
-      // Response-Header loggen
-      console.log('[getRecommendedSurveys] Response Headers:', 
-        Object.fromEntries(response.headers.entries()));
-      
-      // Bei 404 oder 501 (Not Implemented) leeres Array zurückgeben
-      if (response.status === 404 || response.status === 501) {
-        console.warn(`[getRecommendedSurveys] Endpoint nicht verfügbar (${response.status})`);
-        return [];
+      // Versuche mit Wiederholungen
+      while (currentTry <= maxRetries) {
+        console.log(`[getRecommendedSurveys] Versuch ${currentTry} von ${maxRetries}`);
+        
+        try {
+          // Versuche zuerst über den Proxy
+          if (currentTry === 1) {
+            response = await fetch(url, getRequestOptions());
+          } 
+          // Bei weiteren Versuchen direkt die Railway-API ansprechen
+          else {
+            const directUrl = 'https://interaktive-umfrage-plattform-nechts.up.railway.app/api/surveys/recommended';
+            console.log(`[getRecommendedSurveys] Direkter Versuch an: ${directUrl}`);
+            response = await fetch(directUrl, getRequestOptions(false));
+          }
+          
+          console.log(`[getRecommendedSurveys] Response Status: ${response.status} ${response.statusText}`);
+          
+          // Content-Type überprüfen
+          const contentType = response.headers.get('content-type');
+          const isJson = contentType && contentType.includes('application/json');
+          
+          // Response-Header loggen
+          console.log('[getRecommendedSurveys] Response Headers:', 
+            Object.fromEntries(response.headers.entries()));
+          
+          // Bei 404 oder 501 (Not Implemented) leeres Array zurückgeben
+          if (response.status === 404 || response.status === 501) {
+            console.warn(`[getRecommendedSurveys] Endpoint nicht verfügbar (${response.status})`);
+            return [];
+          }
+          
+          // Wenn JSON-Antwort, dann verarbeiten
+          if (isJson && response.ok) {
+            break; // Erfolgreiche Antwort, Schleife verlassen
+          }
+          
+          // Wenn keine JSON-Antwort, Fehler loggen und nächsten Versuch starten
+          if (!isJson) {
+            const responseText = await response.text();
+            console.warn(`[getRecommendedSurveys] Versuch ${currentTry}: Keine JSON-Antwort erhalten`);
+            console.error('[getRecommendedSurveys] Ungültiges Antwortformat. Erwartet: JSON, Erhalten:', {
+              status: response.status,
+              statusText: response.statusText,
+              contentType,
+              responsePreview: responseText.substring(0, 200) // Erste 200 Zeichen der Antwort
+            });
+            
+            // Nächster Versuch
+            currentTry++;
+            continue;
+          }
+          
+          // Bei anderen Fehlern (nicht 2xx) auch nächsten Versuch starten
+          if (!response.ok) {
+            console.warn(`[getRecommendedSurveys] Versuch ${currentTry}: Fehlerhafte Antwort (${response.status})`);
+            currentTry++;
+            continue;
+          }
+        } catch (networkError) {
+          // Netzwerkfehler abfangen und nächsten Versuch starten
+          console.error(`[getRecommendedSurveys] Versuch ${currentTry}: Netzwerkfehler:`, networkError);
+          currentTry++;
+          continue;
+        }
       }
       
-      // Bei nicht-JSON Antwort
-      if (!isJson) {
-        const responseText = await response.text();
-        console.error('[getRecommendedSurveys] Ungültiges Antwortformat. Erwartet: JSON, Erhalten:', {
-          status: response.status,
-          statusText: response.statusText,
-          contentType,
-          responsePreview: responseText.substring(0, 200) // Erste 200 Zeichen der Antwort
-        });
-        return []; // Leeres Array zurückgeben anstatt einen Fehler zu werfen
+      // Wenn wir hier ankommen, haben wir entweder eine erfolgreiche Antwort oder alle Versuche sind fehlgeschlagen
+      if (currentTry > maxRetries || !response) {
+        console.error('[getRecommendedSurveys] Alle Versuche fehlgeschlagen');
+        return [];
       }
       
       // JSON-Antwort verarbeiten
       let responseData;
       try {
+        if (!response) {
+          throw new Error('Keine Antwort erhalten');
+        }
         responseData = await response.json();
       } catch (error) {
         console.error('[getRecommendedSurveys] Fehler beim Parsen der JSON-Antwort:', error);
@@ -1173,6 +1327,10 @@ export const surveyService = {
             // Verwende das erste gefundene Array
             console.log('[getRecommendedSurveys] Array-Eigenschaft im Objekt gefunden, verwende diese');
             responseData = possibleArrays[0];
+          } else if (responseData.data) {
+            // Spezialfall: Wenn es eine data-Eigenschaft gibt, die kein Array ist
+            console.log('[getRecommendedSurveys] data-Eigenschaft gefunden, aber kein Array');
+            return [];
           } else {
             // Wenn keine Array-Eigenschaft gefunden wurde, leeres Array zurückgeben
             console.error('[getRecommendedSurveys] Keine Array-Eigenschaft im Objekt gefunden');
@@ -1184,7 +1342,7 @@ export const surveyService = {
       }
       
       // Bei HTTP-Fehlern
-      if (!response.ok) {
+      if (response && !response.ok) {
         console.error('[getRecommendedSurveys] API-Fehler:', {
           status: response.status,
           statusText: response.statusText,
@@ -1195,71 +1353,17 @@ export const surveyService = {
       
       console.log('[getRecommendedSurveys] Erfolgreich abgerufen:', {
         count: Array.isArray(responseData) ? responseData.length : 'unbekannt',
-        data: Array.isArray(responseData) ? responseData.slice(0, 3) : responseData
+        data: responseData
       });
       
       return responseData || [];
-      
     } catch (error) {
-      console.error('[getRecommendedSurveys] Kritischer Fehler:', {
-        error: error instanceof Error ? error.message : 'Unbekannter Fehler',
-        stack: error instanceof Error ? error.stack : undefined,
-        timestamp: new Date().toISOString()
-      });
-      return [];
-    }
-  },
-  
-  /**
-   * Ruft alle Umfragen des eingeloggten Lehrers ab
-   */
-  async getTeacherSurveys(): Promise<Survey[]> {
-    try {
-      // Überprüfe, ob ein Auth-Token vorhanden ist
-      const token = localStorage.getItem('auth_token');
-      if (!token) {
-        console.warn('getTeacherSurveys: Kein Auth-Token vorhanden');
-        return [];
-      }
-      
-      console.log('Fetching teacher surveys from:', `${API_BASE_URL}/teacher/surveys`);
-      console.log('Auth headers:', getAuthHeader());
-      
-      const response = await fetch(`${API_BASE_URL}/teacher/surveys`, {
-        headers: getAuthHeader(),
-        // Verhindere Caching der Anfrage
-        cache: 'no-store'
-      });
-      
-      console.log('Teacher surveys response status:', response.status);
-      
-      if (response.status === 401) {
-        console.warn('Authentifizierungsfehler beim Abrufen der Lehrerumfragen (401)');
-        return [];
-      }
-      
-      if (response.status === 403) {
-        console.warn('Keine Berechtigung zum Abrufen der Lehrerumfragen (403)');
-        return [];
-      }
-      
-      if (response.status === 404) {
-        console.log('Keine Lehrerumfragen gefunden (404)');
-        return [];
-      }
-      
-      const data = await handleApiResponse<any[]>(response);
-      console.log('API Response:', data);
-      const surveys = transformSurveyApiResponse(data);
-      console.log('Transformed teacher surveys:', surveys);
-      return surveys;
-    } catch (error) {
-      console.error('Error in getTeacherSurveys:', error);
-      // Fehler abfangen, aber leeres Array zurückgeben, um UI-Fehler zu vermeiden
+      console.error('[getRecommendedSurveys] Unerwarteter Fehler:', error);
       return [];
     }
   }
-}; // Nur eine schließende Klammer für das surveyService-Objekt
+};
 
-// Exportiere die Instanz als Standard-Export für die Abwärtskompatibilität
+// Exportiere sowohl als benannter Export als auch als Standardexport
+export { surveyService };
 export default surveyService;

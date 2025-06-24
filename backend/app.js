@@ -48,6 +48,7 @@ const allowedOrigins = [
   'https://interaktive-umfrage-plattform-icn72borz.vercel.app',
   'https://interaktive-umfrage-plattform-git-main-nechts.vercel.app',
   'https://interaktive-umfrage-plattform-nechts.vercel.app',
+  'https://interaktive-umfrage-plattform-1l80junkz.vercel.app',
   'http://localhost:5173',
   'http://localhost:5174',
   'https://interaktive-umfrage-plattform-nechts.up.railway.app',

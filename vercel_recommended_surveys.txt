@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="OpinionBase - Professionelle Umfrageplattform für Bildungseinrichtungen. Erstellen, verteilen und auswerten Sie Umfragen einfach und effizient." />
+    <meta name="keywords" content="Umfragen, Feedback, Bildung, Lehrer, Schüler, Auswertung, OpinionBase" />
+    <meta name="author" content="OpinionBase" />
+    <meta property="og:title" content="OpinionBase - Professionelle Umfrageplattform" />
+    <meta property="og:description" content="Erstellen, verteilen und auswerten Sie Umfragen einfach und effizient." />
+    <meta property="og:type" content="website" />
+    <title>OpinionBase - Professionelle Umfrageplattform</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon-DyOapm2s.svg" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/assets/index-DmnCQmvj.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-CtRVvrpK.js">
+    <link rel="modulepreload" crossorigin href="/assets/i18n-DatnLVuH.js">
+    <link rel="modulepreload" crossorigin href="/assets/charts-rdkiVpNA.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BBq-Y30C.css">
+  </head>
+  <body class="bg-white text-neutral-dark font-sans antialiased">
+    <!-- Keine Import Map - Wir verwenden die von Vite gebündelten Module -->
+    <noscript class="fixed inset-0 flex items-center justify-center bg-white p-8 text-center">
+      <div class="max-w-md p-6 bg-white rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold text-red-600 mb-4">JavaScript erforderlich</h1>
+        <p class="mb-4">Diese Anwendung benötigt JavaScript, um korrekt zu funktionieren.</p>
+        <p>Bitte aktivieren Sie JavaScript in Ihren Browsereinstellungen und laden Sie die Seite neu.</p>
+      </div>
+    </noscript>
+    
+    <div id="root" class="min-h-screen flex flex-col"></div>
+    
+    <!-- Hauptanwendungsskript - Nur ein einziger Einstiegspunkt -->
+  </body>
+</html>

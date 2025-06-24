@@ -40,7 +40,9 @@ app.set('trust proxy', true);
 const allowedOrigins = [
     'https://interaktive-umfrage-plattform.vercel.app',
     'https://interaktive-umfrage-plattform-icn72borz.vercel.app',
-    'https://interaktive-umfrage-plattform.vercel.app',
+    'https://interaktive-umfrage-plattform-git-main-nechts.vercel.app',
+    'https://interaktive-umfrage-plattform-nechts.vercel.app',
+    'https://interaktive-umfrage-plattform-1l80junkz.vercel.app',
     'http://localhost:5173',
     'http://localhost:5174',
     'https://interaktive-umfrage-plattform-nechts.up.railway.app',
@@ -50,18 +52,12 @@ const corsOptions = {
         if (!origin) {
             return callback(null, true); // Same-origin, erlaubt
         }
-        // Vercel-Domain explizit überprüfen
-        if (origin.includes('vercel.app')) {
-            console.log('Vercel-Domain erkannt, CORS erlaubt:', origin);
-            return callback(null, true);
-        }
         if (allowedOrigins.includes(origin.toLowerCase())) {
             return callback(null, true); // Whitelisted, erlaubt
         }
         if (process.env.NODE_ENV === 'development') {
             return callback(null, true); // Im Entwicklungsmodus alles erlauben
         }
-        console.log('CORS-Anfrage abgelehnt für Origin:', origin);
         // KORRIGIERTER AUFRUF:
         // Übergeben Sie den Fehler UND den Status 'false' für nicht erlaubt.
         callback(new Error('Not allowed by CORS'), false);
@@ -84,19 +80,31 @@ app.options('*', cors(corsOptions));
  */
 app.use((req, res, next) => {
     const origin = req.headers.origin;
-    // Vercel-Domain oder erlaubte Ursprünge oder Railway-App
-    if (origin && (allowedOrigins.includes(origin) ||
-        /^https?:\/\/.*\.railway\.app$/.test(origin) ||
-        /^https?:\/\/.*\.vercel\.app$/.test(origin))) {
-        console.log('CORS-Header gesetzt für Origin:', origin);
+    // Verbesserte CORS-Konfiguration
+    // Erlaube alle Ursprünge für API-Anfragen im Produktionsmodus
+    if (req.path.startsWith('/api/') || req.originalUrl.startsWith('/api/')) {
+        if (process.env.NODE_ENV === 'production') {
+            // Im Produktionsmodus erlauben wir alle Ursprünge für API-Anfragen
+            res.header('Access-Control-Allow-Origin', origin || '*');
+            console.log(`CORS für API-Anfrage gesetzt: ${req.method} ${req.originalUrl} - Origin: ${origin || '*'}`);
+        }
+        else if (origin) {
+            // Im Entwicklungsmodus prüfen wir die allowedOrigins
+            if (allowedOrigins.includes(origin) || /^https?:\/\/.*\.railway\.app$/.test(origin) || /^https?:\/\/.*\.vercel\.app$/.test(origin)) {
+                res.header('Access-Control-Allow-Origin', origin);
+            }
+        }
+        // Weitere CORS-Header für API-Anfragen
+        res.header('Access-Control-Allow-Credentials', 'true');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+    }
+    else if (origin && (allowedOrigins.includes(origin) || /^https?:\/\/.*\.railway\.app$/.test(origin) || /^https?:\/\/.*\.vercel\.app$/.test(origin))) {
+        // Für Nicht-API-Anfragen behalten wir das bisherige Verhalten bei
         res.header('Access-Control-Allow-Origin', origin);
         res.header('Access-Control-Allow-Credentials', 'true');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
-        // Bei OPTIONS-Anfragen sofort antworten
-        if (req.method === 'OPTIONS') {
-            return res.status(200).end();
-        }
     }
     next();
 });
@@ -110,17 +118,25 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
  * @param {NextFunction} next
  */
 app.use((req, res, next) => {
-    // Diese Zeile wurde entfernt, da sie mit res.json() in Konflikt geraten könnte
-    // und zu 'Unexpected Content-Type: text/plain'-Fehlern führen kann
-    // if (req.path.startsWith('/api/')) {
-    //   res.setHeader('Content-Type', 'application/json');
-    // }
+    // Verbesserte API-Erkennung
+    const isApiRequest = req.path.startsWith('/api/') || req.originalUrl.startsWith('/api/');
+    // Für API-Anfragen explizit den Content-Type setzen
+    if (isApiRequest) {
+        // Setze den Content-Type nur, wenn die Anfrage eine API-Anfrage ist
+        // und keine OPTIONS-Anfrage
+        if (req.method !== 'OPTIONS') {
+            res.setHeader('Content-Type', 'application/json');
+            console.log(`Content-Type für API-Anfrage gesetzt: ${req.method} ${req.originalUrl}`);
+        }
+    }
+    // Allgemeine Sicherheitsheader
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader('X-XSS-Protection', '1; mode=block');
+    // OPTIONS-Anfragen sofort beantworten
     if (req.method === 'OPTIONS')
         return res.status(200).end();
     next();
@@ -150,7 +166,13 @@ else {
 }
 // API-Routen
 const apiRoutes = require('./routes');
-app.use('/api', apiRoutes);
+// API-Routen mit verbesserter Fehlerbehandlung
+app.use('/api', (req, res, next) => {
+    console.log(`API-Anfrage empfangen: ${req.method} ${req.originalUrl}`);
+    // Setze explizit den Content-Type für alle API-Antworten
+    res.type('json');
+    next();
+}, apiRoutes);
 // API-404-Absicherung
 /**
  * @param {Request} req
@@ -158,6 +180,7 @@ app.use('/api', apiRoutes);
  * @param {NextFunction} next
  */
 app.use('/api', (req, res, next) => {
+    console.log(`API-Endpunkt nicht gefunden: ${req.method} ${req.originalUrl}`);
     res.status(404).json({
         error: 'API-Endpunkt nicht gefunden',
         path: req.originalUrl
@@ -173,8 +196,11 @@ if (process.env.NODE_ENV === 'production') {
      * @param {NextFunction} next
      */
     app.use((req, res, next) => {
-        if (req.path.startsWith('/api/'))
+        // Verbesserte API-Pfaderkennung
+        if (req.path.startsWith('/api/') || req.originalUrl.startsWith('/api/')) {
+            console.log(`API-Anfrage erkannt: ${req.method} ${req.originalUrl}`);
             return next();
+        }
         express.static(buildPath)(req, res, next);
     });
     // Fallback auf index.html für Nicht-API-Routen
@@ -184,8 +210,11 @@ if (process.env.NODE_ENV === 'production') {
      * @param {NextFunction} next
      */
     app.get('*', (req, res, next) => {
-        if (req.path.startsWith('/api/'))
+        // Verbesserte API-Pfaderkennung
+        if (req.path.startsWith('/api/') || req.originalUrl.startsWith('/api/')) {
+            console.log(`API-Fallback erkannt: ${req.method} ${req.originalUrl}`);
             return next();
+        }
         res.sendFile(path.join(buildPath, 'index.html'));
     });
 }

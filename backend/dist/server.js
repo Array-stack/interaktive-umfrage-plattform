@@ -1,7 +1,26 @@
 const { createServer } = require('http');
 const app = require('./app');
 const db = require('./database');
-const PORT = process.env.PORT || 8080;
+// Kommandozeilenargumente parsen
+const args = process.argv.slice(2);
+let portArg = null;
+// Debug-Ausgabe aller Argumente
+console.log('Kommandozeilenargumente:', process.argv);
+// Suche nach --port Argument
+for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    console.log(`Prüfe Argument: ${arg}`);
+    if (arg.startsWith('--port=')) {
+        portArg = parseInt(arg.split('=')[1], 10);
+        console.log(`Port aus Kommandozeilenargument gefunden: ${portArg}`);
+        break;
+    }
+}
+// Explizit den Port setzen und ausgeben
+const PORT = portArg || process.env.PORT || 8080;
+console.log(`Verwendeter Port: ${PORT}`);
+// Setze PORT als Umgebungsvariable, um sicherzustellen, dass sie überall verwendet wird
+process.env.PORT = PORT.toString();
 const HOST = process.env.HOST || '0.0.0.0'; // Für IPv4-kompatiblen Fallback
 /**
  * Initialisiert die Datenbank

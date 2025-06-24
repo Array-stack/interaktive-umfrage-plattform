@@ -7,8 +7,8 @@ export interface VerifyEmailResponse {
 }
 
 // API-Basis-URL für Backend-Anfragen
-// Verwende die Umgebungsvariable oder den Fallback für die Produktion
-const API_BASE_URL = process.env.API_BASE_URL || '/api';
+// Verwende die Vite-Umgebungsvariable oder den Fallback für die Produktion
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 console.log('API_BASE_URL:', API_BASE_URL);
 
 // Helper zum Umgang mit API-Antworten
